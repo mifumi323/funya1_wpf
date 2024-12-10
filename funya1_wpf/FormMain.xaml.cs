@@ -12,11 +12,11 @@ using System.Windows.Shapes;
 namespace funya1_wpf
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for FormMain.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FormMain : Window
     {
-        public MainWindow()
+        public FormMain()
         {
             InitializeComponent();
         }
