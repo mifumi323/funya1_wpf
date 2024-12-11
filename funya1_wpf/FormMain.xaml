@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:funya1_wpf"
         mc:Ignorable="d"
-        Title="ふにゃ" Height="268" Width="347">
+        Title="ふにゃ"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="ゲーム(_G)">
+                <MenuItem Header="スタート(_S)"/>
+                <MenuItem Header="指定ステージからスタート(_E)"/>
+                <MenuItem Header="ポーズ(_P)"/>
+                <MenuItem Header="自爆(_D)"/>
+                <Separator/>
+                <MenuItem Header="ステージの読み込み(_R)"/>
+                <Separator/>
+                <MenuItem Header="終了(_X)"/>
+            </MenuItem>
+            <MenuItem Header="オプション(_O)">
+                <MenuItem Header="スピード(_S)">
+                    <MenuItem Header="速い" Tag="25"/>
+                    <MenuItem Header="普通" Tag="50"/>
+                    <MenuItem Header="遅い" Tag="100"/>
+                </MenuItem>
+                <MenuItem Header="重力(_G)">
+                    <MenuItem Header="無重力" Tag="0"/>
+                    <MenuItem Header="低重力" Tag="1"/>
+                    <MenuItem Header="通常" Tag="2"/>
+                    <MenuItem Header="高重力" Tag="3"/>
+                </MenuItem>
+                <MenuItem Header="反操作(_R)"/>
+                <MenuItem Header="音楽の設定(_M)"/>
+            </MenuItem>
+            <MenuItem Header="ヘルプ(_H)">
+                <MenuItem Header="ふにゃのヘルプ(_H)"/>
+                <Separator/>
+                <MenuItem Header="バージョン情報(_A)"/>
+            </MenuItem>
+        </Menu>
+        <Canvas x:Name="Client" Grid.Row="1" ClipToBounds="True" Background="Black" Height="268" Width="347">
+            <Canvas x:Name="Stage" Height="153" Width="193" Canvas.Left="10" Canvas.Top="10" ClipToBounds="True" Background="Gray">
+                <Image x:Name="Food1" Height="32" Width="32" Canvas.Left="0" Canvas.Top="0"/>
+                <Image x:Name="Food2" Height="32" Width="32" Canvas.Left="32" Canvas.Top="0"/>
+                <Image x:Name="Food3" Height="32" Width="32" Canvas.Left="64" Canvas.Top="0"/>
+                <Image x:Name="Food4" Height="32" Width="32" Canvas.Left="96" Canvas.Top="0"/>
+                <Image x:Name="Food5" Height="32" Width="32" Canvas.Left="128" Canvas.Top="0"/>
+                <Image x:Name="Mine" Height="32" Width="32" Canvas.Left="0" Canvas.Top="32"/>
+            </Canvas>
+        </Canvas>
     </Grid>
 </Window>
