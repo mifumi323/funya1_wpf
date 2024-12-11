@@ -6,6 +6,73 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Stand.ICO</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\BlockData1.bmp" />
+    <None Remove="Resources\Death.png" />
+    <None Remove="Resources\Fall.png" />
+    <None Remove="Resources\FallG.png" />
+    <None Remove="Resources\FallL.png" />
+    <None Remove="Resources\FallLG.png" />
+    <None Remove="Resources\FallR.png" />
+    <None Remove="Resources\FallRG.png" />
+    <None Remove="Resources\funyaG.png" />
+    <None Remove="Resources\Happy.png" />
+    <None Remove="Resources\Jump.png" />
+    <None Remove="Resources\JumpG.png" />
+    <None Remove="Resources\JumpL.png" />
+    <None Remove="Resources\JumpLG.png" />
+    <None Remove="Resources\JumpR.png" />
+    <None Remove="Resources\JumpRG.png" />
+    <None Remove="Resources\RunLA.png" />
+    <None Remove="Resources\RunLB.png" />
+    <None Remove="Resources\RunLC.png" />
+    <None Remove="Resources\RunRA.png" />
+    <None Remove="Resources\RunRB.png" />
+    <None Remove="Resources\RunRC.png" />
+    <None Remove="Resources\Sit.png" />
+    <None Remove="Resources\Sleep.png" />
+    <None Remove="Resources\Sleep2.png" />
+    <None Remove="Resources\Stand.ICO" />
+    <None Remove="Resources\Stand.png" />
+    <None Remove="Resources\WalkL.png" />
+    <None Remove="Resources\WalkR.png" />
+    <None Remove="Resources\Wink.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\BlockData1.bmp" />
+    <Resource Include="Resources\Death.png" />
+    <Resource Include="Resources\Fall.png" />
+    <Resource Include="Resources\FallG.png" />
+    <Resource Include="Resources\FallL.png" />
+    <Resource Include="Resources\FallLG.png" />
+    <Resource Include="Resources\FallR.png" />
+    <Resource Include="Resources\FallRG.png" />
+    <Resource Include="Resources\funyaG.png" />
+    <Resource Include="Resources\Happy.png" />
+    <Resource Include="Resources\Jump.png" />
+    <Resource Include="Resources\JumpG.png" />
+    <Resource Include="Resources\JumpL.png" />
+    <Resource Include="Resources\JumpLG.png" />
+    <Resource Include="Resources\JumpR.png" />
+    <Resource Include="Resources\JumpRG.png" />
+    <Resource Include="Resources\RunLA.png" />
+    <Resource Include="Resources\RunLB.png" />
+    <Resource Include="Resources\RunLC.png" />
+    <Resource Include="Resources\RunRA.png" />
+    <Resource Include="Resources\RunRB.png" />
+    <Resource Include="Resources\RunRC.png" />
+    <Resource Include="Resources\Sit.png" />
+    <Resource Include="Resources\Sleep.png" />
+    <Resource Include="Resources\Sleep2.png" />
+    <Resource Include="Resources\Stand.ICO" />
+    <Resource Include="Resources\Stand.png" />
+    <Resource Include="Resources\WalkL.png" />
+    <Resource Include="Resources\WalkR.png" />
+    <Resource Include="Resources\Wink.png" />
+  </ItemGroup>
 
 </Project>
