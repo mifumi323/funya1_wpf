@@ -8,7 +8,11 @@
         Title="ふにゃ"
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
-        Icon="/Resources/Stand.ICO">
+        Icon="/Resources/Stand.ICO"
+        StateChanged="Window_StateChanged"
+        Closed="Window_Closed"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,34 +20,36 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="ゲーム(_G)">
-                <MenuItem Header="スタート(_S)"/>
-                <MenuItem Header="指定ステージからスタート(_E)"/>
-                <MenuItem Header="ポーズ(_P)"/>
-                <MenuItem Header="自爆(_D)"/>
+                <MenuItem Header="スタート(_S)" Click="MenuStart_Click"/>
+                <MenuItem Header="指定ステージからスタート(_E)">
+                    <MenuItem Header="ステージ1" Tag="1" Click="MenuStage_Click"/>
+                </MenuItem>
+                <MenuItem Header="ポーズ(_P)" Click="MenuPause_Click"/>
+                <MenuItem Header="自爆(_D)" Click="Death_Click"/>
                 <Separator/>
-                <MenuItem Header="ステージの読み込み(_R)"/>
+                <MenuItem Header="ステージの読み込み(_R)" Click="MenuOpen_Click"/>
                 <Separator/>
-                <MenuItem Header="終了(_X)"/>
+                <MenuItem Header="終了(_X)" Click="GameExit_Click"/>
             </MenuItem>
             <MenuItem Header="オプション(_O)">
                 <MenuItem Header="スピード(_S)">
-                    <MenuItem Header="速い" Tag="25"/>
-                    <MenuItem Header="普通" Tag="50"/>
-                    <MenuItem Header="遅い" Tag="100"/>
+                    <MenuItem Header="速い" Tag="25" Click="Speed_Click"/>
+                    <MenuItem Header="普通" Tag="50" Click="Speed_Click"/>
+                    <MenuItem Header="遅い" Tag="100" Click="Speed_Click"/>
                 </MenuItem>
                 <MenuItem Header="重力(_G)">
-                    <MenuItem Header="無重力" Tag="0"/>
-                    <MenuItem Header="低重力" Tag="1"/>
-                    <MenuItem Header="通常" Tag="2"/>
-                    <MenuItem Header="高重力" Tag="3"/>
+                    <MenuItem Header="無重力" Tag="0" Click="Gravity_Click"/>
+                    <MenuItem Header="低重力" Tag="1" Click="Gravity_Click"/>
+                    <MenuItem Header="通常" Tag="2" Click="Gravity_Click"/>
+                    <MenuItem Header="高重力" Tag="3" Click="Gravity_Click"/>
                 </MenuItem>
-                <MenuItem Header="反操作(_R)"/>
-                <MenuItem Header="音楽の設定(_M)"/>
+                <MenuItem Header="反操作(_R)" Click="MenuReverse_Click"/>
+                <MenuItem Header="音楽の設定(_M)" Click="MenuMusic_Click"/>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
-                <MenuItem Header="ふにゃのヘルプ(_H)"/>
+                <MenuItem Header="ふにゃのヘルプ(_H)" Click="HelpContents_Click"/>
                 <Separator/>
-                <MenuItem Header="バージョン情報(_A)"/>
+                <MenuItem Header="バージョン情報(_A)" Click="MenuAbout_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="Client" Grid.Row="1" ClipToBounds="True" Background="Black" Height="268" Width="347">
@@ -53,7 +59,9 @@
                 <Image x:Name="Food3" Height="32" Width="32" Canvas.Left="64" Canvas.Top="0"/>
                 <Image x:Name="Food4" Height="32" Width="32" Canvas.Left="96" Canvas.Top="0"/>
                 <Image x:Name="Food5" Height="32" Width="32" Canvas.Left="128" Canvas.Top="0"/>
-                <Image x:Name="Mine" Height="32" Width="32" Canvas.Left="0" Canvas.Top="32" Source="/Resources/Stand.png"/>
+                <ContentControl x:Name="Mine" Canvas.Left="0" Canvas.Top="32" MouseDoubleClick="Mine_MouseDoubleClick">
+                    <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png"/>
+                </ContentControl>
             </Canvas>
         </Canvas>
     </Grid>

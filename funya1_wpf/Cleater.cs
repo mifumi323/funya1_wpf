@@ -1,6 +1,6 @@
 ﻿namespace funya1_wpf
 {
-    public class Cleater
+    public class Cleater(FormMain formMain)
     {
         public MapData[] Map = new MapData[31]; // 0 To 30
         public string[,] MapText = new string[31, 40]; // 0 To 30, 0 To 39
@@ -10,12 +10,8 @@
         public int RemainFood;
         public int AnimationCounter;
 
-        public bool Smile;
-        public bool SpeedSet;
-        public bool StageSelect;
-        public bool GravitySet;
-        public bool ZeroGStage;
-        public bool Reverse;
+        public Secrets Secrets = new();
+        public Options Options = new();
 
         public Status Status;
         public GameState GameState;
@@ -38,7 +34,7 @@
         }
 
         public ControlMode ControlMode =>
-            Status == Status.Charge ? ControlMode.Charge:
+            Status == Status.Charge ? ControlMode.Charge :
             Status == Status.JumpingUp || Status == Status.JumpingDown ? ControlMode.InAir :
             ControlMode.Ground;
 
