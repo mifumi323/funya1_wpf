@@ -6,7 +6,7 @@ namespace funya1_wpf
     {
         public string StageFile = "";
 
-        public RangeArray<MapData> Map = new(0, 31, i => new MapData());
+        public RangeArray<MapData> Map = new(0, 30, i => new MapData());
         public string[,] MapText = new string[31, 40]; // 0 To 30, 0 To 39
 
         public int StageCount;
@@ -116,7 +116,23 @@ namespace funya1_wpf
 
         public void SetStage()
         {
-            // TODO: 実装
+            foreach (var map in Map)
+            {
+                var StageNumber = map.Key;
+                var MapValue = map.Value;
+                for (int x = 0; x <= MapValue.Width; x++)
+                {
+                    for (int y = 0; y <= MapValue.Height; y++)
+                    {
+                        int n =
+                            string.IsNullOrEmpty(MapText[StageNumber, y]) ? 0 :
+                            y >= MapText[StageNumber, y].Length ? 0 :
+                            MapText[StageNumber, y][x] == ' ' ? 0 :
+                            MapText[StageNumber, y][x] - '0';
+                        MapValue.Data[x, y] = n;
+                    }
+                }
+            }
         }
 
         public void StartStage(int NextStage)
