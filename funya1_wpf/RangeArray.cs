@@ -2,7 +2,7 @@
 
 namespace funya1_wpf
 {
-    public class RangeArray<T> : IEnumerable<T>
+    public class RangeArray<T> : IEnumerable<KeyValuePair<int, T>>
     {
         private readonly T[] array;
 
@@ -50,7 +50,13 @@ namespace funya1_wpf
             }
         }
 
-        public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)array.GetEnumerator();
+        public IEnumerator<KeyValuePair<int, T>> GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return new KeyValuePair<int, T>(i + MinIndex, array[i]);
+            }
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

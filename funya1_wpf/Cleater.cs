@@ -150,7 +150,16 @@ namespace funya1_wpf
 
         public void ResetStage()
         {
-            // TODO: 実装
+            foreach (var map in Map)
+            {
+                for (int x = 0; x <= 39; x++)
+                {
+                    for (int y = 0; y <= 39; y++)
+                    {
+                        map.Value.Data[x, y] = 0;
+                    }
+                }
+            }
         }
 
         public void SampleStage()
