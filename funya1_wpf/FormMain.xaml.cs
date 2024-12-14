@@ -29,6 +29,8 @@ namespace funya1_wpf
             };
             Timer1.Tick += Timer1_Tick;
             Timer2.Tick += Timer2_Tick;
+
+            cleater.GameStart();
         }
 
         private void MenuStage_Click(object sender, RoutedEventArgs e)
