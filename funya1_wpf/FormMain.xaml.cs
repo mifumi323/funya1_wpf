@@ -35,7 +35,7 @@ namespace funya1_wpf
 
         private void MenuStage_Click(object sender, RoutedEventArgs e)
         {
-            int stage = int.Parse((string)((MenuItem)sender).Tag);
+            int stage = (int)((MenuItem)sender).Tag;
             cleater.GameStart();
             cleater.StartStage(stage);
         }
@@ -145,6 +145,30 @@ namespace funya1_wpf
         private void HelpContents_Click(object sender, RoutedEventArgs e)
         {
             // TODO: 実装
+        }
+
+        public void UpdateMenuStage()
+        {
+            if (cleater.Secrets.StageSelect)
+            {
+                MenuStage.Visibility = Visibility.Visible;
+                MenuStage.Items.Clear();
+                for (int i = 1; i <= cleater.StageCount; i++)
+                {
+                    var map = cleater.Map[i];
+                    MenuItem newItem = new MenuItem()
+                    {
+                        Header = map.Title,
+                        Tag = i,
+                    };
+                    newItem.Click += MenuStage_Click;
+                    MenuStage.Items.Add(newItem);
+                }
+            }
+            else
+            {
+                MenuStage.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

@@ -184,7 +184,8 @@ namespace funya1_wpf
 
         public void SetMenuStage()
         {
-            // TODO: 実装
+            CurrentStage = 1;
+            formMain.UpdateMenuStage();
         }
 
         public void ShowMessage(string MessageText, MessageMode Mode)

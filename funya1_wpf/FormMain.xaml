@@ -21,9 +21,7 @@
         <Menu>
             <MenuItem Header="ゲーム(_G)">
                 <MenuItem Header="スタート(_S)" Click="MenuStart_Click"/>
-                <MenuItem Header="指定ステージからスタート(_E)">
-                    <MenuItem Header="ステージ1" Tag="1" Click="MenuStage_Click"/>
-                </MenuItem>
+                <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)" Visibility="Collapsed"/>
                 <MenuItem Header="ポーズ(_P)" Click="MenuPause_Click"/>
                 <MenuItem Header="自爆(_D)" Click="Death_Click"/>
                 <Separator/>
