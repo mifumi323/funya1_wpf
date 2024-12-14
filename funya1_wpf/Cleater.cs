@@ -6,7 +6,7 @@ namespace funya1_wpf
     {
         public string StageFile = "";
 
-        public MapData[] Map = new MapData[31]; // 0 To 30
+        public RangeArray<MapData> Map = new(0, 31, i => new MapData());
         public string[,] MapText = new string[31, 40]; // 0 To 30, 0 To 39
 
         public int StageCount;
@@ -17,6 +17,8 @@ namespace funya1_wpf
 
         public int Rest;
         public int RestMax;
+        public int Friction;
+        public int EndingType;
 
         public Secrets Secrets = new();
         public Options Options = new();
@@ -153,7 +155,31 @@ namespace funya1_wpf
 
         public void SampleStage()
         {
-            // TODO: 実装
+            StageCount = 1;
+            Map[1].Title = "サンプルステージ";
+            Map[1].Width = 15;
+            Map[1].Height = 8;
+            Map[1].StartX = 4;
+            Map[1].StartY = 6;
+            MapText[1, 0] = "2211111200000000";
+            MapText[1, 1] = "2000000200000000";
+            MapText[1, 2] = "1000111222200002";
+            MapText[1, 3] = "2000000002222001";
+            MapText[1, 4] = "2100000102222001";
+            MapText[1, 5] = "2200000100000001";
+            MapText[1, 6] = "2211000100011111";
+            MapText[1, 7] = "2222111100010000";
+            MapText[1, 8] = "0000000111110000";
+            Map[1].TotalFood = 3;
+            Map[1].Food[1].x = 1;
+            Map[1].Food[1].y = 3;
+            Map[1].Food[2].x = 6;
+            Map[1].Food[2].y = 1;
+            Map[1].Food[3].x = 11;
+            Map[1].Food[3].y = 3;
+            RestMax = 5;
+            Friction = 10;
+            EndingType = 0;
         }
 
         public void SetMenuStage()
