@@ -15,6 +15,8 @@ namespace funya1_wpf
         private DispatcherTimer Timer1;
         private DispatcherTimer Timer2;
 
+        public RangeArray<Image> Foods;
+
         public FormMain()
         {
             InitializeComponent();
@@ -29,6 +31,12 @@ namespace funya1_wpf
             };
             Timer1.Tick += Timer1_Tick;
             Timer2.Tick += Timer2_Tick;
+            Foods = new(1, 5);
+            Foods[1] = Food1;
+            Foods[2] = Food2;
+            Foods[3] = Food3;
+            Foods[4] = Food4;
+            Foods[5] = Food5;
 
             cleater.GameStart();
         }

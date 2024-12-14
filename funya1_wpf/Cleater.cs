@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
@@ -14,6 +16,8 @@ namespace funya1_wpf
         public int RemainFood;
         public int AnimationCounter;
         public Color StageColor = Color.FromRgb(0, 0, 0);
+        public BitmapSource Image = null!;
+        public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
 
         public int Rest;
         public int RestMax;
@@ -25,6 +29,10 @@ namespace funya1_wpf
 
         public Status Status;
         public GameState GameState;
+
+        public int SpeedX = 0;
+        public int SpeedY = 0;
+
 
         public void Ending2()
         {
@@ -57,7 +65,6 @@ namespace funya1_wpf
         public void ResumeGame()
         {
             // TODO: 実装
-            throw new NotImplementedException();
         }
 
         public void Pause()
@@ -111,7 +118,6 @@ namespace funya1_wpf
         public void MoveChara(int NewLeft, int NewTop)
         {
             // TODO: 実装
-            throw new NotImplementedException();
         }
 
         public void SetStage()
@@ -127,7 +133,8 @@ namespace funya1_wpf
                         int n =
                             string.IsNullOrEmpty(MapText[StageNumber, y]) ? 0 :
                             y >= MapText[StageNumber, y].Length ? 0 :
-                            MapText[StageNumber, y][x] == ' ' ? 0 :
+                            MapText[StageNumber, y][x] < '0' ? 0 :
+                            MapText[StageNumber, y][x] > '9' ? 0 :
                             MapText[StageNumber, y][x] - '0';
                         MapValue.Data[x, y] = n;
                     }
@@ -137,7 +144,67 @@ namespace funya1_wpf
 
         public void StartStage(int NextStage)
         {
-            // TODO: 実装
+            if (GameState != GameState.Ending && GameState != GameState.Ending2)
+            {
+                GameState = GameState.Playing;
+            }
+            if (GameState != GameState.Playing)
+            {
+                formMain.Title = $"{Map[NextStage].Title}(残り{Rest})";
+            }
+            DrawTerrain(NextStage);
+            for (int i = 1; i <= 5; i++)
+            {
+                if (i <= Map[NextStage].TotalFood)
+                {
+                    formMain.Foods[i].Visibility = System.Windows.Visibility.Visible;
+                    Canvas.SetLeft(formMain.Foods[i], Map[NextStage].Food[i].x * 32);
+                    Canvas.SetTop(formMain.Foods[i], Map[NextStage].Food[i].y * 32);
+                }
+                else
+                {
+                    formMain.Foods[i].Visibility = System.Windows.Visibility.Collapsed;
+                }
+            }
+            RemainFood = Map[NextStage].TotalFood;
+            CurrentStage = NextStage;
+            // Me(68) = 0
+            SpeedX = 0;
+            SpeedY = 0;
+            //Me(90) = 0
+            //Me(72) = 0
+            Status = Status.Standing;
+            MoveChara((32 * Map[NextStage].StartX) + 2, (32 * Map[NextStage].StartY) - 4);
+            ResumeGame();
+            // PlayMusic(MusicFilePlaying);
+        }
+
+        private void DrawTerrain(int NextStage)
+        {
+            int terrainWidth = 32 * (Map[NextStage].Width + 1);
+            formMain.Stage.Width = terrainWidth;
+            int terrainHeight = 32 * (Map[NextStage].Height + 1);
+            formMain.Stage.Height = terrainHeight;
+
+            var terrainImage = new RenderTargetBitmap(terrainWidth, terrainHeight, 96, 96, PixelFormats.Pbgra32);
+            var dv = new DrawingVisual();
+            using (var dc = dv.RenderOpen())
+            {
+                for (int x = 0; x <= Map[NextStage].Width; x++)
+                {
+                    for (int y = 0; y <= Map[NextStage].Height; y++)
+                    {
+                        CroppedBitmap? imageSource = croppedBitmaps[Map[NextStage].Data[x, y]];
+                        if (imageSource != null)
+                        {
+                            dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
+                        }
+                    }
+                }
+            }
+            terrainImage.Render(dv);
+
+            formMain.Stage.Background = new ImageBrush(terrainImage);
         }
 
         public void LoadFile()
@@ -205,6 +272,16 @@ namespace funya1_wpf
             RestMax = 5;
             Friction = 10;
             EndingType = 0;
+            LoadSampleImage();
+        }
+
+        private void LoadSampleImage()
+        {
+            Image = (formMain.SampleTerrain.Source as BitmapSource)!;
+            for (int i = 0; i < 10; i++)
+            {
+                croppedBitmaps[i] = (i + 1) * 32 <= Image.Width ? new(Image, new(i * 32, 0, 32, 32)) : null;
+            }
         }
 
         public void SetMenuStage()

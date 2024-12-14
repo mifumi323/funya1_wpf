@@ -60,6 +60,7 @@
                 <ContentControl x:Name="Mine" Canvas.Left="0" Canvas.Top="32" MouseDoubleClick="Mine_MouseDoubleClick">
                     <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png"/>
                 </ContentControl>
+                <Image x:Name="SampleTerrain" Height="32" Width="96" Canvas.Left="0" Canvas.Top="64" Source="/Resources/BlockData1.bmp" Visibility="Collapsed"/>
             </Canvas>
         </Canvas>
     </Grid>
