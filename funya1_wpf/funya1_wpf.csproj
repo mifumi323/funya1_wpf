@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
     <None Remove="Resources\Fall.png" />
@@ -44,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\banana.png" />
     <Resource Include="Resources\BlockData1.bmp" />
     <Resource Include="Resources\Death.png" />
     <Resource Include="Resources\Fall.png" />
