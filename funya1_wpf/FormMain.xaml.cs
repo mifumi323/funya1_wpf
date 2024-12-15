@@ -30,6 +30,7 @@ namespace funya1_wpf
                 Interval = TimeSpan.FromMilliseconds(500),
             };
             Timer1.Tick += Timer1_Tick;
+            Timer1.Start();
             Timer2.Tick += Timer2_Tick;
             Foods = new(1, 5);
             Foods[1] = Food1;
@@ -96,7 +97,7 @@ namespace funya1_wpf
 
         private void Timer1_Tick(object? sender, EventArgs e)
         {
-            // TODO: 実装
+            cleater.MainLoop();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

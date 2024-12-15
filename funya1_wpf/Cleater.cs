@@ -16,6 +16,7 @@ namespace funya1_wpf
         public int CurrentStage;
         public int RemainFood;
         public int AnimationCounter;
+        public int MovieCounter;
         public Color StageColor = Color.FromRgb(0, 0, 0);
         public BitmapSource Image = null!;
         public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
@@ -29,6 +30,7 @@ namespace funya1_wpf
         public Options Options = new();
         public Resources Resources = new();
         public Misc Misc = new();
+        public Random Random = new();
 
         public Status Status;
         public GameState GameState;
@@ -43,6 +45,11 @@ namespace funya1_wpf
         private int MainIndexY;
         public int SpeedX = 0;
         public int SpeedY = 0;
+        public int JumpCharge;
+
+        public bool PressedDownKey;
+        public bool PressedUpKey;
+        public HorizontalInput HorizontalInput;
 
         public void Ending2()
         {
@@ -103,25 +110,24 @@ namespace funya1_wpf
         public void CollisionHorizontal()
         {
             // TODO: 実装
-            throw new NotImplementedException();
         }
 
         public bool TouchRight()
         {
             // TODO: 実装
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool TouchLeft()
         {
             // TODO: 実装
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool TouchTop()
         {
             // TODO: 実装
-            throw new NotImplementedException();
+            return false;
         }
 
         public void MoveChara(int NewLeft, int NewTop)
@@ -155,10 +161,12 @@ namespace funya1_wpf
                     if (SpeedX < 0)
                     {
                         formMain.MineImage.Source = Resources.JumpL;
-                    } else if (SpeedX == 0)
+                    }
+                    else if (SpeedX == 0)
                     {
                         formMain.MineImage.Source = Resources.Jump;
-                    }else
+                    }
+                    else
                     {
                         formMain.MineImage.Source = Resources.JumpR;
                     }
@@ -168,10 +176,12 @@ namespace funya1_wpf
                     if (SpeedX < 0)
                     {
                         formMain.MineImage.Source = Resources.FallL;
-                    } else if (SpeedX == 0)
+                    }
+                    else if (SpeedX == 0)
                     {
                         formMain.MineImage.Source = Resources.Fall;
-                    }else
+                    }
+                    else
                     {
                         formMain.MineImage.Source = Resources.FallR;
                     }
@@ -403,6 +413,242 @@ namespace funya1_wpf
         {
             // TODO: 実装
             throw new NotImplementedException();
+        }
+
+        public void MainLoop()
+        {
+            switch (GameState)
+            {
+                case GameState.Playing:
+                case GameState.Ending:
+                case GameState.Ending2:
+                    switch (Status)
+                    {
+                        case Status.Standing:
+                            formMain.MineImage.Source = Random.Next(100) < 2 ? Resources.Wink : (ImageSource)Resources.Stand;
+                            SpeedX = 0;
+                            break;
+                        case Status.Sitting:
+                            SpeedX = 0;
+                            break;
+                        case Status.Charge:
+                            JumpCharge++;
+                            if (JumpCharge < 2)
+                            {
+                                SpeedY = 28;
+                            }
+                            else if (JumpCharge < 10)
+                            {
+                                SpeedY = 22;
+                            }
+                            else if (JumpCharge < 25)
+                            {
+                                SpeedY = 16;
+                            }
+                            else
+                            {
+                                SpeedY = 1;
+                            }
+                            break;
+                        case Status.JumpingUp:
+                            if (SpeedY < 0)
+                            {
+                                Status = Status.JumpingDown;
+                            }
+                            if (TouchTop())
+                            {
+                                Status = Status.JumpingDown;
+                                SpeedY = Options.Gravity;
+                            }
+                            CollisionHorizontal();
+                            MoveChara(MainLeft + SpeedX / 10, MainTop - SpeedY / 2);
+                            SpeedY -= Options.Gravity;
+                            break;
+                        case Status.JumpingDown:
+                            if (PressedDownKey)
+                            {
+                                if (SpeedY < 30)
+                                {
+                                    SpeedY += 2;
+                                }
+                            }
+                            else
+                            {
+                                if (SpeedY < Options.Gravity * 2)
+                                {
+                                    SpeedY += Options.Gravity;
+                                }
+                                if ((SpeedY > Options.Gravity * 2 || Options.Gravity == 0) && PressedUpKey)
+                                {
+                                    SpeedY -= 2;
+                                }
+                                if (Options.Gravity == 0 && SpeedY < -30)
+                                {
+                                    SpeedY = -30;
+                                }
+                            }
+                            switch (HorizontalInput)
+                            {
+                                case HorizontalInput.None:
+                                    break;
+                                case HorizontalInput.Left:
+                                    SpeedX -= 5 * (Options.Reverse ? -1 : 1);
+                                    break;
+                                case HorizontalInput.Right:
+                                    SpeedX += 5 * (Options.Reverse ? -1 : 1);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            SaturateSpeedX(100);
+                            if (TouchTop() && SpeedY < 0)
+                            {
+                                PressedUpKey = false;
+                                SpeedY = 0;
+                            }
+                            if (TouchBottom())
+                            {
+                                SpeedY = 0;
+                                MainTop = MainIndexY * 32 + 2;
+                                if (PressedDownKey)
+                                {
+                                    switch (HorizontalInput)
+                                    {
+                                        case HorizontalInput.None:
+                                            Status = Status.Sitting;
+                                            break;
+                                        case HorizontalInput.Left:
+                                            SpeedX = -20;
+                                            Status = Status.WalkingL;
+                                            break;
+                                        case HorizontalInput.Right:
+                                            SpeedX = 20;
+                                            Status = Status.WalkingR;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    switch (HorizontalInput)
+                                    {
+                                        case HorizontalInput.None:
+                                            Status = Status.Standing;
+                                            break;
+                                        case HorizontalInput.Left:
+                                            Status = Status.RunningL;
+                                            break;
+                                        case HorizontalInput.Right:
+                                            Status = Status.RunningR;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            CollisionHorizontal();
+                            MoveChara(MainLeft + SpeedX / 10, MainTop + SpeedY / 2);
+                            break;
+                        case Status.RunningL:
+                            SpeedX -= Friction * (Options.Reverse ? -1 : 1);
+                            SaturateSpeedX(100);
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.RunningR:
+                            SpeedX += Friction * (Options.Reverse ? -1 : 1);
+                            SaturateSpeedX(100);
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.SlippingL:
+                            SpeedX += Friction;
+                            if (SpeedX >= 0)
+                            {
+                                Status = Status.Standing;
+                            }
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.SlippingR:
+                            SpeedX -= Friction;
+                            if (SpeedX <= 0)
+                            {
+                                Status = Status.Standing;
+                            }
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.WalkingL:
+                            SpeedX -= 5 * (Options.Reverse ? -1 : 1);
+                            SaturateSpeedX(20);
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.WalkingR:
+                            SpeedX += 5 * (Options.Reverse ? -1 : 1);
+                            SaturateSpeedX(20);
+                            CollisionHorizontal();
+                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            break;
+                        case Status.Slepping:
+                            break;
+                        case Status.Smile:
+                            break;
+                        default:
+                            break;
+                    }
+                    if (GameState == GameState.Ending)
+                    {
+                        MovieCounter++;
+                        if (MovieCounter == 50)
+                        {
+                            Status = Status.RunningR;
+                        }
+                        else if (MovieCounter == 60)
+                        {
+                            Status = Status.SlippingR;
+                        }
+                        else if (MovieCounter == 90)
+                        {
+                            Status = Status.JumpingUp;
+                            SpeedY = 16;
+                        }
+                        else if (MovieCounter == 100)
+                        {
+                            formMain.MineImage.Source = Resources.Happy;
+                            Status = Status.Smile;
+                        }
+                        else if (MovieCounter == 110)
+                        {
+                            GameState = GameState.AllClear;
+                            // PlayMusic(MusicFileEnding);
+                            ShowMessage("All Clear!", MessageMode.Clear);
+                        }
+                    }
+                    break;
+                case GameState.Paused:
+                    break;
+                case GameState.Dying:
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SaturateSpeedX(int max)
+        {
+            if (SpeedX < -max)
+            {
+                SpeedX = -max;
+            }
+            if (SpeedX > max)
+            {
+                SpeedX = max;
+            }
         }
     }
 }

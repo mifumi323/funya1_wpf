@@ -4,6 +4,8 @@
     {
         Playing = 0,
         Paused = 1,
+        Clear = 2,
+        AllClear = 100,
         Ending = 200, // 謎の演出用。
         Ending2 = 300, // 謎の演出用。
         Dying = 1000,
