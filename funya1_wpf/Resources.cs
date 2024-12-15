@@ -36,6 +36,19 @@ namespace funya1_wpf
         public BitmapSource WalkR { get; } = LoadBitmapSource("WalkR.png");
         public BitmapSource Wink { get; } = LoadBitmapSource("Wink.png");
 
+        public BitmapSource[] RunL { get; } = new BitmapSource[3];
+        public BitmapSource[] RunR { get; } = new BitmapSource[3];
+
+        public Resources()
+        {
+            RunL[0] = RunLA;
+            RunL[1] = RunLB;
+            RunL[2] = RunLC;
+            RunR[0] = RunRA;
+            RunR[1] = RunRB;
+            RunR[2] = RunRC;
+        }
+
         private static BitmapFrame LoadBitmapSource(string filename)
         {
             var uri = new Uri($"/Resources/{filename}", UriKind.Relative);

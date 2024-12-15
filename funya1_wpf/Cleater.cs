@@ -28,13 +28,21 @@ namespace funya1_wpf
         public Secrets Secrets = new();
         public Options Options = new();
         public Resources Resources = new();
+        public Misc Misc = new();
 
         public Status Status;
         public GameState GameState;
 
+        private int MainLeft;
+        private int MainTop;
+        private int MainCenterX;
+        private int MainCenterY;
+        private int MainRight;
+        private int MainBottom;
+        private int MainIndexX;
+        private int MainIndexY;
         public int SpeedX = 0;
         public int SpeedY = 0;
-
 
         public void Ending2()
         {
@@ -78,13 +86,12 @@ namespace funya1_wpf
         public bool TouchBottom()
         {
             // TODO: 実装
-            throw new NotImplementedException();
+            return false;
         }
 
         public void CheckFood()
         {
             // TODO: 実装
-            throw new NotImplementedException();
         }
 
         public void PlayMusic(string? MusicFile)
@@ -119,7 +126,101 @@ namespace funya1_wpf
 
         public void MoveChara(int NewLeft, int NewTop)
         {
-            // TODO: 実装
+            int OffsetY = 0;
+
+            MainLeft = NewLeft;
+            MainTop = NewTop;
+            MainCenterX = NewLeft + 14;
+            MainCenterY = NewTop + 15;
+            MainRight = NewLeft + 28;
+            MainBottom = NewTop + 32;
+            MainIndexX = MainCenterX / 32;
+            MainIndexY = MainCenterY / 32;
+
+            switch (Status)
+            {
+                case Status.Standing:
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.Stand;
+                    break;
+                case Status.Sitting:
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.Sit;
+                    break;
+                case Status.Charge:
+                    // なんもやらんでええんか？
+                    break;
+                case Status.JumpingUp:
+                    OffsetY = 0;
+                    if (SpeedX < 0)
+                    {
+                        formMain.MineImage.Source = Resources.JumpL;
+                    } else if (SpeedX == 0)
+                    {
+                        formMain.MineImage.Source = Resources.Jump;
+                    }else
+                    {
+                        formMain.MineImage.Source = Resources.JumpR;
+                    }
+                    break;
+                case Status.JumpingDown:
+                    OffsetY = 5;
+                    if (SpeedX < 0)
+                    {
+                        formMain.MineImage.Source = Resources.FallL;
+                    } else if (SpeedX == 0)
+                    {
+                        formMain.MineImage.Source = Resources.Fall;
+                    }else
+                    {
+                        formMain.MineImage.Source = Resources.FallR;
+                    }
+                    break;
+                case Status.RunningL:
+                    Misc.Change12321(ref AnimationCounter, 0, 2);
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.RunL[AnimationCounter];
+                    break;
+                case Status.RunningR:
+                    Misc.Change12321(ref AnimationCounter, 0, 2);
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.RunR[AnimationCounter];
+                    break;
+                case Status.SlippingL:
+                case Status.SlippingR:
+                    OffsetY = 2;
+                    break;
+                case Status.WalkingL:
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.WalkL;
+                    break;
+                case Status.WalkingR:
+                    OffsetY = 2;
+                    formMain.MineImage.Source = Resources.WalkR;
+                    break;
+                case Status.Slepping:
+                    // なんもやらんでええんか？
+                    break;
+                case Status.Smile:
+                    // なんもやらんでええんか？
+                    break;
+                default:
+                    break;
+            }
+            if (!TouchBottom() && Status != Status.JumpingUp)
+            {
+                Status = Status.JumpingDown;
+            }
+
+            Canvas.SetLeft(formMain.Mine, MainLeft - 2);
+            Canvas.SetTop(formMain.Mine, MainBottom - 32 - OffsetY);
+            Canvas.SetLeft(formMain.Stage, (int)((formMain.Client.Width / 2.0) - MainCenterX));
+            Canvas.SetTop(formMain.Stage, (int)((formMain.Client.Height / 2.0) - MainCenterY));
+
+            if (GameState == GameState.Playing)
+            {
+                CheckFood();
+            }
         }
 
         public void SetStage()
