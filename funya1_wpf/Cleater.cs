@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -148,22 +149,22 @@ namespace funya1_wpf
             {
                 GameState = GameState.Playing;
             }
-            if (GameState != GameState.Playing)
+            if (GameState == GameState.Playing)
             {
-                formMain.Title = $"{Map[NextStage].Title}(残り{Rest})";
+                formMain.Title = $"{Map[NextStage].Title}(残り{Rest}) - ふにゃ";
             }
             DrawTerrain(NextStage);
             for (int i = 1; i <= 5; i++)
             {
                 if (i <= Map[NextStage].TotalFood)
                 {
-                    formMain.Foods[i].Visibility = System.Windows.Visibility.Visible;
+                    formMain.Foods[i].Visibility = Visibility.Visible;
                     Canvas.SetLeft(formMain.Foods[i], Map[NextStage].Food[i].x * 32);
                     Canvas.SetTop(formMain.Foods[i], Map[NextStage].Food[i].y * 32);
                 }
                 else
                 {
-                    formMain.Foods[i].Visibility = System.Windows.Visibility.Collapsed;
+                    formMain.Foods[i].Visibility = Visibility.Collapsed;
                 }
             }
             RemainFood = Map[NextStage].TotalFood;
@@ -277,7 +278,9 @@ namespace funya1_wpf
 
         private void LoadSampleImage()
         {
-            Image = (formMain.SampleTerrain.Source as BitmapSource)!;
+            var uri = new Uri("/Resources/BlockData1.bmp", UriKind.Relative);
+            var info = Application.GetResourceStream(uri);
+            Image = BitmapFrame.Create(info.Stream);
             for (int i = 0; i < 10; i++)
             {
                 croppedBitmaps[i] = (i + 1) * 32 <= Image.Width ? new(Image, new(i * 32, 0, 32, 32)) : null;
