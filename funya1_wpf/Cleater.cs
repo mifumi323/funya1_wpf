@@ -27,6 +27,7 @@ namespace funya1_wpf
 
         public Secrets Secrets = new();
         public Options Options = new();
+        public Resources Resources = new();
 
         public Status Status;
         public GameState GameState;
@@ -278,9 +279,7 @@ namespace funya1_wpf
 
         private void LoadSampleImage()
         {
-            var uri = new Uri("/Resources/BlockData1.bmp", UriKind.Relative);
-            var info = Application.GetResourceStream(uri);
-            Image = BitmapFrame.Create(info.Stream);
+            Image = Resources.BlockData1;
             for (int i = 0; i < 10; i++)
             {
                 croppedBitmaps[i] = (i + 1) * 32 <= Image.Width ? new(Image, new(i * 32, 0, 32, 32)) : null;
