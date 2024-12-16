@@ -92,7 +92,13 @@ namespace funya1_wpf
 
         public bool TouchBottom()
         {
-            // TODO: 実装
+            if (Map[CurrentStage].Data[MainIndexX, MainIndexY + 1] == 1)
+            {
+                if (MainBottom > (((MainIndexY + 1) * 32) - 1))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
