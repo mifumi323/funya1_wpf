@@ -118,7 +118,7 @@ namespace funya1_wpf
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            // TODO: 実装
+            cleater.OnKeyDown(e.Key);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -656,5 +658,97 @@ namespace funya1_wpf
                 SpeedX = max;
             }
         }
+
+        public void OnKeyDown(Key key)
+        {
+            if (GameState != GameState.Playing)
+            {
+                return;
+            }
+            if (ControlMode == ControlMode.Ground)
+            {
+                if (IsUpKey(key))
+                {
+                    if (SpeedX < 0)
+                    {
+                        formMain.MineImage.Source = Resources.WalkL;
+                    }
+                    else if (SpeedX == 0)
+                    {
+                        formMain.MineImage.Source = Resources.Sit;
+                    }
+                    else if (SpeedX > 0)
+                    {
+                        formMain.MineImage.Source = Resources.WalkR;
+                    }
+                    JumpCharge = 0;
+                    SpeedY = 28;
+                    Status = Status.Charge;
+                }
+                else if (IsDownKey(key))
+                {
+                    formMain.MineImage.Source = Resources.Sit;
+                    Status = Status.Sitting;
+                }
+                else if (IsLeftKey(key))
+                {
+                    if (Status is Status.Sitting or Status.WalkingL or Status.WalkingR)
+                    {
+                        Status = Status.WalkingL;
+                    }
+                    else
+                    {
+                        Status = Status.RunningL;
+                    }
+                }
+                else if (IsRightKey(key))
+                {
+                    if (Status is Status.Sitting or Status.WalkingL or Status.WalkingR)
+                    {
+                        Status = Status.WalkingR;
+                    }
+                    else
+                    {
+                        Status = Status.RunningR;
+                    }
+                }
+                else if (IsSmileKey(key) && Secrets.Smile)
+                {
+                    formMain.MineImage.Source = Resources.Happy;
+                    Status = Status.Smile;
+                }
+            }
+            else
+            {
+                if (IsLeftKey(key))
+                {
+                    HorizontalInput = HorizontalInput.Left;
+                }
+                else if (IsRightKey(key))
+                {
+                    HorizontalInput = HorizontalInput.Right;
+                }
+                else if (IsUpKey(key))
+                {
+                    PressedUpKey = true;
+                    PressedDownKey = false;
+                }
+                else if (IsDownKey(key))
+                {
+                    PressedDownKey = true;
+                    PressedUpKey = false;
+                }
+            }
+        }
+
+        private static bool IsUpKey(Key key) => key is Key.Space or Key.Up or Key.W;
+
+        private static bool IsDownKey(Key key) => key is Key.Down or Key.S;
+
+        private static bool IsLeftKey(Key key) => key is Key.Left or Key.A;
+
+        private static bool IsRightKey(Key key) => key is Key.Right or Key.D;
+
+        private static bool IsSmileKey(Key key) => key is Key.Enter;
     }
 }
