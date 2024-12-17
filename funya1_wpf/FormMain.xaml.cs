@@ -123,7 +123,7 @@ namespace funya1_wpf
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            // TODO: 実装
+            cleater.OnKeyUp(e.Key);
         }
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)

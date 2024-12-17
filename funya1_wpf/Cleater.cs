@@ -741,6 +741,91 @@ namespace funya1_wpf
             }
         }
 
+        public void OnKeyUp(Key key)
+        {
+            if (GameState != GameState.Playing)
+            {
+                return;
+            }
+            if (ControlMode == ControlMode.Ground)
+            {
+                if (IsDownKey(key))
+                {
+                    Status = Status.Standing;
+                    MoveChara(MainLeft, MainTop);
+                }
+                else if (IsLeftKey(key))
+                {
+                    if (Status == Status.RunningL)
+                    {
+                        if (SpeedX != 0)
+                        {
+                            Status = Status.SlippingL;
+                        }
+                        else
+                        {
+                            Status = Status.Standing;
+                        }
+                    }
+                    else if (Status == Status.WalkingL)
+                    {
+                        formMain.MineImage.Source = Resources.Sit;
+                        Status = Status.Sitting;
+                    }
+                }
+                else if (IsRightKey(key))
+                {
+                    if (Status == Status.RunningR)
+                    {
+                        if (SpeedX != 0)
+                        {
+                            Status = Status.SlippingR;
+                        }
+                        else
+                        {
+                            Status = Status.Standing;
+                        }
+                    }
+                    else if (Status == Status.WalkingR)
+                    {
+                        formMain.MineImage.Source = Resources.Sit;
+                        Status = Status.Sitting;
+                    }
+                }
+                else if (IsSmileKey(key))
+                {
+                    if (Secrets.Smile)
+                    {
+                        formMain.MineImage.Source = Resources.Happy;
+                        Status = Status.Standing;
+                    }
+                }
+            }
+            else
+            {
+                if (Status == Status.Charge)
+                {
+                    if (IsUpKey(key))
+                    {
+                        formMain.MineImage.Source = Resources.Jump;
+                        Status = Status.JumpingUp;
+                    }
+                }
+            }
+            if (IsLeftKey(key) || IsRightKey(key))
+            {
+                HorizontalInput = HorizontalInput.None;
+            }
+            else if (IsUpKey(key))
+            {
+                PressedUpKey = false;
+            }
+            else if (IsDownKey(key))
+            {
+                PressedDownKey = false;
+            }
+        }
+
         private static bool IsUpKey(Key key) => key is Key.Space or Key.Up or Key.W;
 
         private static bool IsDownKey(Key key) => key is Key.Down or Key.S;
