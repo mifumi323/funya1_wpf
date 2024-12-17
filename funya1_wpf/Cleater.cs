@@ -562,13 +562,13 @@ namespace funya1_wpf
                             SpeedX -= Friction * (Options.Reverse ? -1 : 1);
                             SaturateSpeedX(100);
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.RunningR:
                             SpeedX += Friction * (Options.Reverse ? -1 : 1);
                             SaturateSpeedX(100);
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.SlippingL:
                             SpeedX += Friction;
@@ -577,7 +577,7 @@ namespace funya1_wpf
                                 Status = Status.Standing;
                             }
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.SlippingR:
                             SpeedX -= Friction;
@@ -586,19 +586,19 @@ namespace funya1_wpf
                                 Status = Status.Standing;
                             }
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.WalkingL:
                             SpeedX -= 5 * (Options.Reverse ? -1 : 1);
                             SaturateSpeedX(20);
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.WalkingR:
                             SpeedX += 5 * (Options.Reverse ? -1 : 1);
                             SaturateSpeedX(20);
                             CollisionHorizontal();
-                            MoveChara(MainLeft, MainTop + SpeedX / 10);
+                            MoveChara(MainLeft + SpeedX / 10, MainTop);
                             break;
                         case Status.Slepping:
                             break;
