@@ -2,6 +2,7 @@
 {
     public class Secrets
     {
+        public int GetTotal;
         public bool Smile;
         public bool SpeedSet;
         public bool StageSelect;

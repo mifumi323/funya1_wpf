@@ -12,7 +12,9 @@
         StateChanged="Window_StateChanged"
         Closed="Window_Closed"
         KeyDown="Window_KeyDown"
-        KeyUp="Window_KeyUp" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
+        KeyUp="Window_KeyUp"
+        Loaded="Window_Loaded"
+        Unloaded="Window_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -62,5 +64,18 @@
                 </ContentControl>
             </Canvas>
         </Canvas>
+        <Button x:Name="MessageButton" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsDefault="True" IsCancel="True" Grid.Row="1" Width="264" Height="88" Click="MessageButton_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="MessageImage" Width="32" Height="32" Margin="8,0,8,0" Source="/Resources/Stand.png" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="LabelMsg" FontSize="27.75" Grid.Column="1" VerticalAlignment="Center">ふにゃ</TextBlock>
+                <TextBlock x:Name="LabelSub" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,8,8">補足説明</TextBlock>
+            </Grid>
+        </Button>
+        <Button x:Name="CancelButton" Grid.Column="2" Width="20" VerticalAlignment="Center" Background="#FFFF4444" Grid.Row="1" Margin="284,0,0,68" HorizontalAlignment="Center" Height="20" Click="CancelButton_Click">×</Button>
     </Grid>
 </Window>

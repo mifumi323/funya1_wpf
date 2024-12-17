@@ -89,7 +89,6 @@ namespace funya1_wpf
         public void Pause()
         {
             // TODO: 実装
-            throw new NotImplementedException();
         }
 
         public bool TouchBottom()
@@ -445,12 +444,6 @@ namespace funya1_wpf
             formMain.UpdateMenuStage();
         }
 
-        public void ShowMessage(string MessageText, MessageMode Mode)
-        {
-            // TODO: 実装
-            throw new NotImplementedException();
-        }
-
         public void StopMusic()
         {
             // TODO: 実装
@@ -666,7 +659,7 @@ namespace funya1_wpf
                         {
                             GameState = GameState.AllClear;
                             // PlayMusic(MusicFileEnding);
-                            ShowMessage("All Clear!", MessageMode.Clear);
+                            formMain.ShowMessage("All Clear!", MessageMode.Clear);
                         }
                     }
                     break;

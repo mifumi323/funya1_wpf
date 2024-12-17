@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace funya1_wpf
 {
@@ -17,6 +18,10 @@ namespace funya1_wpf
 
         public RangeArray<Image> Foods;
 
+        private int CountDown = 10;
+        private DispatcherTimer? MessageTimer = null;
+        private Queue<Message> MessageQueue = new();
+
         public FormMain()
         {
             InitializeComponent();
@@ -31,6 +36,8 @@ namespace funya1_wpf
             Foods[5] = Food5;
 
             cleater.GameStart();
+            CloseMessage();
+            ShowMessage("ふにゃ", MessageMode.Info, "Enter/クリックで進む");
         }
 
         private void MenuStage_Click(object sender, RoutedEventArgs e)
@@ -104,11 +111,19 @@ namespace funya1_wpf
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (MessageButton.Visibility == Visibility.Visible)
+            {
+                return;
+            }
             cleater.OnKeyDown(e.Key);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
+            if (MessageButton.Visibility == Visibility.Visible)
+            {
+                return;
+            }
             cleater.OnKeyUp(e.Key);
         }
 
@@ -188,6 +203,118 @@ namespace funya1_wpf
             {
                 // TODO: 眠る処理
             }
+        }
+
+        public void ShowMessage(string MessageText, MessageMode Mode, string SubMessage = "")
+        {
+            var message = new Message() { Content = MessageText, Mode = Mode, SubContent = SubMessage };
+            if (MessageButton.Visibility == Visibility.Visible)
+            {
+                MessageQueue.Enqueue(message);
+            }
+            else
+            {
+                MessageButton.Visibility = Visibility.Visible;
+                SetMessage(message);
+            }
+        }
+
+        private void SetMessage(Message message)
+        {
+            LabelMsg.Text = message.Content;
+            LabelSub.Text = message.SubContent;
+            MessageButton.IsCancel = true;
+            CancelButton.IsCancel = false;
+            CancelButton.Visibility = Visibility.Collapsed;
+            switch (message.Mode)
+            {
+                case MessageMode.Info:
+                    MessageImage.Source = cleater.Resources.Stand;
+                    break;
+                case MessageMode.Clear:
+                    MessageImage.Source = cleater.Resources.Happy;
+                    break;
+                case MessageMode.Dying:
+                    MessageImage.Source = cleater.Resources.Death;
+                    break;
+                case MessageMode.GameOver:
+                    MessageImage.Source = cleater.Resources.Death;
+                    LabelMsg.Text = "Continue? 10";
+                    StartContinueTimer();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void StartContinueTimer()
+        {
+            MessageTimer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromSeconds(1),
+            };
+            MessageTimer.Tick += MessageTimer_Tick;
+            MessageTimer.Start();
+            MessageButton.IsCancel = false;
+            CancelButton.IsCancel = true;
+            CancelButton.Visibility = Visibility.Visible;
+        }
+
+        public void EndContinueTimer()
+        {
+            if (MessageTimer == null)
+            {
+                return;
+            }
+            MessageTimer.Stop();
+            MessageTimer = null;
+        }
+
+        private void MessageTimer_Tick(object? sender, EventArgs e)
+        {
+            CountDown--;
+            LabelMsg.Text = $"Continue? {CountDown}";
+            if (CountDown == 0)
+            {
+                MessageButton.Visibility = Visibility.Collapsed;
+                EndContinueTimer();
+            }
+        }
+
+        private void MessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageQueue.TryDequeue(out var message))
+            {
+                SetMessage(message);
+            }
+            else
+            {
+                if (MessageTimer != null)
+                {
+                    cleater.Secrets.GetTotal -= 10;
+                    cleater.StartStage(cleater.CurrentStage);
+                }
+                CloseMessage();
+            }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageQueue.TryDequeue(out var message))
+            {
+                SetMessage(message);
+            }
+            else
+            {
+                CloseMessage();
+            }
+        }
+
+        private void CloseMessage()
+        {
+            MessageButton.Visibility = Visibility.Collapsed;
+            CancelButton.Visibility = Visibility.Collapsed;
+            EndContinueTimer();
         }
     }
 }
