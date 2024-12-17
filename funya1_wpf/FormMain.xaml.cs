@@ -11,7 +11,7 @@ namespace funya1_wpf
     /// </summary>
     public partial class FormMain : Window
     {
-        private Cleater cleater;
+        private readonly Cleater cleater;
 
         readonly ElapsedFrameCounter frameCounter1;
         readonly ElapsedFrameCounter frameCounter2;
@@ -20,7 +20,7 @@ namespace funya1_wpf
 
         private int CountDown = 10;
         private DispatcherTimer? MessageTimer = null;
-        private Queue<Message> MessageQueue = new();
+        private readonly Queue<Message> MessageQueue = new();
 
         public FormMain()
         {
@@ -166,7 +166,7 @@ namespace funya1_wpf
                 for (int i = 1; i <= cleater.StageCount; i++)
                 {
                     var map = cleater.Map[i];
-                    MenuItem newItem = new MenuItem()
+                    var newItem = new MenuItem()
                     {
                         Header = map.Title,
                         Tag = i,
