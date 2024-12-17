@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
+using System.Windows.Media;
 
 namespace funya1_wpf
 {
@@ -12,8 +12,8 @@ namespace funya1_wpf
     {
         private Cleater cleater;
 
-        private DispatcherTimer Timer1;
-        private DispatcherTimer Timer2;
+        readonly ElapsedFrameCounter frameCounter1;
+        readonly ElapsedFrameCounter frameCounter2;
 
         public RangeArray<Image> Foods;
 
@@ -21,17 +21,8 @@ namespace funya1_wpf
         {
             InitializeComponent();
             cleater = new Cleater(this);
-            Timer1 = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromMilliseconds(cleater.Options.Interval),
-            };
-            Timer2 = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromMilliseconds(500),
-            };
-            Timer1.Tick += Timer1_Tick;
-            Timer1.Start();
-            Timer2.Tick += Timer2_Tick;
+            frameCounter1 = new(1000 / cleater.Options.Interval);
+            frameCounter2 = new(2);
             Foods = new(1, 5);
             Foods[1] = Food1;
             Foods[2] = Food2;
@@ -93,11 +84,6 @@ namespace funya1_wpf
         private void MenuMusic_Click(object sender, RoutedEventArgs e)
         {
             // TODO: 実装
-        }
-
-        private void Timer1_Tick(object? sender, EventArgs e)
-        {
-            cleater.MainLoop();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -177,6 +163,30 @@ namespace funya1_wpf
             else
             {
                 MenuStage.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
+        }
+
+        private void CompositionTarget_Rendering(object? sender, EventArgs e)
+        {
+            var frames1 = frameCounter1.GetElapsedFrames(true);
+            if (frames1 > 0)
+            {
+                cleater.MainLoop();
+            }
+            var frames2 = frameCounter2.GetElapsedFrames(true);
+            if (frames2 > 0)
+            {
+                // TODO: 眠る処理
             }
         }
     }
