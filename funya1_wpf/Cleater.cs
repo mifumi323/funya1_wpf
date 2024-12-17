@@ -162,7 +162,13 @@ namespace funya1_wpf
 
         public bool TouchTop()
         {
-            // TODO: 実装
+            if (Map[CurrentStage].Data[MainIndexX, MainIndexY - 1] == 1)
+            {
+                if (MainTop < ((MainIndexY * 32) + 1))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
