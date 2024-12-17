@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu>
+        <Menu x:Name="MainMenu">
             <MenuItem Header="ゲーム(_G)">
                 <MenuItem Header="スタート(_S)" Click="MenuStart_Click"/>
                 <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)" Visibility="Collapsed"/>

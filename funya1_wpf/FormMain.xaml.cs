@@ -215,6 +215,7 @@ namespace funya1_wpf
             else
             {
                 MessageButton.Visibility = Visibility.Visible;
+                MainMenu.IsEnabled = false;
                 SetMessage(message);
             }
         }
@@ -314,6 +315,7 @@ namespace funya1_wpf
         {
             MessageButton.Visibility = Visibility.Collapsed;
             CancelButton.Visibility = Visibility.Collapsed;
+            MainMenu.IsEnabled = true;
             EndContinueTimer();
         }
     }
