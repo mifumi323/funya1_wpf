@@ -117,18 +117,46 @@ namespace funya1_wpf
 
         public void CollisionHorizontal()
         {
-            // TODO: 実装
+            var Touched = false;
+            if (TouchRight() && SpeedX >= 0)
+            {
+                SpeedX = 0;
+                MainLeft = (MainIndexX * 32) + 4;
+                Touched = true;
+            }
+            if (TouchLeft() && SpeedX <= 0)
+            {
+                SpeedX = 0;
+                MainLeft = 32 * MainIndexX;
+                Touched = true;
+            }
+            if (Touched)
+            {
+                MoveChara(MainLeft, MainTop);
+            }
         }
 
         public bool TouchRight()
         {
-            // TODO: 実装
+            if (Map[CurrentStage].Data[MainIndexX + 1, MainIndexY] == 1)
+            {
+                if (MainRight > ((MainIndexX + 1) * 32) - 1)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
         public bool TouchLeft()
         {
-            // TODO: 実装
+            if (Map[CurrentStage].Data[MainIndexX - 1, MainIndexY] == 1)
+            {
+                if (MainLeft < (MainIndexX * 32) + 1)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
