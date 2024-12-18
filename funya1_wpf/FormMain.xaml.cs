@@ -23,9 +23,16 @@ namespace funya1_wpf
         private readonly Queue<Message> MessageQueue = new();
         public Action<bool>? OnMessageClose;
 
+        private Point PreviousMousePosition;
+        private DateTime LastMouseMoved = DateTime.Now;
+        private readonly DispatcherTimer? MouseHideTimer = new() { Interval = TimeSpan.FromSeconds(0.5) };
+
         public FormMain()
         {
             InitializeComponent();
+            MouseHideTimer.Tick += MouseHideTimer_Tick;
+            MouseHideTimer.Start();
+
             cleater = new Cleater(this);
             frameCounter1 = new(1000 / cleater.Options.Interval);
             frameCounter2 = new(2);
@@ -323,6 +330,25 @@ namespace funya1_wpf
             CancelButton.Visibility = Visibility.Collapsed;
             MainMenu.IsEnabled = true;
             EndContinueTimer();
+        }
+
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        {
+            var position = e.GetPosition(this);
+            if (PreviousMousePosition != position)
+            {
+                PreviousMousePosition = position;
+                LastMouseMoved = DateTime.Now;
+                Client.Cursor = Cursors.Arrow;
+            }
+        }
+
+        private void MouseHideTimer_Tick(object? sender, EventArgs e)
+        {
+            if ((DateTime.Now - LastMouseMoved).TotalSeconds > 3)
+            {
+                Client.Cursor = Cursors.None;
+            }
         }
     }
 }

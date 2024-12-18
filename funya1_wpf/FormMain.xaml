@@ -15,7 +15,7 @@
         KeyUp="Window_KeyUp"
         Loaded="Window_Loaded"
         Unloaded="Window_Unloaded">
-    <Grid>
+    <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
