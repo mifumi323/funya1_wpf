@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel.Design.Serialization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -105,7 +106,47 @@ namespace funya1_wpf
 
         public void CheckFood()
         {
-            // TODO: 実装
+            for (int i = 1; i <= Map[CurrentStage].TotalFood; i++)
+            {
+                if (Map[CurrentStage].Food[i].x == MainIndexX && Map[CurrentStage].Food[i].y == MainIndexY)
+                {
+                    if (formMain.Foods[i].Visibility == Visibility.Visible)
+                    {
+                        RemainFood--;
+                        Secrets.GetTotal++;
+                        if (Secrets.GetTotal > 5000)
+                        {
+                            Secrets.GetTotal = 5000;
+                        }
+                        formMain.Foods[i].Visibility = Visibility.Collapsed;
+                        if (RemainFood == 0)
+                        {
+                            formMain.MineImage.Source = Resources.Happy;
+                            GameState = GameState.Clear;
+                            //PlayMusic(MusicFileClear);
+                            formMain.Title = $"{Map[CurrentStage].Title}(ステージクリア) - ふにゃ";
+                            formMain.ShowMessage("Clear!", MessageMode.Clear);
+                            formMain.OnMessageClose = _ =>
+                            {
+                                if (CurrentStage == StageCount)
+                                {
+                                    AllClear();
+                                }
+                                else
+                                {
+                                    StartStage(CurrentStage + 1);
+                                    GameState = GameState.Playing;
+                                }
+                            };
+                        }
+                        return;
+                    }
+                }
+            }
+            if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].Width || MainIndexY == Map[CurrentStage].Height + 2)
+            {
+                Die();
+            }
         }
 
         public void PlayMusic(string? MusicFile)

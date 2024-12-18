@@ -21,6 +21,7 @@ namespace funya1_wpf
         private int CountDown = 10;
         private DispatcherTimer? MessageTimer = null;
         private readonly Queue<Message> MessageQueue = new();
+        public Action<bool>? OnMessageClose;
 
         public FormMain()
         {
@@ -296,6 +297,11 @@ namespace funya1_wpf
                     cleater.StartStage(cleater.CurrentStage);
                 }
                 CloseMessage();
+                if (OnMessageClose != null)
+                {
+                    OnMessageClose.Invoke(true);
+                    OnMessageClose = null;
+                }
             }
         }
 
@@ -308,6 +314,11 @@ namespace funya1_wpf
             else
             {
                 CloseMessage();
+                if (OnMessageClose != null)
+                {
+                    OnMessageClose.Invoke(false);
+                    OnMessageClose = null;
+                }
             }
         }
 
