@@ -61,8 +61,53 @@ namespace funya1_wpf
 
         public void AllClear()
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            formMain.Title = $"{Map[CurrentStage].Title}(オールクリア) - ふにゃ";
+            if (EndingType == 1)
+            {
+                Ending();
+            }
+            else if (EndingType == 2)
+            {
+                Ending2();
+            }
+            else
+            {
+                formMain.MineImage.Source = Resources.Happy;
+                // PlayMusic(MusicFileEnding)
+                formMain.ShowMessage("All Clear!", MessageMode.Clear);
+                GameState = GameState.AllClear;
+            }
+            if (!Secrets.Smile)
+            {
+                Secrets.Smile = true;
+                formMain.ShowMessage("Secret 1", MessageMode.Clear, "秘密機能 1 - Enterキーでわらうよ -");
+            }
+            if (Rest == RestMax && StageFile != "" && !Secrets.SpeedSet)
+            {
+                Secrets.SpeedSet = true;
+                formMain.ShowMessage("Secret 2", MessageMode.Clear, "秘密機能 2 - スピードオプション -");
+            }
+            if (Secrets.GetTotal >= 500 && StageFile != "" && !Secrets.StageSelect)
+            {
+                Secrets.StageSelect = true;
+                formMain.ShowMessage("Secret 3", MessageMode.Clear, "秘密機能 3 - 指定ステージからスタート -");
+            }
+            if (Secrets.GetTotal >= 1000 && StageFile != "" && !Secrets.GravitySet)
+            {
+                Secrets.GravitySet = true;
+                formMain.ShowMessage("Secret 4", MessageMode.Clear, "秘密機能 4 - 重力オプション -");
+            }
+            if (Secrets.GetTotal >= 3000 && !Secrets.ZeroGStage)
+            {
+                Secrets.ZeroGStage = true;
+                formMain.ShowMessage("Secret 5", MessageMode.Clear, "秘密機能 5 - ゼロGステージ -");
+                // TODO: ゼロGステージを出す
+            }
+            if (Secrets.GetTotal >= 5000 && !Secrets.Reverse && Rest == RestMax)
+            {
+                Secrets.Reverse = true;
+                formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - 反操作 -");
+            }
         }
 
         public void Ending()
