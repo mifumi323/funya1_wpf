@@ -216,6 +216,7 @@ namespace funya1_wpf
             else
             {
                 MessageButton.Visibility = Visibility.Visible;
+                CancelButton.Visibility = Visibility.Visible;
                 MainMenu.IsEnabled = false;
                 SetMessage(message);
             }
@@ -225,9 +226,6 @@ namespace funya1_wpf
         {
             LabelMsg.Text = message.Content;
             LabelSub.Text = message.SubContent;
-            MessageButton.IsCancel = true;
-            CancelButton.IsCancel = false;
-            CancelButton.Visibility = Visibility.Collapsed;
             switch (message.Mode)
             {
                 case MessageMode.Info:
@@ -257,9 +255,6 @@ namespace funya1_wpf
             };
             MessageTimer.Tick += MessageTimer_Tick;
             MessageTimer.Start();
-            MessageButton.IsCancel = false;
-            CancelButton.IsCancel = true;
-            CancelButton.Visibility = Visibility.Visible;
         }
 
         public void EndContinueTimer()
