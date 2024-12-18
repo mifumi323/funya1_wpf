@@ -59,6 +59,14 @@ namespace funya1_wpf
             GameState = GameState.Ending2;
         }
 
+        public void ChangeMineImage(ImageSource image)
+        {
+            if (image != formMain.MineImage.Source)
+            {
+                formMain.MineImage.Source = image;
+            }
+        }
+
         public void AllClear()
         {
             formMain.Title = $"{Map[CurrentStage].Title}(オールクリア) - ふにゃ";
@@ -72,7 +80,7 @@ namespace funya1_wpf
             }
             else
             {
-                formMain.MineImage.Source = Resources.Happy;
+                ChangeMineImage(Resources.Happy);
                 // PlayMusic(MusicFileEnding)
                 formMain.ShowMessage("All Clear!", MessageMode.Clear);
                 GameState = GameState.AllClear;
@@ -166,7 +174,7 @@ namespace funya1_wpf
                         formMain.Foods[i].Visibility = Visibility.Collapsed;
                         if (RemainFood == 0)
                         {
-                            formMain.MineImage.Source = Resources.Happy;
+                            ChangeMineImage(Resources.Happy);
                             GameState = GameState.Clear;
                             //PlayMusic(MusicFileClear);
                             formMain.Title = $"{Map[CurrentStage].Title}(ステージクリア) - ふにゃ";
@@ -274,11 +282,11 @@ namespace funya1_wpf
             {
                 case Status.Standing:
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.Stand;
+                    ChangeMineImage(Resources.Stand);
                     break;
                 case Status.Sitting:
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.Sit;
+                    ChangeMineImage(Resources.Sit);
                     break;
                 case Status.Charge:
                     // なんもやらんでええんか？
@@ -287,41 +295,41 @@ namespace funya1_wpf
                     OffsetY = 0;
                     if (SpeedX < 0)
                     {
-                        formMain.MineImage.Source = Resources.JumpL;
+                        ChangeMineImage(Resources.JumpL);
                     }
                     else if (SpeedX == 0)
                     {
-                        formMain.MineImage.Source = Resources.Jump;
+                        ChangeMineImage(Resources.Jump);
                     }
                     else
                     {
-                        formMain.MineImage.Source = Resources.JumpR;
+                        ChangeMineImage(Resources.JumpR);
                     }
                     break;
                 case Status.JumpingDown:
                     OffsetY = 5;
                     if (SpeedX < 0)
                     {
-                        formMain.MineImage.Source = Resources.FallL;
+                        ChangeMineImage(Resources.FallL);
                     }
                     else if (SpeedX == 0)
                     {
-                        formMain.MineImage.Source = Resources.Fall;
+                        ChangeMineImage(Resources.Fall);
                     }
                     else
                     {
-                        formMain.MineImage.Source = Resources.FallR;
+                        ChangeMineImage(Resources.FallR);
                     }
                     break;
                 case Status.RunningL:
                     Misc.Change12321(ref AnimationCounter, 0, 2);
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.RunL[AnimationCounter];
+                    ChangeMineImage(Resources.RunL[AnimationCounter]);
                     break;
                 case Status.RunningR:
                     Misc.Change12321(ref AnimationCounter, 0, 2);
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.RunR[AnimationCounter];
+                    ChangeMineImage(Resources.RunR[AnimationCounter]);
                     break;
                 case Status.SlippingL:
                 case Status.SlippingR:
@@ -329,11 +337,11 @@ namespace funya1_wpf
                     break;
                 case Status.WalkingL:
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.WalkL;
+                    ChangeMineImage(Resources.WalkL);
                     break;
                 case Status.WalkingR:
                     OffsetY = 2;
-                    formMain.MineImage.Source = Resources.WalkR;
+                    ChangeMineImage(Resources.WalkR);
                     break;
                 case Status.Slepping:
                     // なんもやらんでええんか？
@@ -546,7 +554,7 @@ namespace funya1_wpf
                     switch (Status)
                     {
                         case Status.Standing:
-                            formMain.MineImage.Source = Random.Next(100) < 2 ? Resources.Wink : (ImageSource)Resources.Stand;
+                            ChangeMineImage(Random.Next(100) < 2 ? Resources.Wink : (ImageSource)Resources.Stand);
                             SpeedX = 0;
                             break;
                         case Status.Sitting:
@@ -738,7 +746,7 @@ namespace funya1_wpf
                         }
                         else if (MovieCounter == 100)
                         {
-                            formMain.MineImage.Source = Resources.Happy;
+                            ChangeMineImage(Resources.Happy);
                             Status = Status.Smile;
                         }
                         else if (MovieCounter == 110)
@@ -784,15 +792,15 @@ namespace funya1_wpf
                 {
                     if (SpeedX < 0)
                     {
-                        formMain.MineImage.Source = Resources.WalkL;
+                        ChangeMineImage(Resources.WalkL);
                     }
                     else if (SpeedX == 0)
                     {
-                        formMain.MineImage.Source = Resources.Sit;
+                        ChangeMineImage(Resources.Sit);
                     }
                     else if (SpeedX > 0)
                     {
-                        formMain.MineImage.Source = Resources.WalkR;
+                        ChangeMineImage(Resources.WalkR);
                     }
                     JumpCharge = 0;
                     SpeedY = 28;
@@ -800,7 +808,7 @@ namespace funya1_wpf
                 }
                 else if (IsDownKey(key))
                 {
-                    formMain.MineImage.Source = Resources.Sit;
+                    ChangeMineImage(Resources.Sit);
                     Status = Status.Sitting;
                 }
                 else if (IsLeftKey(key))
@@ -827,7 +835,7 @@ namespace funya1_wpf
                 }
                 else if (IsSmileKey(key) && Secrets.Smile)
                 {
-                    formMain.MineImage.Source = Resources.Happy;
+                    ChangeMineImage(Resources.Happy);
                     Status = Status.Smile;
                 }
             }
@@ -882,7 +890,7 @@ namespace funya1_wpf
                     }
                     else if (Status == Status.WalkingL)
                     {
-                        formMain.MineImage.Source = Resources.Sit;
+                        ChangeMineImage(Resources.Sit);
                         Status = Status.Sitting;
                     }
                 }
@@ -901,7 +909,7 @@ namespace funya1_wpf
                     }
                     else if (Status == Status.WalkingR)
                     {
-                        formMain.MineImage.Source = Resources.Sit;
+                        ChangeMineImage(Resources.Sit);
                         Status = Status.Sitting;
                     }
                 }
@@ -909,7 +917,7 @@ namespace funya1_wpf
                 {
                     if (Secrets.Smile)
                     {
-                        formMain.MineImage.Source = Resources.Happy;
+                        ChangeMineImage(Resources.Happy);
                         Status = Status.Standing;
                     }
                 }
@@ -920,7 +928,7 @@ namespace funya1_wpf
                 {
                     if (IsUpKey(key))
                     {
-                        formMain.MineImage.Source = Resources.Jump;
+                        ChangeMineImage(Resources.Jump);
                         Status = Status.JumpingUp;
                     }
                 }
