@@ -131,8 +131,27 @@ namespace funya1_wpf
 
         public void Die()
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            Rest--;
+            ChangeMineImage(Resources.Death);
+            if (Rest == 0)
+            {
+                GameState = GameState.GameOver;
+                //  PlayMusic(MusicFileGameOver);
+                formMain.Title = $"{Map[CurrentStage].Title}(ゲームオーバー) - ふにゃ";
+                formMain.ShowMessage("Game Over!", MessageMode.Dying);
+                if (Secrets.GetTotal >= 10)
+                {
+                    formMain.ShowMessage("Continue?", MessageMode.GameOver);
+                }
+            }
+            else
+            {
+                GameState = GameState.Dying;
+                //  PlayMusic(MusicFileMissing);
+                formMain.Title = $"{Map[CurrentStage].Title}(残り{Rest}) - ふにゃ";
+                formMain.ShowMessage("Miss!", MessageMode.Dying);
+                formMain.OnMessageClose = _ => StartStage(CurrentStage);
+            }
         }
 
         public void ResumeGame()
