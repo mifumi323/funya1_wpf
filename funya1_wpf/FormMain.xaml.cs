@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -137,7 +138,21 @@ namespace funya1_wpf
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: 実装
+            cleater.Pause();
+            var dialog = new OpenFileDialog()
+            {
+                Filter = "ふにゃステージファイル|*.stg",
+                Title = "ふにゃステージファイルを開く",
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                cleater.StageFile = dialog.FileName;
+            }
+            else
+            {
+                cleater.StageFile = "";
+            }
+            cleater.GameStart();
         }
 
         private void Speed_Click(object sender, RoutedEventArgs e)
