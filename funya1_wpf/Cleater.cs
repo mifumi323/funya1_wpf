@@ -168,12 +168,55 @@ namespace funya1_wpf
 
         public void ResumeGame()
         {
-            // TODO: 実装
+            if (GameState == GameState.Paused)
+            {
+                GameState = GameState.Playing;
+                // PlayMusic(MusicFilePlaying);
+            }
         }
 
         public void Pause()
         {
-            // TODO: 実装
+            if (GameState == GameState.Playing)
+            {
+                GameState = GameState.Paused;
+                //StopMusic();
+                if (Status == Status.JumpingUp)
+                {
+                    if (SpeedX < 0)
+                    {
+                        ChangeMineImage(Resources.JumpLG);
+                    }
+                    else if (SpeedX == 0)
+                    {
+                        ChangeMineImage(Resources.JumpG);
+                    }
+                    else
+                    {
+                        ChangeMineImage(Resources.JumpRG);
+                    }
+                }
+                else if (Status == Status.JumpingDown)
+                {
+                    if (SpeedX < 0)
+                    {
+                        ChangeMineImage(Resources.FallLG);
+                    }
+                    else if (SpeedX == 0)
+                    {
+                        ChangeMineImage(Resources.FallG);
+                    }
+                    else
+                    {
+                        ChangeMineImage(Resources.FallRG);
+                    }
+                }
+                else
+                {
+                    Status = Status.Standing;
+                    ChangeMineImage(Resources.funyaG);
+                }
+            }
         }
 
         public bool TouchBottom()
