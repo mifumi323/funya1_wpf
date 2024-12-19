@@ -36,7 +36,7 @@ namespace funya1_wpf
         public Random Random = new();
 
         public Status Status;
-        public GameState GameState;
+        private GameState gameState;
 
         private int MainLeft;
         private int MainTop;
@@ -128,6 +128,18 @@ namespace funya1_wpf
             Status == Status.Charge ? ControlMode.Charge :
             Status == Status.JumpingUp || Status == Status.JumpingDown ? ControlMode.InAir :
             ControlMode.Ground;
+
+        public GameState GameState
+        {
+            get => gameState;
+            set
+            {
+                gameState = value;
+                PressedDownKey = false;
+                PressedUpKey = false;
+                HorizontalInput = HorizontalInput.None;
+            }
+        }
 
         public void Die()
         {
