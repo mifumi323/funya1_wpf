@@ -256,6 +256,7 @@ namespace funya1_wpf
 
         public void StartContinueTimer()
         {
+            CountDown = 10;
             MessageTimer = new DispatcherTimer()
             {
                 Interval = TimeSpan.FromSeconds(1),
@@ -280,7 +281,7 @@ namespace funya1_wpf
             LabelMsg.Text = $"Continue? {CountDown}";
             if (CountDown == 0)
             {
-                MessageButton.Visibility = Visibility.Collapsed;
+                OnCancel();
                 EndContinueTimer();
             }
         }
@@ -296,6 +297,7 @@ namespace funya1_wpf
                 if (MessageTimer != null)
                 {
                     cleater.Secrets.GetTotal -= 10;
+                    cleater.Rest = cleater.RestMax;
                     cleater.StartStage(cleater.CurrentStage);
                 }
                 CloseMessage();
@@ -308,6 +310,11 @@ namespace funya1_wpf
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnCancel();
+        }
+
+        private void OnCancel()
         {
             if (MessageQueue.TryDequeue(out var message))
             {
