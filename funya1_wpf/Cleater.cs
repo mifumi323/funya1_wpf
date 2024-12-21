@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.Design.Serialization;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -474,7 +476,7 @@ namespace funya1_wpf
                     {
                         int n =
                             string.IsNullOrEmpty(MapText[StageNumber, y]) ? 0 :
-                            y >= MapText[StageNumber, y].Length ? 0 :
+                            x >= MapText[StageNumber, y].Length ? 0 :
                             MapText[StageNumber, y][x] < '0' ? 0 :
                             MapText[StageNumber, y][x] > '9' ? 0 :
                             MapText[StageNumber, y][x] - '0';
@@ -552,8 +554,85 @@ namespace funya1_wpf
 
         public void LoadFile()
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var fileText = File.ReadAllText(StageFile, Encoding.GetEncoding(932));
+            var reader = new Vb6TextReader(fileText);
+            if (!reader.TryInputInt(out Friction))
+            {
+                return;
+            }
+            if (!reader.TryInputString(out var MapBank))
+            {
+                return;
+            }
+            var MapBankPath = Path.Combine(Path.GetDirectoryName(StageFile)!, MapBank);
+            using (var stream = File.OpenRead(MapBankPath))
+            {
+                Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                LoadCroppedBitmaps();
+            }
+            if (!reader.TryInputInt(out StageCount))
+            {
+                return;
+            }
+            if (!reader.TryInputInt(out RestMax))
+            {
+                return;
+            }
+            if (!reader.TryInputInt(out int ColorValue))
+            {
+                return;
+            }
+            StageColor = Color.FromRgb((byte)(ColorValue & 0xFF), (byte)((ColorValue >> 8) & 0xFF), (byte)((ColorValue >> 16) & 0xFF));
+            for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
+            {
+                if (!reader.TryInputString(out Map[StageNumber].Title))
+                {
+                    return;
+                }
+                if (!reader.TryInputInt(out Map[StageNumber].Width))
+                {
+                    return;
+                }
+                if (!reader.TryInputInt(out Map[StageNumber].Height))
+                {
+                    return;
+                }
+                if (!reader.TryInputInt(out Map[StageNumber].StartX))
+                {
+                    return;
+                }
+                if (!reader.TryInputInt(out Map[StageNumber].StartY))
+                {
+                    return;
+                }
+                if (!reader.TryInputInt(out Map[StageNumber].TotalFood))
+                {
+                    return;
+                }
+                for (int i = 1; i <= Map[StageNumber].TotalFood; i++)
+                {
+                    if (!reader.TryInputInt(out Map[StageNumber].Food[i].x))
+                    {
+                        return;
+                    }
+                    if (!reader.TryInputInt(out Map[StageNumber].Food[i].y))
+                    {
+                        return;
+                    }
+                }
+                for (int y = 0; y <= Map[StageNumber].Height; y++)
+                {
+                    if (!reader.TryInputString(out MapText[StageNumber, y]))
+                    {
+                        return;
+                    }
+                }
+            }
+            if (!reader.TryInputInt(out EndingType))
+            {
+                return;
+            }
         }
 
         public void GameStart()
@@ -621,6 +700,11 @@ namespace funya1_wpf
         private void LoadSampleImage()
         {
             Image = Resources.BlockData1;
+            LoadCroppedBitmaps();
+        }
+
+        private void LoadCroppedBitmaps()
+        {
             for (int i = 0; i < 10; i++)
             {
                 croppedBitmaps[i] = (i + 1) * 32 <= Image.Width ? new(Image, new(i * 32, 0, 32, 32)) : null;
