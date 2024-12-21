@@ -486,6 +486,7 @@ namespace funya1_wpf
 
         public void StartStage(int NextStage)
         {
+            formMain.CloseMessage();
             if (GameState != GameState.Ending && GameState != GameState.Ending2)
             {
                 GameState = GameState.Playing;
