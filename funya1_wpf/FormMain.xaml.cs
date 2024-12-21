@@ -372,5 +372,28 @@ namespace funya1_wpf
                 Client.Cursor = Cursors.None;
             }
         }
+
+        private void FixedScreen_Click(object sender, RoutedEventArgs e)
+        {
+            FixedScreen.IsChecked = true;
+            SizableScreen.IsChecked = false;
+            WindowState = WindowState.Normal;
+            ResizeMode = ResizeMode.CanMinimize;
+            SizeToContent = SizeToContent.WidthAndHeight;
+            Screen.Width = Client.Width;
+            Screen.Height = Client.Height;
+            ScreenRow.Height = new GridLength(1, GridUnitType.Auto);
+        }
+
+        private void SizableScreen_Click(object sender, RoutedEventArgs e)
+        {
+            FixedScreen.IsChecked = false;
+            SizableScreen.IsChecked = true;
+            ResizeMode = ResizeMode.CanResize;
+            SizeToContent = SizeToContent.Manual;
+            Screen.Width = double.NaN;
+            Screen.Height = double.NaN;
+            ScreenRow.Height = new GridLength(1, GridUnitType.Star);
+        }
     }
 }

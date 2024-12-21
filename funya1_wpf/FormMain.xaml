@@ -9,6 +9,7 @@
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
         Icon="/Resources/Stand.ICO"
+        Background="Gray"
         StateChanged="Window_StateChanged"
         Closed="Window_Closed"
         KeyDown="Window_KeyDown"
@@ -18,7 +19,7 @@
     <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition x:Name="ScreenRow" Height="Auto"/>
         </Grid.RowDefinitions>
         <Menu x:Name="MainMenu">
             <MenuItem Header="ゲーム(_G)">
@@ -32,6 +33,10 @@
                 <MenuItem Header="終了(_X)" Click="GameExit_Click"/>
             </MenuItem>
             <MenuItem Header="オプション(_O)">
+                <MenuItem Header="画面サイズ(_Z)">
+                    <MenuItem x:Name="FixedScreen" Header="固定(_F)" Click="FixedScreen_Click"/>
+                    <MenuItem x:Name="SizableScreen"  Header="可変(_S)" Click="SizableScreen_Click"/>
+                </MenuItem>
                 <MenuItem Header="スピード(_S)">
                     <MenuItem Header="速い" Tag="25" Click="Speed_Click"/>
                     <MenuItem Header="普通" Tag="50" Click="Speed_Click"/>
@@ -52,30 +57,34 @@
                 <MenuItem Header="バージョン情報(_A)" Click="MenuAbout_Click"/>
             </MenuItem>
         </Menu>
-        <Canvas x:Name="Client" Grid.Row="1" ClipToBounds="True" Height="268" Width="347">
-            <Canvas x:Name="Stage" Height="153" Width="193" Canvas.Left="10" Canvas.Top="10" ClipToBounds="True">
-                <Image x:Name="Food1" Height="32" Width="32" Canvas.Left="0" Canvas.Top="0" Source="/Resources/banana.png"/>
-                <Image x:Name="Food2" Height="32" Width="32" Canvas.Left="32" Canvas.Top="0" Source="/Resources/banana.png"/>
-                <Image x:Name="Food3" Height="32" Width="32" Canvas.Left="64" Canvas.Top="0" Source="/Resources/banana.png"/>
-                <Image x:Name="Food4" Height="32" Width="32" Canvas.Left="96" Canvas.Top="0" Source="/Resources/banana.png"/>
-                <Image x:Name="Food5" Height="32" Width="32" Canvas.Left="128" Canvas.Top="0" Source="/Resources/banana.png"/>
-                <ContentControl x:Name="Mine" Canvas.Left="0" Canvas.Top="32" MouseDoubleClick="Mine_MouseDoubleClick">
-                    <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png"/>
-                </ContentControl>
-            </Canvas>
-        </Canvas>
-        <Button x:Name="MessageButton" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsDefault="True" Grid.Row="1" Width="264" Height="88" Click="MessageButton_Click" Background="#E5DDDDDD">
+        <Viewbox x:Name="Screen" Grid.Row="1" Height="268" Width="347">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Image x:Name="MessageImage" Width="32" Height="32" Margin="8,0,8,0" Source="/Resources/Stand.png" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="LabelMsg" FontSize="27.75" Grid.Column="1" VerticalAlignment="Center">ふにゃ</TextBlock>
-                <TextBlock x:Name="LabelSub" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,8,8">補足説明</TextBlock>
+                <Canvas x:Name="Client" ClipToBounds="True" Height="268" Width="347" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas x:Name="Stage" Height="153" Width="193" Canvas.Left="10" Canvas.Top="10" ClipToBounds="True">
+                        <Image x:Name="Food1" Height="32" Width="32" Canvas.Left="0" Canvas.Top="0" Source="/Resources/banana.png"/>
+                        <Image x:Name="Food2" Height="32" Width="32" Canvas.Left="32" Canvas.Top="0" Source="/Resources/banana.png"/>
+                        <Image x:Name="Food3" Height="32" Width="32" Canvas.Left="64" Canvas.Top="0" Source="/Resources/banana.png"/>
+                        <Image x:Name="Food4" Height="32" Width="32" Canvas.Left="96" Canvas.Top="0" Source="/Resources/banana.png"/>
+                        <Image x:Name="Food5" Height="32" Width="32" Canvas.Left="128" Canvas.Top="0" Source="/Resources/banana.png"/>
+                        <ContentControl x:Name="Mine" Canvas.Left="0" Canvas.Top="32" MouseDoubleClick="Mine_MouseDoubleClick">
+                            <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png"/>
+                        </ContentControl>
+                    </Canvas>
+                </Canvas>
+                <Button x:Name="MessageButton" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsDefault="True" Width="264" Height="88" Click="MessageButton_Click" Background="#E5DDDDDD">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="MessageImage" Width="32" Height="32" Margin="8,0,8,0" Source="/Resources/Stand.png" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="LabelMsg" FontSize="27.75" Grid.Column="1" VerticalAlignment="Center">ふにゃ</TextBlock>
+                        <TextBlock x:Name="LabelSub" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,8,8">補足説明</TextBlock>
+                    </Grid>
+                </Button>
+                <Button x:Name="CancelButton" Grid.Column="2" Width="20" VerticalAlignment="Center" IsCancel="True" Background="#FFFF4444" Margin="284,0,0,68" HorizontalAlignment="Center" Height="20" Click="CancelButton_Click">×</Button>
             </Grid>
-        </Button>
-        <Button x:Name="CancelButton" Grid.Column="2" Width="20" VerticalAlignment="Center" IsCancel="True" Background="#FFFF4444" Grid.Row="1" Margin="284,0,0,68" HorizontalAlignment="Center" Height="20" Click="CancelButton_Click">×</Button>
+        </Viewbox>
     </Grid>
 </Window>
