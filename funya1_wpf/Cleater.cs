@@ -12,7 +12,7 @@ namespace funya1_wpf
     {
         public string StageFile = "";
 
-        public RangeArray<MapData> Map = new(0, 30, i => new MapData());
+        public RangeArray<MapData> Map = new(0, 30, i => new MapData()); // 1~30: 通常マップ、0: 演出用マップ
         public string[,] MapText = new string[31, 40]; // 0 To 30, 0 To 39
 
         public int StageCount;
@@ -73,6 +73,7 @@ namespace funya1_wpf
             if (EndingType == 1)
             {
                 Ending();
+                return;
             }
             else if (EndingType == 2)
             {
@@ -120,8 +121,27 @@ namespace funya1_wpf
 
         public void Ending()
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            Map[0].Width = 13;
+            Map[0].Height = 9;
+            for (var r = 0; r <= 3; r++)
+            {
+                MapText[0, r] = "55555555555555";
+            }
+            MapText[0, 4] = "11111111555555";
+            MapText[0, 5] = "00000000555555";
+            MapText[0, 6] = "11111111111111";
+            for (var r = 7; r <= 9; r++)
+            {
+                MapText[0, r] = "55555555555555";
+            }
+            SetStage();
+            Map[0].StartX = 5;
+            Map[0].StartY = 5;
+            Map[0].TotalFood = 1;
+            Map[0].Food[1].x = 255;
+            GameState = GameState.Ending;
+            StartStage(0);
+            //StopMusic()
         }
 
         public ControlMode ControlMode =>
@@ -825,9 +845,8 @@ namespace funya1_wpf
                         }
                         else if (MovieCounter == 110)
                         {
-                            GameState = GameState.AllClear;
-                            // PlayMusic(MusicFileEnding);
-                            formMain.ShowMessage("All Clear!", MessageMode.Clear);
+                            EndingType = 0;
+                            AllClear();
                         }
                     }
                     break;
