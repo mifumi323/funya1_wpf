@@ -707,7 +707,7 @@ namespace funya1_wpf
         {
             for (int i = 0; i < 10; i++)
             {
-                croppedBitmaps[i] = (i + 1) * 32 <= Image.Width ? new(Image, new(i * 32, 0, 32, 32)) : null;
+                croppedBitmaps[i] = (i + 1) * 32 <= Image.PixelWidth ? new(Image, new(i * 32, 0, 32, 32)) : null;
             }
         }
 
