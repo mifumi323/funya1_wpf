@@ -26,7 +26,7 @@
         <Label Content="プレイ中の音楽" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center"/>
         <CheckBox Content="ループ" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Playing}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
         <TextBox Grid.Row="1" Grid.Column="0" Margin="2" DataContext="{Binding Playing}" Text="{Binding FilePath, Mode=TwoWay}"/>
-        <Button Content="参照" Grid.Row="1" Grid.Column="1" Margin="2"/>
+        <Button Content="参照" Grid.Row="1" Grid.Column="1" Margin="2" DataContext="{Binding Playing}" Tag="{Binding FilePath, Mode=TwoWay}" Click="OpenButton_Click"/>
 
         <CheckBox Content="音楽を鳴らす" Grid.Row="0" Grid.Column="2" VerticalContentAlignment="Center" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
         <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
@@ -41,21 +41,21 @@
         <Label Content="クリアしたときの音楽" Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center"/>
         <CheckBox Content="ループ" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Clear}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
         <TextBox Grid.Row="3" Grid.Column="0" Margin="2" DataContext="{Binding Clear}" Text="{Binding FilePath, Mode=TwoWay}"/>
-        <Button Content="参照" Grid.Row="3" Grid.Column="1" Margin="2"/>
+        <Button Content="参照" Grid.Row="3" Grid.Column="1" Margin="2" DataContext="{Binding Clear}" Tag="{Binding FilePath, Mode=TwoWay}" Click="OpenButton_Click"/>
 
         <Label Content="オールクリアの音楽" Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center"/>
         <CheckBox Content="ループ" Grid.Row="2" Grid.Column="3" VerticalContentAlignment="Center" DataContext="{Binding Ending}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
         <TextBox Grid.Row="3" Grid.Column="2" Margin="2" DataContext="{Binding Ending}" Text="{Binding FilePath, Mode=TwoWay}"/>
-        <Button Content="参照" Grid.Row="3" Grid.Column="3" Margin="2"/>
+        <Button Content="参照" Grid.Row="3" Grid.Column="3" Margin="2" DataContext="{Binding Ending}" Tag="{Binding FilePath, Mode=TwoWay}" Click="OpenButton_Click"/>
 
         <Label Content="ミスしたときの音楽" Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center"/>
         <CheckBox Content="ループ" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Missing}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
         <TextBox Grid.Row="5" Grid.Column="0" Margin="2" DataContext="{Binding Missing}" Text="{Binding FilePath, Mode=TwoWay}"/>
-        <Button Content="参照" Grid.Row="5" Grid.Column="1" Margin="2"/>
+        <Button Content="参照" Grid.Row="5" Grid.Column="1" Margin="2" DataContext="{Binding Missing}" Tag="{Binding FilePath, Mode=TwoWay}" Click="OpenButton_Click"/>
 
         <Label Content="オールクリアの音楽" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center"/>
         <CheckBox Content="ループ" Grid.Row="4" Grid.Column="3" VerticalContentAlignment="Center" DataContext="{Binding GameOver}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
         <TextBox Grid.Row="5" Grid.Column="2" Margin="2" DataContext="{Binding GameOver}" Text="{Binding FilePath, Mode=TwoWay}"/>
-        <Button Content="参照" Grid.Row="5" Grid.Column="3" Margin="2"/>
+        <Button Content="参照" Grid.Row="5" Grid.Column="3" Margin="2" DataContext="{Binding GameOver}" Tag="{Binding FilePath, Mode=TwoWay}" Click="OpenButton_Click"/>
     </Grid>
 </Window>
