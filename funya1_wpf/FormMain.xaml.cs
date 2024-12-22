@@ -99,7 +99,18 @@ namespace funya1_wpf
 
         private void MenuMusic_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: 実装
+            cleater.Pause();
+            var editing = cleater.MusicOptions.Clone();
+            var formMusic = new FormMusic
+            {
+                Owner = this,
+                DataContext = editing,
+            };
+            var result = formMusic.ShowDialog();
+            if (result == true)
+            {
+                cleater.MusicOptions = editing;
+            }
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

@@ -1,0 +1,61 @@
+﻿<Window x:Class="funya1_wpf.FormMusic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:funya1_wpf"
+        mc:Ignorable="d"
+        Title="音楽の設定" Height="153" Width="457" SizeToContent="Height" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="プレイ中の音楽" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Center"/>
+        <CheckBox Content="ループ" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Playing}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="2" DataContext="{Binding Playing}" Text="{Binding FilePath, Mode=TwoWay}"/>
+        <Button Content="参照" Grid.Row="1" Grid.Column="1" Margin="2"/>
+
+        <CheckBox Content="音楽を鳴らす" Grid.Row="0" Grid.Column="2" VerticalContentAlignment="Center" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
+        <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="OK" Grid.Column="0" Margin="2" IsDefault="True" Click="OkButton_Click"/>
+            <Button Content="キャンセル" Grid.Column="1" Margin="2" IsCancel="True"/>
+        </Grid>
+
+        <Label Content="クリアしたときの音楽" Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center"/>
+        <CheckBox Content="ループ" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Clear}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
+        <TextBox Grid.Row="3" Grid.Column="0" Margin="2" DataContext="{Binding Clear}" Text="{Binding FilePath, Mode=TwoWay}"/>
+        <Button Content="参照" Grid.Row="3" Grid.Column="1" Margin="2"/>
+
+        <Label Content="オールクリアの音楽" Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center"/>
+        <CheckBox Content="ループ" Grid.Row="2" Grid.Column="3" VerticalContentAlignment="Center" DataContext="{Binding Ending}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Margin="2" DataContext="{Binding Ending}" Text="{Binding FilePath, Mode=TwoWay}"/>
+        <Button Content="参照" Grid.Row="3" Grid.Column="3" Margin="2"/>
+
+        <Label Content="ミスしたときの音楽" Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center"/>
+        <CheckBox Content="ループ" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" DataContext="{Binding Missing}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
+        <TextBox Grid.Row="5" Grid.Column="0" Margin="2" DataContext="{Binding Missing}" Text="{Binding FilePath, Mode=TwoWay}"/>
+        <Button Content="参照" Grid.Row="5" Grid.Column="1" Margin="2"/>
+
+        <Label Content="オールクリアの音楽" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center"/>
+        <CheckBox Content="ループ" Grid.Row="4" Grid.Column="3" VerticalContentAlignment="Center" DataContext="{Binding GameOver}" IsChecked="{Binding IsLoop, Mode=TwoWay}"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Margin="2" DataContext="{Binding GameOver}" Text="{Binding FilePath, Mode=TwoWay}"/>
+        <Button Content="参照" Grid.Row="5" Grid.Column="3" Margin="2"/>
+    </Grid>
+</Window>

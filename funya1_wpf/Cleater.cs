@@ -33,6 +33,7 @@ namespace funya1_wpf
 
         public Results Results = new();
         public Options Options = new();
+        public MusicOptions MusicOptions = new();
         public Resources Resources = new();
         public Misc Misc = new();
         public Random Random = new();
