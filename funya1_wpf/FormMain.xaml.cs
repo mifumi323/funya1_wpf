@@ -182,7 +182,7 @@ namespace funya1_wpf
 
         public void UpdateMenuStage()
         {
-            if (cleater.Secrets.StageSelect)
+            if (cleater.Results.StageSelect)
             {
                 MenuStage.Visibility = Visibility.Visible;
                 MenuStage.Items.Clear();
@@ -310,7 +310,7 @@ namespace funya1_wpf
             {
                 if (MessageTimer != null)
                 {
-                    cleater.Secrets.GetTotal -= 10;
+                    cleater.Results.GetTotal -= 10;
                     cleater.Rest = cleater.RestMax;
                     cleater.StartStage(cleater.CurrentStage);
                 }

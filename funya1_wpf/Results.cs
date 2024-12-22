@@ -1,6 +1,6 @@
 ﻿namespace funya1_wpf
 {
-    public class Secrets
+    public class Results
     {
         public int GetTotal;
         public bool Smile;

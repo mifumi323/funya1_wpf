@@ -31,7 +31,7 @@ namespace funya1_wpf
         public int Friction;
         public int EndingType;
 
-        public Secrets Secrets = new();
+        public Results Results = new();
         public Options Options = new();
         public Resources Resources = new();
         public Misc Misc = new();
@@ -88,35 +88,35 @@ namespace funya1_wpf
                 formMain.ShowMessage("All Clear!", MessageMode.Clear);
                 GameState = GameState.AllClear;
             }
-            if (!Secrets.Smile)
+            if (!Results.Smile)
             {
-                Secrets.Smile = true;
+                Results.Smile = true;
                 formMain.ShowMessage("Secret 1", MessageMode.Clear, "秘密機能 1 - Enterキーでわらうよ -");
             }
-            if (Rest == RestMax && StageFile != "" && !Secrets.SpeedSet)
+            if (Rest == RestMax && StageFile != "" && !Results.SpeedSet)
             {
-                Secrets.SpeedSet = true;
+                Results.SpeedSet = true;
                 formMain.ShowMessage("Secret 2", MessageMode.Clear, "秘密機能 2 - スピードオプション -");
             }
-            if (Secrets.GetTotal >= 500 && StageFile != "" && !Secrets.StageSelect)
+            if (Results.GetTotal >= 500 && StageFile != "" && !Results.StageSelect)
             {
-                Secrets.StageSelect = true;
+                Results.StageSelect = true;
                 formMain.ShowMessage("Secret 3", MessageMode.Clear, "秘密機能 3 - 指定ステージからスタート -");
             }
-            if (Secrets.GetTotal >= 1000 && StageFile != "" && !Secrets.GravitySet)
+            if (Results.GetTotal >= 1000 && StageFile != "" && !Results.GravitySet)
             {
-                Secrets.GravitySet = true;
+                Results.GravitySet = true;
                 formMain.ShowMessage("Secret 4", MessageMode.Clear, "秘密機能 4 - 重力オプション -");
             }
-            if (Secrets.GetTotal >= 3000 && !Secrets.ZeroGStage)
+            if (Results.GetTotal >= 3000 && !Results.ZeroGStage)
             {
-                Secrets.ZeroGStage = true;
+                Results.ZeroGStage = true;
                 formMain.ShowMessage("Secret 5", MessageMode.Clear, "秘密機能 5 - ゼロGステージ -");
                 // TODO: ゼロGステージを出す
             }
-            if (Secrets.GetTotal >= 5000 && !Secrets.Reverse && Rest == RestMax)
+            if (Results.GetTotal >= 5000 && !Results.Reverse && Rest == RestMax)
             {
-                Secrets.Reverse = true;
+                Results.Reverse = true;
                 formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - 反操作 -");
             }
         }
@@ -173,7 +173,7 @@ namespace funya1_wpf
                 //  PlayMusic(MusicFileGameOver);
                 formMain.Title = $"{Map[CurrentStage].Title}(ゲームオーバー) - ふにゃ";
                 formMain.ShowMessage("Game Over!", MessageMode.Dying);
-                if (Secrets.GetTotal >= 10)
+                if (Results.GetTotal >= 10)
                 {
                     formMain.ShowMessage("Continue?", MessageMode.GameOver);
                 }
@@ -262,10 +262,10 @@ namespace funya1_wpf
                     if (formMain.Foods[i].Visibility == Visibility.Visible)
                     {
                         RemainFood--;
-                        Secrets.GetTotal++;
-                        if (Secrets.GetTotal > 5000)
+                        Results.GetTotal++;
+                        if (Results.GetTotal > 5000)
                         {
-                            Secrets.GetTotal = 5000;
+                            Results.GetTotal = 5000;
                         }
                         formMain.Foods[i].Visibility = Visibility.Collapsed;
                         if (RemainFood == 0)
@@ -1011,7 +1011,7 @@ namespace funya1_wpf
                         Status = Status.RunningR;
                     }
                 }
-                else if (IsSmileKey(key) && Secrets.Smile)
+                else if (IsSmileKey(key) && Results.Smile)
                 {
                     ChangeMineImage(Resources.Happy);
                     Status = Status.Smile;
@@ -1093,7 +1093,7 @@ namespace funya1_wpf
                 }
                 else if (IsSmileKey(key))
                 {
-                    if (Secrets.Smile)
+                    if (Results.Smile)
                     {
                         ChangeMineImage(Resources.Happy);
                         Status = Status.Standing;
