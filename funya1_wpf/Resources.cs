@@ -14,7 +14,9 @@ namespace funya1_wpf
         public BitmapSource FallLG { get; } = LoadBitmapSource("FallLG.png");
         public BitmapSource FallR { get; } = LoadBitmapSource("FallR.png");
         public BitmapSource FallRG { get; } = LoadBitmapSource("FallRG.png");
+#pragma warning disable IDE1006 // 命名スタイル
         public BitmapSource funyaG { get; } = LoadBitmapSource("funyaG.png");
+#pragma warning restore IDE1006 // 命名スタイル
         public BitmapSource Happy { get; } = LoadBitmapSource("Happy.png");
         public BitmapSource Jump { get; } = LoadBitmapSource("Jump.png");
         public BitmapSource JumpG { get; } = LoadBitmapSource("JumpG.png");

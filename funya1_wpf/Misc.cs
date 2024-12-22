@@ -4,7 +4,7 @@
     {
         private int C = 0;
 
-        public void Change123(ref int x, int Min, int Max)
+        public static void Change123(ref int x, int Min, int Max)
         {
             x++;
             if (x > Max) x = Min;
