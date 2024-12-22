@@ -37,6 +37,7 @@ namespace funya1_wpf
         public Resources Resources = new();
         public Misc Misc = new();
         public Random Random = new();
+        public MediaPlayer MediaPlayer = new();
 
         public Status Status;
         private GameState gameState;
@@ -85,7 +86,7 @@ namespace funya1_wpf
             else
             {
                 ChangeMineImage(Resources.Happy);
-                // PlayMusic(MusicFileEnding)
+                PlayMusic(MusicOptions.Ending);
                 formMain.ShowMessage("All Clear!", MessageMode.Clear);
                 GameState = GameState.AllClear;
             }
@@ -144,7 +145,7 @@ namespace funya1_wpf
             Map[0].Food[1].x = 255;
             GameState = GameState.Ending;
             StartStage(0);
-            //StopMusic()
+            StopMusic();
         }
 
         public ControlMode ControlMode =>
@@ -171,7 +172,7 @@ namespace funya1_wpf
             if (Rest == 0)
             {
                 GameState = GameState.GameOver;
-                //  PlayMusic(MusicFileGameOver);
+                PlayMusic(MusicOptions.GameOver);
                 formMain.Title = $"{Map[CurrentStage].Title}(ゲームオーバー) - ふにゃ";
                 formMain.ShowMessage("Game Over!", MessageMode.Dying);
                 if (Results.GetTotal >= 10)
@@ -182,7 +183,7 @@ namespace funya1_wpf
             else
             {
                 GameState = GameState.Dying;
-                //  PlayMusic(MusicFileMissing);
+                PlayMusic(MusicOptions.Missing);
                 formMain.Title = $"{Map[CurrentStage].Title}(残り{Rest}) - ふにゃ";
                 formMain.ShowMessage("Miss!", MessageMode.Dying);
                 formMain.OnMessageClose = _ => StartStage(CurrentStage);
@@ -194,7 +195,7 @@ namespace funya1_wpf
             if (GameState == GameState.Paused)
             {
                 GameState = GameState.Playing;
-                // PlayMusic(MusicFilePlaying);
+                PlayMusic(MusicOptions.Playing);
             }
         }
 
@@ -203,7 +204,7 @@ namespace funya1_wpf
             if (GameState == GameState.Playing)
             {
                 GameState = GameState.Paused;
-                //StopMusic();
+                StopMusic();
                 if (Status == Status.JumpingUp)
                 {
                     if (SpeedX < 0)
@@ -273,7 +274,7 @@ namespace funya1_wpf
                         {
                             ChangeMineImage(Resources.Happy);
                             GameState = GameState.Clear;
-                            //PlayMusic(MusicFileClear);
+                            PlayMusic(MusicOptions.Clear);
                             formMain.Title = $"{Map[CurrentStage].Title}(ステージクリア) - ふにゃ";
                             formMain.ShowMessage("Clear!", MessageMode.Clear);
                             formMain.OnMessageClose = _ =>
@@ -299,10 +300,15 @@ namespace funya1_wpf
             }
         }
 
-        public void PlayMusic(string? MusicFile)
+        public void PlayMusic(MusicInfo music)
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            StopMusic();
+            if (!MusicOptions.IsEnabled || music.FilePath == "" || !File.Exists(music.FilePath))
+            {
+                return;
+            }
+            MediaPlayer.Open(new Uri(music.FilePath));
+            MediaPlayer.Play();
         }
 
         public void CollisionHorizontal()
@@ -522,7 +528,7 @@ namespace funya1_wpf
             Status = Status.Standing;
             MoveChara((32 * Map[NextStage].StartX) + 2, (32 * Map[NextStage].StartY) - 4);
             ResumeGame();
-            // PlayMusic(MusicFilePlaying);
+            PlayMusic(MusicOptions.Playing);
         }
 
         private void DrawTerrain(int NextStage)
@@ -720,8 +726,7 @@ namespace funya1_wpf
 
         public void StopMusic()
         {
-            // TODO: 実装
-            throw new NotImplementedException();
+            MediaPlayer.Stop();
         }
 
         public void MainLoop()

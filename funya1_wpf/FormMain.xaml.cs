@@ -100,6 +100,7 @@ namespace funya1_wpf
         private void MenuMusic_Click(object sender, RoutedEventArgs e)
         {
             cleater.Pause();
+            cleater.StopMusic(); // Pauseメソッドで音楽が止まるのはプレイ中だけ。
             var editing = cleater.MusicOptions.Clone();
             var formMusic = new FormMusic
             {
