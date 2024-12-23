@@ -2,7 +2,7 @@
 {
     public class MusicOptions
     {
-        public bool IsEnabled { get; set; } = false;
+        public bool IsEnabled { get; set; } = true;
         public MusicInfo Playing { get; set; } = new();
         public MusicInfo Clear { get; set; } = new();
         public MusicInfo Ending { get; set; } = new();
