@@ -307,6 +307,20 @@ namespace funya1_wpf
             }
             MediaPlayer.Open(new Uri(music.FilePath));
             MediaPlayer.Play();
+            if (music.IsLoop)
+            {
+                MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+            }
+            else
+            {
+                MediaPlayer.MediaEnded -= MediaPlayer_MediaEnded;
+            }
+        }
+
+        private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
+        {
+            MediaPlayer.Position = TimeSpan.Zero;
+            MediaPlayer.Play();
         }
 
         public void CollisionHorizontal()
