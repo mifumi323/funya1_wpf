@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
-    public class Cleater(FormMain formMain)
+    public class Cleater
     {
         public string StageFile = "";
 
@@ -36,6 +36,7 @@ namespace funya1_wpf
         public Misc Misc = new();
         public Random Random = new();
         public MediaPlayer MediaPlayer = new();
+        public MusicInfo? PlayingMusic;
 
         public Status Status;
         private GameState gameState;
@@ -55,6 +56,13 @@ namespace funya1_wpf
         public bool PressedDownKey;
         public bool PressedUpKey;
         public HorizontalInput HorizontalInput;
+        private readonly FormMain formMain;
+
+        public Cleater(FormMain formMain)
+        {
+            this.formMain = formMain;
+            MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+        }
 
         public void Ending2()
         {
@@ -307,20 +315,20 @@ namespace funya1_wpf
             }
             MediaPlayer.Open(new Uri(music.FilePath));
             MediaPlayer.Play();
-            if (music.IsLoop)
-            {
-                MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
-            }
-            else
-            {
-                MediaPlayer.MediaEnded -= MediaPlayer_MediaEnded;
-            }
+            PlayingMusic = music;
         }
 
         private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
         {
-            MediaPlayer.Position = TimeSpan.Zero;
-            MediaPlayer.Play();
+            if (PlayingMusic != null && PlayingMusic.IsLoop)
+            {
+                MediaPlayer.Position = TimeSpan.Zero;
+                MediaPlayer.Play();
+            }
+            else
+            {
+                StopMusic();
+            }
         }
 
         public void CollisionHorizontal()
@@ -739,6 +747,7 @@ namespace funya1_wpf
         public void StopMusic()
         {
             MediaPlayer.Stop();
+            PlayingMusic = null;
         }
 
         public void MainLoop()
