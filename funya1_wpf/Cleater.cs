@@ -1152,5 +1152,104 @@ namespace funya1_wpf
         private static bool IsRightKey(Key key) => key is Key.Right or Key.D;
 
         private static bool IsSmileKey(Key key) => key is Key.Enter;
+
+        public void LoadSettings()
+        {
+            // 存在チェック
+            var settingsFile = GetSettingsFilePath();
+            if (!File.Exists(settingsFile))
+            {
+                return;
+            }
+
+            // 読み込み
+            var lines = File.ReadAllLines(settingsFile);
+            var dictionary = new Dictionary<string, string>();
+            foreach (var line in lines)
+            {
+                var p = line.Split('=', 2);
+                var key = p[0];
+                var value = p[1];
+                dictionary[key] = value;
+            }
+
+            // 関数
+            string LoadString(string key, string defaultValue) => dictionary.TryGetValue(key, out var value) ? value : defaultValue;
+            int LoadInt(string key, int defaultValue) => int.TryParse(LoadString(key, defaultValue.ToString()), out var value) ? value : defaultValue;
+            bool LoadBool(string key, bool defaultValue) => bool.TryParse(LoadString(key, defaultValue.ToString()), out var value) ? value : defaultValue;
+
+            // 基本オプション
+            Options.Interval = LoadInt("Interval", Options.Interval);
+            Options.Gravity = LoadInt("Gravity", Options.Gravity);
+            Options.Reverse = LoadBool("Reverse", Options.Reverse);
+
+            // 音楽
+            MusicOptions.IsEnabled = LoadBool("MusicEnabled", MusicOptions.IsEnabled);
+            MusicOptions.Playing.FilePath = LoadString("MusicPlaying", MusicOptions.Playing.FilePath);
+            MusicOptions.Playing.IsLoop = LoadBool("MusicPlayingLoop", MusicOptions.Playing.IsLoop);
+            MusicOptions.Clear.FilePath = LoadString("MusicClear", MusicOptions.Clear.FilePath);
+            MusicOptions.Clear.IsLoop = LoadBool("MusicClearLoop", MusicOptions.Clear.IsLoop);
+            MusicOptions.Ending.FilePath = LoadString("MusicEnding", MusicOptions.Ending.FilePath);
+            MusicOptions.Ending.IsLoop = LoadBool("MusicEndingLoop", MusicOptions.Ending.IsLoop);
+            MusicOptions.Missing.FilePath = LoadString("MusicMissing", MusicOptions.Missing.FilePath);
+            MusicOptions.Missing.IsLoop = LoadBool("MusicMissingLoop", MusicOptions.Missing.IsLoop);
+            MusicOptions.GameOver.FilePath = LoadString("MusicGameOver", MusicOptions.GameOver.FilePath);
+            MusicOptions.GameOver.IsLoop = LoadBool("MusicGameOverLoop", MusicOptions.GameOver.IsLoop);
+
+            // リザルト
+            Results.GetTotal = LoadInt("GetTotal", Results.GetTotal);
+            Results.Smile = LoadBool("Smile", Results.Smile);
+            Results.SpeedSet = LoadBool("SpeedSet", Results.SpeedSet);
+            Results.StageSelect = LoadBool("StageSelect", Results.StageSelect);
+            Results.GravitySet = LoadBool("GravitySet", Results.GravitySet);
+            Results.ZeroGStage = LoadBool("ZeroGStage", Results.ZeroGStage);
+            Results.Reverse = LoadBool("Reverse", Results.Reverse);
+        }
+
+        public void SaveSettings()
+        {
+            // 存在チェック
+            var settingsFile = GetSettingsFilePath();
+            var settingsDir = Path.GetDirectoryName(settingsFile);
+            if (settingsDir != null && !Directory.Exists(settingsDir))
+            {
+                Directory.CreateDirectory(settingsDir);
+            }
+
+            File.WriteAllLines(settingsFile,
+            [
+                // 基本オプション
+                $"Interval={Options.Interval}",
+                $"Gravity={Options.Gravity}",
+                $"Reverse={Options.Reverse}",
+
+                // 音楽
+                $"MusicEnabled={MusicOptions.IsEnabled}",
+                $"MusicPlaying={MusicOptions.Playing.FilePath}",
+                $"MusicPlayingLoop={MusicOptions.Playing.IsLoop}",
+                $"MusicClear={MusicOptions.Clear.FilePath}",
+                $"MusicClearLoop={MusicOptions.Clear.IsLoop}",
+                $"MusicEnding={MusicOptions.Ending.FilePath}",
+                $"MusicEndingLoop={MusicOptions.Ending.IsLoop}",
+                $"MusicMissing={MusicOptions.Missing.FilePath}",
+                $"MusicMissingLoop={MusicOptions.Missing.IsLoop}",
+                $"MusicGameOver={MusicOptions.GameOver.FilePath}",
+                $"MusicGameOverLoop={MusicOptions.GameOver.IsLoop}",
+
+                // リザルト
+                $"GetTotal={Results.GetTotal}",
+                $"Smile={Results.Smile}",
+                $"SpeedSet={Results.SpeedSet}",
+                $"StageSelect={Results.StageSelect}",
+                $"GravitySet={Results.GravitySet}",
+                $"ZeroGStage={Results.ZeroGStage}",
+                $"Reverse={Results.Reverse}",
+            ]);
+        }
+
+        public static string GetSettingsFilePath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MifuminSoft", "funya", "settings.ini");
+        }
     }
 }

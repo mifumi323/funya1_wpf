@@ -35,6 +35,8 @@ namespace funya1_wpf
             MouseHideTimer.Start();
 
             cleater = new Cleater(this);
+            cleater.LoadSettings();
+
             frameCounter1 = new(1000 / cleater.Options.Interval);
             frameCounter2 = new(2);
             Foods = new(1, 5);
@@ -127,7 +129,7 @@ namespace funya1_wpf
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            // TODO: 実装
+            cleater.SaveSettings();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
