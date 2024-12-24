@@ -36,6 +36,11 @@ namespace funya1_wpf
 
             cleater = new Cleater(this);
             cleater.LoadSettings();
+            
+            SetScreenSize(cleater.Options.ScreenSize);
+            WindowState = cleater.Options.WindowState;
+            Width = cleater.Options.WindowWidth;
+            Height = cleater.Options.WindowHeight;
 
             frameCounter1 = new(1000 / cleater.Options.Interval);
             frameCounter2 = new(2);
@@ -124,6 +129,10 @@ namespace funya1_wpf
                 {
                     cleater.Pause();
                 }
+            }
+            else
+            {
+                cleater.Options.WindowState = WindowState;
             }
         }
 
@@ -388,25 +397,45 @@ namespace funya1_wpf
 
         private void FixedScreen_Click(object sender, RoutedEventArgs e)
         {
-            FixedScreen.IsChecked = true;
-            SizableScreen.IsChecked = false;
-            WindowState = WindowState.Normal;
-            ResizeMode = ResizeMode.CanMinimize;
-            SizeToContent = SizeToContent.WidthAndHeight;
-            Screen.Width = Client.Width;
-            Screen.Height = Client.Height;
-            ScreenRow.Height = new GridLength(1, GridUnitType.Auto);
+            SetScreenSize(ScreenSize.Fixed);
         }
 
         private void SizableScreen_Click(object sender, RoutedEventArgs e)
         {
-            FixedScreen.IsChecked = false;
-            SizableScreen.IsChecked = true;
-            ResizeMode = ResizeMode.CanResize;
-            SizeToContent = SizeToContent.Manual;
-            Screen.Width = double.NaN;
-            Screen.Height = double.NaN;
-            ScreenRow.Height = new GridLength(1, GridUnitType.Star);
+            SetScreenSize(ScreenSize.Sizable);
+        }
+
+        private void SetScreenSize(ScreenSize screenSize)
+        {
+            cleater.Options.ScreenSize = screenSize;
+            switch (screenSize)
+            {
+                case ScreenSize.Fixed:
+                    FixedScreen.IsChecked = true;
+                    SizableScreen.IsChecked = false;
+                    WindowState = WindowState.Normal;
+                    ResizeMode = ResizeMode.CanMinimize;
+                    SizeToContent = SizeToContent.WidthAndHeight;
+                    Screen.Width = Client.Width;
+                    Screen.Height = Client.Height;
+                    ScreenRow.Height = new GridLength(1, GridUnitType.Auto);
+                    break;
+                case ScreenSize.Sizable:
+                    FixedScreen.IsChecked = false;
+                    SizableScreen.IsChecked = true;
+                    ResizeMode = ResizeMode.CanResize;
+                    SizeToContent = SizeToContent.Manual;
+                    Screen.Width = double.NaN;
+                    Screen.Height = double.NaN;
+                    ScreenRow.Height = new GridLength(1, GridUnitType.Star);
+                    break;
+            }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            cleater.Options.WindowWidth = Width;
+            cleater.Options.WindowHeight = Height;
         }
     }
 }

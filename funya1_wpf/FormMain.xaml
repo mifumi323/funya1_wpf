@@ -11,6 +11,7 @@
         Icon="/Resources/Stand.ICO"
         Background="Gray"
         StateChanged="Window_StateChanged"
+        SizeChanged="Window_SizeChanged"
         Closed="Window_Closed"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp"

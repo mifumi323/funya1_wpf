@@ -1185,9 +1185,14 @@ namespace funya1_wpf
             // 関数
             string LoadString(string key, string defaultValue) => dictionary.TryGetValue(key, out var value) ? value : defaultValue;
             int LoadInt(string key, int defaultValue) => int.TryParse(LoadString(key, defaultValue.ToString()), out var value) ? value : defaultValue;
+            double LoadDouble(string key, double defaultValue) => double.TryParse(LoadString(key, defaultValue.ToString()), out var value) ? value : defaultValue;
             bool LoadBool(string key, bool defaultValue) => bool.TryParse(LoadString(key, defaultValue.ToString()), out var value) ? value : defaultValue;
 
             // 基本オプション
+            Options.ScreenSize = (ScreenSize)LoadInt("ScreenSize", (int)Options.ScreenSize);
+            Options.WindowState = (WindowState)LoadInt("WindowState", (int)Options.WindowState);
+            Options.WindowWidth = LoadDouble("WindowWidth", Options.WindowWidth);
+            Options.WindowHeight = LoadDouble("WindowHeight", Options.WindowHeight);
             Options.Interval = LoadInt("Interval", Options.Interval);
             Options.Gravity = LoadInt("Gravity", Options.Gravity);
             Options.Reverse = LoadBool("Reverse", Options.Reverse);
@@ -1228,6 +1233,10 @@ namespace funya1_wpf
             File.WriteAllLines(settingsFile,
             [
                 // 基本オプション
+                $"ScreenSize={(int)Options.ScreenSize}",
+                $"WindowState={(int)Options.WindowState}",
+                $"WindowWidth={Options.WindowWidth}",
+                $"WindowHeight={Options.WindowHeight}",
                 $"Interval={Options.Interval}",
                 $"Gravity={Options.Gravity}",
                 $"Reverse={Options.Reverse}",
