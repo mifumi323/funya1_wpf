@@ -1217,7 +1217,7 @@ namespace funya1_wpf
             Results.StageSelect = LoadBool("StageSelect", Results.StageSelect);
             Results.GravitySet = LoadBool("GravitySet", Results.GravitySet);
             Results.ZeroGStage = LoadBool("ZeroGStage", Results.ZeroGStage);
-            Results.Reverse = LoadBool("Reverse", Results.Reverse);
+            Results.Reverse = LoadBool("ReverseSet", Results.Reverse);
         }
 
         public void SaveSettings()
@@ -1261,7 +1261,7 @@ namespace funya1_wpf
                 $"StageSelect={Results.StageSelect}",
                 $"GravitySet={Results.GravitySet}",
                 $"ZeroGStage={Results.ZeroGStage}",
-                $"Reverse={Results.Reverse}",
+                $"ReverseSet={Results.Reverse}",
             ]);
         }
 
