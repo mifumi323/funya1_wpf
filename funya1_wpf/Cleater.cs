@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Microsoft.Win32;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -1168,6 +1169,7 @@ namespace funya1_wpf
             var settingsFile = GetSettingsFilePath();
             if (!File.Exists(settingsFile))
             {
+                LoadSettingsFromRegistry();
                 return;
             }
 
@@ -1218,6 +1220,86 @@ namespace funya1_wpf
             Results.GravitySet = LoadBool("GravitySet", Results.GravitySet);
             Results.ZeroGStage = LoadBool("ZeroGStage", Results.ZeroGStage);
             Results.Reverse = LoadBool("ReverseSet", Results.Reverse);
+        }
+
+        private void LoadSettingsFromRegistry()
+        {
+            if (TryGetVb6Setting("Get Total", out var GetTotal) && int.TryParse(GetTotal, out var GetTotalInt))
+            {
+                Results.GetTotal = GetTotalInt;
+            }
+            if (TryGetVb6Setting("Smile", out var Smile) && bool.TryParse(Smile, out var SmileBool))
+            {
+                Results.Smile = SmileBool;
+            }
+            if (TryGetVb6Setting("Speed Set", out var SpeedSet) && bool.TryParse(SpeedSet, out var SpeedSetBool))
+            {
+                Results.SpeedSet = SpeedSetBool;
+            }
+            if (TryGetVb6Setting("Stage Select", out var StageSelect) && bool.TryParse(StageSelect, out var StageSelectBool))
+            {
+                Results.StageSelect = StageSelectBool;
+            }
+            if (TryGetVb6Setting("Gravity Set", out var GravitySet) && bool.TryParse(GravitySet, out var GravitySetBool))
+            {
+                Results.GravitySet = GravitySetBool;
+            }
+            if (TryGetVb6Setting("ZeroG Stage", out var ZeroGStage) && bool.TryParse(ZeroGStage, out var ZeroGStageBool))
+            {
+                Results.ZeroGStage = ZeroGStageBool;
+            }
+            if (TryGetVb6Setting("Reverse", out var Reverse) && bool.TryParse(Reverse, out var ReverseBool))
+            {
+                Results.Reverse = ReverseBool;
+            }
+            if (TryGetVb6Setting("Music", out var Music) && bool.TryParse(Music, out var MusicBool))
+            {
+                MusicOptions.IsEnabled = MusicBool;
+            }
+            if (TryGetVb6Setting("Music File Playing", out var MusicFilePlaying))
+            {
+                MusicOptions.Playing.FilePath = MusicFilePlaying;
+            }
+            if (TryGetVb6Setting("Music File Clear", out var MusicFileClear))
+            {
+                MusicOptions.Clear.FilePath = MusicFileClear;
+            }
+            if (TryGetVb6Setting("Music File Ending", out var MusicFileEnding))
+            {
+                MusicOptions.Ending.FilePath = MusicFileEnding;
+            }
+            if (TryGetVb6Setting("Music File Missing", out var MusicFileMissing))
+            {
+                MusicOptions.Missing.FilePath = MusicFileMissing;
+            }
+            if (TryGetVb6Setting("Music File Game Over", out var MusicFileGameOver))
+            {
+                MusicOptions.GameOver.FilePath = MusicFileGameOver;
+            }
+        }
+
+        private static bool TryGetVb6Setting(string key, out string value)
+        {
+            var registryKey = Registry.CurrentUser.OpenSubKey("Software\\VB and VBA Program Settings\\funya\\Settings");
+            if (registryKey == null)
+            {
+                value = "";
+                return false;
+            }
+            var registryValue = registryKey.GetValue(key);
+            if (registryValue == null)
+            {
+                value = "";
+                return false;
+            }
+            var stringValue = registryValue.ToString();
+            if (stringValue == null)
+            {
+                value = "";
+                return false;
+            }
+            value = stringValue;
+            return true;
         }
 
         public void SaveSettings()
