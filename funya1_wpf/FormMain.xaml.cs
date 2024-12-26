@@ -52,7 +52,7 @@ namespace funya1_wpf
             Foods[5] = Food5;
 
             cleater.GameStart();
-            CloseMessage();
+            UpdateMenuItems();
             ShowMessage("ふにゃ", MessageMode.Info, "Enter/クリックで進む");
         }
 
@@ -66,7 +66,7 @@ namespace funya1_wpf
         private void MenuReverse_Click(object sender, RoutedEventArgs e)
         {
             cleater.Options.Reverse = !cleater.Options.Reverse;
-            ((MenuItem)sender).IsChecked = cleater.Options.Reverse;
+            UpdateMenuReverse();
         }
 
         private void MenuPause_Click(object sender, RoutedEventArgs e)
@@ -203,6 +203,14 @@ namespace funya1_wpf
             // TODO: 実装
         }
 
+        public void UpdateMenuItems()
+        {
+            UpdateMenuStage();
+            UpdateMenuSpeed();
+            UpdateMenuGravity();
+            UpdateMenuReverse();
+        }
+
         public void UpdateMenuStage()
         {
             if (cleater.Results.StageSelect)
@@ -224,6 +232,51 @@ namespace funya1_wpf
             else
             {
                 MenuStage.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateMenuSpeed()
+        {
+            if (cleater.Results.SpeedSet)
+            {
+                MenuSpeed.Visibility = Visibility.Visible;
+                foreach (MenuItem item in MenuSpeed.Items)
+                {
+                    item.IsChecked = item.Tag.Equals(cleater.Options.Interval.ToString());
+                }
+            }
+            else
+            {
+                MenuSpeed.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateMenuGravity()
+        {
+            if (cleater.Results.GravitySet)
+            {
+                MenuGravity.Visibility = Visibility.Visible;
+                foreach (MenuItem item in MenuGravity.Items)
+                {
+                    item.IsChecked = item.Tag.Equals(cleater.Options.Gravity.ToString());
+                }
+            }
+            else
+            {
+                MenuGravity.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateMenuReverse()
+        {
+            if (cleater.Results.Reverse)
+            {
+                MenuReverse.Visibility = Visibility.Visible;
+                MenuReverse.IsChecked = cleater.Options.Reverse;
+            }
+            else
+            {
+                MenuReverse.Visibility = Visibility.Collapsed;
             }
         }
 

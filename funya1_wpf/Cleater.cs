@@ -128,6 +128,7 @@ namespace funya1_wpf
                 Results.Reverse = true;
                 formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - 反操作 -");
             }
+            formMain.UpdateMenuItems();
         }
 
         public void Ending()
@@ -550,6 +551,7 @@ namespace funya1_wpf
             MoveChara((32 * Map[NextStage].StartX) + 2, (32 * Map[NextStage].StartY) - 4);
             ResumeGame();
             PlayMusic(MusicOptions.Playing);
+            formMain.UpdateMenuStage();
         }
 
         private void DrawTerrain(int NextStage)
