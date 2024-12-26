@@ -31,12 +31,13 @@ namespace funya1_wpf
         public FormMain()
         {
             InitializeComponent();
+            DataContext = this;
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
 
             cleater = new Cleater(this);
             cleater.LoadSettings();
-            
+
             SetScreenSize(cleater.Options.ScreenSize);
             WindowState = cleater.Options.WindowState;
             Width = cleater.Options.WindowWidth;
@@ -56,20 +57,20 @@ namespace funya1_wpf
             ShowMessage("ふにゃ", MessageMode.Info, "Enter/クリックで進む");
         }
 
-        private void MenuStage_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuStage_Click => new(stageNumber =>
         {
-            int stage = (int)((MenuItem)sender).Tag;
+            int stage = (int)stageNumber!;
             cleater.GameStart();
             cleater.StartStage(stage);
-        }
+        });
 
-        private void MenuReverse_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuReverse_Click => new(_ =>
         {
             cleater.Options.Reverse = !cleater.Options.Reverse;
             UpdateMenuReverse();
-        }
+        });
 
-        private void MenuPause_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuPause_Click => new(_ =>
         {
             if (cleater.GameState == GameState.Playing)
             {
@@ -79,32 +80,32 @@ namespace funya1_wpf
             {
                 cleater.ResumeGame();
             }
-        }
+        });
 
-        private void GameExit_Click(object sender, RoutedEventArgs e)
+        public ActionCommand GameExit_Click => new(_ =>
         {
             Close();
-        }
+        });
 
-        private void MenuStart_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuStart_Click => new(_ =>
         {
             cleater.GameStart();
-        }
+        });
 
-        private void Death_Click(object sender, RoutedEventArgs e)
+        public ActionCommand Death_Click => new(_ =>
         {
             if (cleater.GameState == GameState.Playing)
             {
                 cleater.Die();
             }
-        }
+        });
 
         private void Timer2_Tick(object? sender, EventArgs e)
         {
             // TODO: 実装
         }
 
-        private void MenuMusic_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuMusic_Click => new(_ =>
         {
             cleater.Pause();
             cleater.StopMusic(); // Pauseメソッドで音楽が止まるのはプレイ中だけ。
@@ -119,7 +120,7 @@ namespace funya1_wpf
             {
                 cleater.MusicOptions = editing;
             }
-        }
+        });
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
@@ -159,7 +160,7 @@ namespace funya1_wpf
             cleater.OnKeyUp(e.Key);
         }
 
-        private void MenuOpen_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuOpen_Click => new(_ =>
         {
             cleater.Pause();
             var dialog = new OpenFileDialog()
@@ -176,35 +177,35 @@ namespace funya1_wpf
                 cleater.StageFile = "";
             }
             cleater.GameStart();
-        }
+        });
 
-        private void Speed_Click(object sender, RoutedEventArgs e)
+        public ActionCommand Speed_Click => new(interval =>
         {
-            cleater.Options.Interval = int.Parse((string)((MenuItem)sender).Tag);
+            cleater.Options.Interval = int.Parse((string)interval!);
             frameCounter1.Fps = 1000.0 / cleater.Options.Interval;
             UpdateMenuSpeed();
-        }
+        });
 
-        private void Gravity_Click(object sender, RoutedEventArgs e)
+        public ActionCommand Gravity_Click => new(gravity =>
         {
-            cleater.Options.Gravity = int.Parse((string)((MenuItem)sender).Tag);
+            cleater.Options.Gravity = int.Parse((string)gravity!);
             UpdateMenuGravity();
-        }
+        });
 
         private void Mine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // TODO: 実装
         }
 
-        private void MenuAbout_Click(object sender, RoutedEventArgs e)
+        public ActionCommand MenuAbout_Click => new(_ =>
         {
             // TODO: 実装
-        }
+        });
 
-        private void HelpContents_Click(object sender, RoutedEventArgs e)
+        public ActionCommand HelpContents_Click => new(_ =>
         {
             // TODO: 実装
-        }
+        });
 
         public void UpdateMenuItems()
         {
@@ -223,13 +224,13 @@ namespace funya1_wpf
                 for (int i = 1; i <= cleater.StageCount; i++)
                 {
                     var map = cleater.Map[i];
-                    var newItem = new MenuItem()
+                    var newItem = new MenuItem
                     {
                         Header = map.Title,
-                        Tag = i,
+                        Command = MenuStage_Click,
+                        CommandParameter = i,
+                        IsChecked = i == cleater.CurrentStage
                     };
-                    newItem.Click += MenuStage_Click;
-                    newItem.IsChecked = i == cleater.CurrentStage;
                     MenuStage.Items.Add(newItem);
                 }
             }
@@ -246,7 +247,7 @@ namespace funya1_wpf
                 MenuSpeed.Visibility = Visibility.Visible;
                 foreach (MenuItem item in MenuSpeed.Items)
                 {
-                    item.IsChecked = item.Tag.Equals(cleater.Options.Interval.ToString());
+                    item.IsChecked = item.CommandParameter.Equals(cleater.Options.Interval.ToString());
                 }
             }
             else
@@ -262,7 +263,7 @@ namespace funya1_wpf
                 MenuGravity.Visibility = Visibility.Visible;
                 foreach (MenuItem item in MenuGravity.Items)
                 {
-                    item.IsChecked = item.Tag.Equals(cleater.Options.Gravity.ToString());
+                    item.IsChecked = item.CommandParameter.Equals(cleater.Options.Gravity.ToString());
                 }
             }
             else
@@ -452,15 +453,15 @@ namespace funya1_wpf
             }
         }
 
-        private void FixedScreen_Click(object sender, RoutedEventArgs e)
+        public ActionCommand FixedScreen_Click => new(_ =>
         {
             SetScreenSize(ScreenSize.Fixed);
-        }
+        });
 
-        private void SizableScreen_Click(object sender, RoutedEventArgs e)
+        public ActionCommand SizableScreen_Click => new(_ =>
         {
             SetScreenSize(ScreenSize.Sizable);
-        }
+        });
 
         private void SetScreenSize(ScreenSize screenSize)
         {

@@ -24,38 +24,38 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="ゲーム(_G)">
-                <MenuItem Header="スタート(_S)" Click="MenuStart_Click"/>
+                <MenuItem Header="スタート(_S)" Command="{Binding MenuStart_Click}"/>
                 <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)"/>
-                <MenuItem Header="ポーズ(_P)" Click="MenuPause_Click"/>
-                <MenuItem Header="自爆(_D)" Click="Death_Click"/>
+                <MenuItem Header="ポーズ(_P)" Command="{Binding MenuPause_Click}"/>
+                <MenuItem Header="自爆(_D)" Command="{Binding Death_Click}"/>
                 <Separator/>
-                <MenuItem Header="ステージの読み込み(_R)" Click="MenuOpen_Click"/>
+                <MenuItem Header="ステージの読み込み(_R)" Command="{Binding MenuOpen_Click}"/>
                 <Separator/>
-                <MenuItem Header="終了(_X)" Click="GameExit_Click"/>
+                <MenuItem Header="終了(_X)" Command="{Binding GameExit_Click}"/>
             </MenuItem>
             <MenuItem Header="オプション(_O)">
                 <MenuItem Header="画面サイズ(_Z)">
-                    <MenuItem x:Name="FixedScreen" Header="固定(_F)" Click="FixedScreen_Click"/>
-                    <MenuItem x:Name="SizableScreen"  Header="可変(_S)" Click="SizableScreen_Click"/>
+                    <MenuItem x:Name="FixedScreen" Header="固定(_F)" Command="{Binding FixedScreen_Click}"/>
+                    <MenuItem x:Name="SizableScreen"  Header="可変(_S)" Command="{Binding SizableScreen_Click}"/>
                 </MenuItem>
                 <MenuItem x:Name="MenuSpeed" Header="スピード(_S)">
-                    <MenuItem Header="速い" Tag="25" Click="Speed_Click"/>
-                    <MenuItem Header="普通" Tag="50" Click="Speed_Click"/>
-                    <MenuItem Header="遅い" Tag="100" Click="Speed_Click"/>
+                    <MenuItem Header="速い" CommandParameter="25" Command="{Binding Speed_Click}"/>
+                    <MenuItem Header="普通" CommandParameter="50" Command="{Binding Speed_Click}"/>
+                    <MenuItem Header="遅い" CommandParameter="100" Command="{Binding Speed_Click}"/>
                 </MenuItem>
                 <MenuItem x:Name="MenuGravity" Header="重力(_G)">
-                    <MenuItem Header="無重力" Tag="0" Click="Gravity_Click"/>
-                    <MenuItem Header="低重力" Tag="1" Click="Gravity_Click"/>
-                    <MenuItem Header="通常" Tag="2" Click="Gravity_Click"/>
-                    <MenuItem Header="高重力" Tag="3" Click="Gravity_Click"/>
+                    <MenuItem Header="無重力" CommandParameter="0" Command="{Binding Gravity_Click}"/>
+                    <MenuItem Header="低重力" CommandParameter="1" Command="{Binding Gravity_Click}"/>
+                    <MenuItem Header="通常" CommandParameter="2" Command="{Binding Gravity_Click}"/>
+                    <MenuItem Header="高重力" CommandParameter="3" Command="{Binding Gravity_Click}"/>
                 </MenuItem>
-                <MenuItem x:Name="MenuReverse" Header="反操作(_R)" Click="MenuReverse_Click"/>
-                <MenuItem Header="音楽の設定(_M)" Click="MenuMusic_Click"/>
+                <MenuItem x:Name="MenuReverse" Header="反操作(_R)" Command="{Binding MenuReverse_Click}"/>
+                <MenuItem Header="音楽の設定(_M)" Command="{Binding MenuMusic_Click}"/>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
-                <MenuItem Header="ふにゃのヘルプ(_H)" Click="HelpContents_Click"/>
+                <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}"/>
                 <Separator/>
-                <MenuItem Header="バージョン情報(_A)" Click="MenuAbout_Click"/>
+                <MenuItem Header="バージョン情報(_A)" Command="{Binding MenuAbout_Click}"/>
             </MenuItem>
         </Menu>
         <Viewbox x:Name="Screen" Grid.Row="1" Height="268" Width="347">
