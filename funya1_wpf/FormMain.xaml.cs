@@ -42,7 +42,7 @@ namespace funya1_wpf
             Width = cleater.Options.WindowWidth;
             Height = cleater.Options.WindowHeight;
 
-            frameCounter1 = new(1000 / cleater.Options.Interval);
+            frameCounter1 = new(1000.0 / cleater.Options.Interval);
             frameCounter2 = new(2);
             Foods = new(1, 5);
             Foods[1] = Food1;
