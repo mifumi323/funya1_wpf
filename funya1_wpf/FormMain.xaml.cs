@@ -59,6 +59,10 @@ namespace funya1_wpf
 
         public ActionCommand MenuStage_Click => new(stageNumber =>
         {
+            if (!cleater.Results.StageSelect)
+            {
+                return;
+            }
             int stage = (int)stageNumber!;
             cleater.GameStart();
             cleater.StartStage(stage);
@@ -66,6 +70,10 @@ namespace funya1_wpf
 
         public ActionCommand MenuReverse_Click => new(_ =>
         {
+            if (!cleater.Results.Reverse)
+            {
+                return;
+            }
             cleater.Options.Reverse = !cleater.Options.Reverse;
             UpdateMenuReverse();
         });
@@ -181,6 +189,10 @@ namespace funya1_wpf
 
         public ActionCommand Speed_Click => new(interval =>
         {
+            if (!cleater.Results.SpeedSet)
+            {
+                return;
+            }
             cleater.Options.Interval = int.Parse((string)interval!);
             frameCounter1.Fps = 1000.0 / cleater.Options.Interval;
             UpdateMenuSpeed();
@@ -188,6 +200,10 @@ namespace funya1_wpf
 
         public ActionCommand Gravity_Click => new(gravity =>
         {
+            if (!cleater.Results.GravitySet)
+            {
+                return;
+            }
             cleater.Options.Gravity = int.Parse((string)gravity!);
             UpdateMenuGravity();
         });
