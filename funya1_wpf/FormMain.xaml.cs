@@ -180,12 +180,15 @@ namespace funya1_wpf
 
         private void Speed_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: 実装
+            cleater.Options.Interval = int.Parse((string)((MenuItem)sender).Tag);
+            frameCounter1.Fps = 1000.0 / cleater.Options.Interval;
+            UpdateMenuSpeed();
         }
 
         private void Gravity_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: 実装
+            cleater.Options.Gravity = int.Parse((string)((MenuItem)sender).Tag);
+            UpdateMenuGravity();
         }
 
         private void Mine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -226,6 +229,7 @@ namespace funya1_wpf
                         Tag = i,
                     };
                     newItem.Click += MenuStage_Click;
+                    newItem.IsChecked = i == cleater.CurrentStage;
                     MenuStage.Items.Add(newItem);
                 }
             }
