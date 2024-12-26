@@ -801,6 +801,11 @@ namespace funya1_wpf
                             CollisionHorizontal();
                             MoveChara(MainLeft + SpeedX / 10, MainTop - SpeedY / 2);
                             SpeedY -= Options.Gravity;
+                            if (Options.Gravity == 0)
+                            {
+                                Status = Status.JumpingDown;
+                                SpeedY = -SpeedY;
+                            }
                             break;
                         case Status.JumpingDown:
                             if (PressedDownKey)
