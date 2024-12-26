@@ -17,6 +17,12 @@
         KeyUp="Window_KeyUp"
         Loaded="Window_Loaded"
         Unloaded="Window_Unloaded">
+    <Window.InputBindings>
+        <KeyBinding Key="F2" Command="{Binding MenuStart_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding MenuPause_Click}"/>
+        <KeyBinding Key="Delete" Command="{Binding Death_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding MenuOpen_Click}"/>
+    </Window.InputBindings>
     <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,12 +30,12 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="ゲーム(_G)">
-                <MenuItem Header="スタート(_S)" Command="{Binding MenuStart_Click}"/>
+                <MenuItem Header="スタート(_S)" Command="{Binding MenuStart_Click}" InputGestureText="F2"/>
                 <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)"/>
-                <MenuItem Header="ポーズ(_P)" Command="{Binding MenuPause_Click}"/>
-                <MenuItem Header="自爆(_D)" Command="{Binding Death_Click}"/>
+                <MenuItem Header="ポーズ(_P)" Command="{Binding MenuPause_Click}" InputGestureText="Ctrl+P"/>
+                <MenuItem Header="自爆(_D)" Command="{Binding Death_Click}" InputGestureText="Del"/>
                 <Separator/>
-                <MenuItem Header="ステージの読み込み(_R)" Command="{Binding MenuOpen_Click}"/>
+                <MenuItem Header="ステージの読み込み(_R)" Command="{Binding MenuOpen_Click}" InputGestureText="Ctrl+O"/>
                 <Separator/>
                 <MenuItem Header="終了(_X)" Command="{Binding GameExit_Click}"/>
             </MenuItem>
