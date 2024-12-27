@@ -101,33 +101,33 @@ namespace funya1_wpf
             if (!Results.Smile)
             {
                 Results.Smile = true;
-                formMain.ShowMessage("Secret 1", MessageMode.Clear, "秘密機能 1 - Enterキーでわらうよ -");
+                formMain.ShowMessage("Secret 1", MessageMode.Clear, "秘密機能 1 - スマイル -");
             }
             if (Rest == RestMax && StageFile != "" && !Results.SpeedSet)
             {
                 Results.SpeedSet = true;
-                formMain.ShowMessage("Secret 2", MessageMode.Clear, "秘密機能 2 - スピードオプション -");
+                formMain.ShowMessage("Secret 2", MessageMode.Clear, "秘密機能 2 - スピード -");
             }
             if (Results.GetTotal >= 500 && StageFile != "" && !Results.StageSelect)
             {
                 Results.StageSelect = true;
-                formMain.ShowMessage("Secret 3", MessageMode.Clear, "秘密機能 3 - 指定ステージからスタート -");
+                formMain.ShowMessage("Secret 3", MessageMode.Clear, "秘密機能 3 - セレクト -");
             }
             if (Results.GetTotal >= 1000 && StageFile != "" && !Results.GravitySet)
             {
                 Results.GravitySet = true;
-                formMain.ShowMessage("Secret 4", MessageMode.Clear, "秘密機能 4 - 重力オプション -");
+                formMain.ShowMessage("Secret 4", MessageMode.Clear, "秘密機能 4 - グラビティ -");
             }
             if (Results.GetTotal >= 3000 && !Results.ZeroGStage)
             {
                 Results.ZeroGStage = true;
-                formMain.ShowMessage("Secret 5", MessageMode.Clear, "秘密機能 5 - ゼロGステージ -");
+                formMain.ShowMessage("Secret 5", MessageMode.Clear, "秘密機能 5 - ゼロ -");
                 // TODO: ゼロGステージを出す
             }
             if (Results.GetTotal >= 5000 && !Results.Reverse && Rest == RestMax)
             {
                 Results.Reverse = true;
-                formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - 反操作 -");
+                formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - リバース -");
             }
             formMain.UpdateMenuItems();
         }
