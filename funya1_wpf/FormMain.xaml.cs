@@ -31,7 +31,6 @@ namespace funya1_wpf
         public FormMain()
         {
             InitializeComponent();
-            DataContext = this;
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
 
