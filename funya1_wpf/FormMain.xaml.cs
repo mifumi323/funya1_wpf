@@ -104,6 +104,7 @@ namespace funya1_wpf
         {
             if (cleater.GameState == GameState.Playing)
             {
+                CloseMessage();
                 cleater.Die();
             }
         });
