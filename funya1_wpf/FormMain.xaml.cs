@@ -108,11 +108,6 @@ namespace funya1_wpf
             }
         });
 
-        private void Timer2_Tick(object? sender, EventArgs e)
-        {
-            // TODO: 実装
-        }
-
         public ActionCommand MenuMusic_Click => new(_ =>
         {
             cleater.Pause();
@@ -321,7 +316,7 @@ namespace funya1_wpf
             var frames2 = frameCounter2.GetElapsedFrames(true);
             if (frames2 > 0)
             {
-                // TODO: 眠る処理
+                cleater.Sleep();
             }
         }
 

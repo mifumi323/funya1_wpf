@@ -53,6 +53,7 @@ namespace funya1_wpf
         public int SpeedX = 0;
         public int SpeedY = 0;
         public int JumpCharge;
+        public int Sleepy;
 
         public bool PressedDownKey;
         public bool PressedUpKey;
@@ -542,11 +543,9 @@ namespace funya1_wpf
             }
             RemainFood = Map[NextStage].TotalFood;
             CurrentStage = NextStage;
-            // Me(68) = 0
             SpeedX = 0;
             SpeedY = 0;
-            //Me(90) = 0
-            //Me(72) = 0
+            Sleepy = 0;
             Status = Status.Standing;
             MoveChara((32 * Map[NextStage].StartX) + 2, (32 * Map[NextStage].StartY) - 4);
             ResumeGame();
@@ -1357,6 +1356,34 @@ namespace funya1_wpf
         public static string GetSettingsFilePath()
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MifuminSoft", "funya", "settings.ini");
+        }
+
+        public void Sleep()
+        {
+            if (GameState == GameState.Playing)
+            {
+                Sleepy++;
+                if (Status == Status.Standing)
+                {
+                    if (Sleepy == 30)
+                    {
+                        Status = Status.Slepping;
+                        ChangeMineImage(Resources.Sleep);
+                    }
+                }
+                else if (Status == Status.Slepping)
+                {
+                    ChangeMineImage(Sleepy % 2 == 0 ? Resources.Sleep : Resources.Sleep2);
+                }
+                else
+                {
+                    Sleepy = 0;
+                }
+            }
+            else
+            {
+                Sleepy = 0;
+            }
         }
     }
 }
