@@ -274,9 +274,9 @@ namespace funya1_wpf
                     {
                         RemainFood--;
                         Results.GetTotal++;
-                        if (Results.GetTotal > 5000)
+                        if (Results.GetTotal > Results.GetTotalMax)
                         {
-                            Results.GetTotal = 5000;
+                            Results.GetTotal = Results.GetTotalMax;
                         }
                         formMain.Foods[i].Visibility = Visibility.Collapsed;
                         if (RemainFood == 0)

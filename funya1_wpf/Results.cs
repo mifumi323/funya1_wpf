@@ -9,5 +9,7 @@
         public bool GravitySet;
         public bool ZeroGStage;
         public bool Reverse;
+
+        public const int GetTotalMax = 5000;
     }
 }
