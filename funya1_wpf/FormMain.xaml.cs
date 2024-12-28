@@ -311,12 +311,18 @@ namespace funya1_wpf
             var frames1 = frameCounter1.GetElapsedFrames(true);
             if (frames1 > 0)
             {
-                cleater.MainLoop();
+                for (int i = 0; i < frames1; i++)
+                {
+                    cleater.MainLoop();
+                }
             }
             var frames2 = frameCounter2.GetElapsedFrames(true);
             if (frames2 > 0)
             {
-                cleater.Sleep();
+                for (int i = 0; i < frames2; i++)
+                {
+                    cleater.Sleep();
+                }
             }
         }
 
