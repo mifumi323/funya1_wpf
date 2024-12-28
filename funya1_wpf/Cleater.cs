@@ -595,10 +595,15 @@ namespace funya1_wpf
                 return;
             }
             var MapBankPath = Path.Combine(Path.GetDirectoryName(StageFile)!, MapBank);
-            using (var stream = File.OpenRead(MapBankPath))
+            if (File.Exists(MapBankPath))
             {
+                using var stream = File.OpenRead(MapBankPath);
                 Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 LoadCroppedBitmaps();
+            }
+            else
+            {
+                LoadSampleImage();
             }
             if (!reader.TryInputInt(out StageCount))
             {
