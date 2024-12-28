@@ -14,6 +14,9 @@ namespace funya1_wpf
     {
         private readonly Cleater cleater;
         private readonly Music music = new();
+        private readonly Results results = new();
+        private readonly Options options = new();
+        private readonly Resources resources = new();
 
         readonly ElapsedFrameCounter frameCounter1;
         readonly ElapsedFrameCounter frameCounter2;
@@ -35,15 +38,15 @@ namespace funya1_wpf
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
 
-            cleater = new Cleater(this, music);
+            cleater = new Cleater(this, music, results, options, resources);
             cleater.LoadSettings();
 
-            SetScreenSize(cleater.Options.ScreenSize);
-            WindowState = cleater.Options.WindowState;
-            Width = cleater.Options.WindowWidth;
-            Height = cleater.Options.WindowHeight;
+            SetScreenSize(options.ScreenSize);
+            WindowState = options.WindowState;
+            Width = options.WindowWidth;
+            Height = options.WindowHeight;
 
-            frameCounter1 = new(1000.0 / cleater.Options.Interval);
+            frameCounter1 = new(1000.0 / options.Interval);
             frameCounter2 = new(2);
             Foods = new(1, 5);
             Foods[1] = Food1;
@@ -59,7 +62,7 @@ namespace funya1_wpf
 
         public ActionCommand MenuStage_Click => new(stageNumber =>
         {
-            if (!cleater.Results.StageSelect)
+            if (!results.StageSelect)
             {
                 return;
             }
@@ -70,11 +73,11 @@ namespace funya1_wpf
 
         public ActionCommand MenuReverse_Click => new(_ =>
         {
-            if (!cleater.Results.Reverse)
+            if (!results.Reverse)
             {
                 return;
             }
-            cleater.Options.Reverse = !cleater.Options.Reverse;
+            options.Reverse = !options.Reverse;
             UpdateMenuReverse();
         });
 
@@ -137,7 +140,7 @@ namespace funya1_wpf
             }
             else
             {
-                cleater.Options.WindowState = WindowState;
+                options.WindowState = WindowState;
             }
         }
 
@@ -185,22 +188,22 @@ namespace funya1_wpf
 
         public ActionCommand Speed_Click => new(interval =>
         {
-            if (!cleater.Results.SpeedSet)
+            if (!results.SpeedSet)
             {
                 return;
             }
-            cleater.Options.Interval = int.Parse((string)interval!);
-            frameCounter1.Fps = 1000.0 / cleater.Options.Interval;
+            options.Interval = int.Parse((string)interval!);
+            frameCounter1.Fps = 1000.0 / options.Interval;
             UpdateMenuSpeed();
         });
 
         public ActionCommand Gravity_Click => new(gravity =>
         {
-            if (!cleater.Results.GravitySet)
+            if (!results.GravitySet)
             {
                 return;
             }
-            cleater.Options.Gravity = int.Parse((string)gravity!);
+            options.Gravity = int.Parse((string)gravity!);
             UpdateMenuGravity();
         });
 
@@ -229,7 +232,7 @@ namespace funya1_wpf
 
         public void UpdateMenuStage()
         {
-            if (cleater.Results.StageSelect)
+            if (results.StageSelect)
             {
                 MenuStage.Visibility = Visibility.Visible;
                 MenuStage.Items.Clear();
@@ -254,12 +257,12 @@ namespace funya1_wpf
 
         private void UpdateMenuSpeed()
         {
-            if (cleater.Results.SpeedSet)
+            if (results.SpeedSet)
             {
                 MenuSpeed.Visibility = Visibility.Visible;
                 foreach (MenuItem item in MenuSpeed.Items)
                 {
-                    item.IsChecked = item.CommandParameter.Equals(cleater.Options.Interval.ToString());
+                    item.IsChecked = item.CommandParameter.Equals(options.Interval.ToString());
                 }
             }
             else
@@ -270,12 +273,12 @@ namespace funya1_wpf
 
         private void UpdateMenuGravity()
         {
-            if (cleater.Results.GravitySet)
+            if (results.GravitySet)
             {
                 MenuGravity.Visibility = Visibility.Visible;
                 foreach (MenuItem item in MenuGravity.Items)
                 {
-                    item.IsChecked = item.CommandParameter.Equals(cleater.Options.Gravity.ToString());
+                    item.IsChecked = item.CommandParameter.Equals(options.Gravity.ToString());
                 }
             }
             else
@@ -286,10 +289,10 @@ namespace funya1_wpf
 
         private void UpdateMenuReverse()
         {
-            if (cleater.Results.Reverse)
+            if (results.Reverse)
             {
                 MenuReverse.Visibility = Visibility.Visible;
-                MenuReverse.IsChecked = cleater.Options.Reverse;
+                MenuReverse.IsChecked = options.Reverse;
             }
             else
             {
@@ -349,16 +352,16 @@ namespace funya1_wpf
             switch (message.Mode)
             {
                 case MessageMode.Info:
-                    MessageImage.Source = cleater.Resources.Stand;
+                    MessageImage.Source = resources.Stand;
                     break;
                 case MessageMode.Clear:
-                    MessageImage.Source = cleater.Resources.Happy;
+                    MessageImage.Source = resources.Happy;
                     break;
                 case MessageMode.Dying:
-                    MessageImage.Source = cleater.Resources.Death;
+                    MessageImage.Source = resources.Death;
                     break;
                 case MessageMode.GameOver:
-                    MessageImage.Source = cleater.Resources.Death;
+                    MessageImage.Source = resources.Death;
                     LabelMsg.Text = "Continue? 10";
                     StartContinueTimer();
                     break;
@@ -409,7 +412,7 @@ namespace funya1_wpf
             {
                 if (MessageTimer != null)
                 {
-                    cleater.Results.GetTotal -= 10;
+                    results.GetTotal -= 10;
                     cleater.Rest = cleater.RestMax;
                     cleater.StartStage(cleater.CurrentStage);
                 }
@@ -483,7 +486,7 @@ namespace funya1_wpf
 
         private void SetScreenSize(ScreenSize screenSize)
         {
-            cleater.Options.ScreenSize = screenSize;
+            options.ScreenSize = screenSize;
             switch (screenSize)
             {
                 case ScreenSize.Fixed:
@@ -510,14 +513,14 @@ namespace funya1_wpf
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            cleater.Options.WindowWidth = Width;
-            cleater.Options.WindowHeight = Height;
+            options.WindowWidth = Width;
+            options.WindowHeight = Height;
         }
 
         public ActionCommand OpenResultsCommand => new(_ =>
         {
             cleater.Pause();
-            var formResults = new FormResults(cleater.Results)
+            var formResults = new FormResults(results)
             {
                 Owner = this,
             };

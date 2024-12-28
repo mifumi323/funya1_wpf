@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
-    public class Cleater(FormMain formMain, Music music)
+    public class Cleater(FormMain formMain, Music music, Results Results, Options Options, Resources Resources)
     {
         public string StageFile = "";
 
@@ -30,9 +30,6 @@ namespace funya1_wpf
         public int Friction;
         public int EndingType;
 
-        public Results Results = new();
-        public Options Options = new();
-        public Resources Resources = new();
         public Misc Misc = new();
         public Random Random = new();
 
