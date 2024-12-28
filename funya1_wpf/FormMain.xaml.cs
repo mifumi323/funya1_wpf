@@ -13,6 +13,7 @@ namespace funya1_wpf
     public partial class FormMain : Window
     {
         private readonly Cleater cleater;
+        private readonly Music music = new();
 
         readonly ElapsedFrameCounter frameCounter1;
         readonly ElapsedFrameCounter frameCounter2;
@@ -34,7 +35,7 @@ namespace funya1_wpf
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
 
-            cleater = new Cleater(this);
+            cleater = new Cleater(this, music);
             cleater.LoadSettings();
 
             SetScreenSize(cleater.Options.ScreenSize);
@@ -111,8 +112,8 @@ namespace funya1_wpf
         public ActionCommand MenuMusic_Click => new(_ =>
         {
             cleater.Pause();
-            cleater.StopMusic(); // Pauseメソッドで音楽が止まるのはプレイ中だけ。
-            var editing = cleater.MusicOptions.Clone();
+            music.Stop(); // Pauseメソッドで音楽が止まるのはプレイ中だけ。
+            var editing = music.Options.Clone();
             var formMusic = new FormMusic
             {
                 Owner = this,
@@ -121,7 +122,7 @@ namespace funya1_wpf
             var result = formMusic.ShowDialog();
             if (result == true)
             {
-                cleater.MusicOptions = editing;
+                music.Options = editing;
             }
         });
 

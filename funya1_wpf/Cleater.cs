@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
-    public class Cleater
+    public class Cleater(FormMain formMain, Music music)
     {
         public string StageFile = "";
 
@@ -32,12 +32,9 @@ namespace funya1_wpf
 
         public Results Results = new();
         public Options Options = new();
-        public MusicOptions MusicOptions = new();
         public Resources Resources = new();
         public Misc Misc = new();
         public Random Random = new();
-        public MediaPlayer MediaPlayer = new();
-        public MusicInfo? PlayingMusic;
 
         public Status Status;
         private GameState gameState;
@@ -58,13 +55,6 @@ namespace funya1_wpf
         public bool PressedDownKey;
         public bool PressedUpKey;
         public HorizontalInput HorizontalInput;
-        private readonly FormMain formMain;
-
-        public Cleater(FormMain formMain)
-        {
-            this.formMain = formMain;
-            MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
-        }
 
         public void Ending2()
         {
@@ -94,7 +84,7 @@ namespace funya1_wpf
             else
             {
                 ChangeMineImage(Resources.Happy);
-                PlayMusic(MusicOptions.Ending);
+                music.Play(music.Options.Ending);
                 formMain.ShowMessage("All Clear!", MessageMode.Clear);
                 GameState = GameState.AllClear;
             }
@@ -154,7 +144,7 @@ namespace funya1_wpf
             Map[0].Food[1].x = 255;
             GameState = GameState.Ending;
             StartStage(0);
-            StopMusic();
+            music.Stop();
         }
 
         public ControlMode ControlMode =>
@@ -181,7 +171,7 @@ namespace funya1_wpf
             if (Rest == 0)
             {
                 GameState = GameState.GameOver;
-                PlayMusic(MusicOptions.GameOver);
+                music.Play(music.Options.GameOver);
                 formMain.Title = $"{Map[CurrentStage].Title}(ゲームオーバー) - ふにゃ";
                 formMain.ShowMessage("Game Over!", MessageMode.Dying);
                 if (Results.GetTotal >= 10)
@@ -192,7 +182,7 @@ namespace funya1_wpf
             else
             {
                 GameState = GameState.Dying;
-                PlayMusic(MusicOptions.Missing);
+                music.Play(music.Options.Missing);
                 formMain.Title = $"{Map[CurrentStage].Title}(残り{Rest}) - ふにゃ";
                 formMain.ShowMessage("Miss!", MessageMode.Dying);
                 formMain.OnMessageClose = _ => StartStage(CurrentStage);
@@ -204,7 +194,7 @@ namespace funya1_wpf
             if (GameState == GameState.Paused)
             {
                 GameState = GameState.Playing;
-                PlayMusic(MusicOptions.Playing);
+                music.Play(music.Options.Playing);
             }
         }
 
@@ -213,7 +203,7 @@ namespace funya1_wpf
             if (GameState == GameState.Playing)
             {
                 GameState = GameState.Paused;
-                StopMusic();
+                music.Stop();
                 if (Status == Status.JumpingUp)
                 {
                     if (SpeedX < 0)
@@ -283,7 +273,7 @@ namespace funya1_wpf
                         {
                             ChangeMineImage(Resources.Happy);
                             GameState = GameState.Clear;
-                            PlayMusic(MusicOptions.Clear);
+                            music.Play(music.Options.Clear);
                             formMain.Title = $"{Map[CurrentStage].Title}(ステージクリア) - ふにゃ";
                             formMain.ShowMessage("Clear!", MessageMode.Clear);
                             formMain.OnMessageClose = _ =>
@@ -306,31 +296,6 @@ namespace funya1_wpf
             if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].Width || MainIndexY == Map[CurrentStage].Height + 2)
             {
                 Die();
-            }
-        }
-
-        public void PlayMusic(MusicInfo music)
-        {
-            StopMusic();
-            if (!MusicOptions.IsEnabled || music.FilePath == "" || !File.Exists(music.FilePath))
-            {
-                return;
-            }
-            MediaPlayer.Open(new Uri(music.FilePath));
-            MediaPlayer.Play();
-            PlayingMusic = music;
-        }
-
-        private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
-        {
-            if (PlayingMusic != null && PlayingMusic.IsLoop)
-            {
-                MediaPlayer.Position = TimeSpan.Zero;
-                MediaPlayer.Play();
-            }
-            else
-            {
-                StopMusic();
             }
         }
 
@@ -549,7 +514,7 @@ namespace funya1_wpf
             Status = Status.Standing;
             MoveChara((32 * Map[NextStage].StartX) + 2, (32 * Map[NextStage].StartY) - 4);
             ResumeGame();
-            PlayMusic(MusicOptions.Playing);
+            music.Play(music.Options.Playing);
             formMain.UpdateMenuStage();
         }
 
@@ -749,12 +714,6 @@ namespace funya1_wpf
         {
             CurrentStage = 1;
             formMain.UpdateMenuStage();
-        }
-
-        public void StopMusic()
-        {
-            MediaPlayer.Stop();
-            PlayingMusic = null;
         }
 
         public void MainLoop()
@@ -1211,17 +1170,17 @@ namespace funya1_wpf
             Options.Reverse = LoadBool("Reverse", Options.Reverse);
 
             // 音楽
-            MusicOptions.IsEnabled = LoadBool("MusicEnabled", MusicOptions.IsEnabled);
-            MusicOptions.Playing.FilePath = LoadString("MusicPlaying", MusicOptions.Playing.FilePath);
-            MusicOptions.Playing.IsLoop = LoadBool("MusicPlayingLoop", MusicOptions.Playing.IsLoop);
-            MusicOptions.Clear.FilePath = LoadString("MusicClear", MusicOptions.Clear.FilePath);
-            MusicOptions.Clear.IsLoop = LoadBool("MusicClearLoop", MusicOptions.Clear.IsLoop);
-            MusicOptions.Ending.FilePath = LoadString("MusicEnding", MusicOptions.Ending.FilePath);
-            MusicOptions.Ending.IsLoop = LoadBool("MusicEndingLoop", MusicOptions.Ending.IsLoop);
-            MusicOptions.Missing.FilePath = LoadString("MusicMissing", MusicOptions.Missing.FilePath);
-            MusicOptions.Missing.IsLoop = LoadBool("MusicMissingLoop", MusicOptions.Missing.IsLoop);
-            MusicOptions.GameOver.FilePath = LoadString("MusicGameOver", MusicOptions.GameOver.FilePath);
-            MusicOptions.GameOver.IsLoop = LoadBool("MusicGameOverLoop", MusicOptions.GameOver.IsLoop);
+            music.Options.IsEnabled = LoadBool("MusicEnabled", music.Options.IsEnabled);
+            music.Options.Playing.FilePath = LoadString("MusicPlaying", music.Options.Playing.FilePath);
+            music.Options.Playing.IsLoop = LoadBool("MusicPlayingLoop", music.Options.Playing.IsLoop);
+            music.Options.Clear.FilePath = LoadString("MusicClear", music.Options.Clear.FilePath);
+            music.Options.Clear.IsLoop = LoadBool("MusicClearLoop", music.Options.Clear.IsLoop);
+            music.Options.Ending.FilePath = LoadString("MusicEnding", music.Options.Ending.FilePath);
+            music.Options.Ending.IsLoop = LoadBool("MusicEndingLoop", music.Options.Ending.IsLoop);
+            music.Options.Missing.FilePath = LoadString("MusicMissing", music.Options.Missing.FilePath);
+            music.Options.Missing.IsLoop = LoadBool("MusicMissingLoop", music.Options.Missing.IsLoop);
+            music.Options.GameOver.FilePath = LoadString("MusicGameOver", music.Options.GameOver.FilePath);
+            music.Options.GameOver.IsLoop = LoadBool("MusicGameOverLoop", music.Options.GameOver.IsLoop);
 
             // リザルト
             Results.GetTotal = LoadInt("GetTotal", Results.GetTotal);
@@ -1263,29 +1222,29 @@ namespace funya1_wpf
             {
                 Results.Reverse = ReverseBool;
             }
-            if (TryGetVb6Setting("Music", out var Music) && bool.TryParse(Music, out var MusicBool))
+            if (TryGetVb6Setting("Music", out var MusicEnabled) && bool.TryParse(MusicEnabled, out var MusicBool))
             {
-                MusicOptions.IsEnabled = MusicBool;
+                music.Options.IsEnabled = MusicBool;
             }
             if (TryGetVb6Setting("Music File Playing", out var MusicFilePlaying))
             {
-                MusicOptions.Playing.FilePath = MusicFilePlaying;
+                music.Options.Playing.FilePath = MusicFilePlaying;
             }
             if (TryGetVb6Setting("Music File Clear", out var MusicFileClear))
             {
-                MusicOptions.Clear.FilePath = MusicFileClear;
+                music.Options.Clear.FilePath = MusicFileClear;
             }
             if (TryGetVb6Setting("Music File Ending", out var MusicFileEnding))
             {
-                MusicOptions.Ending.FilePath = MusicFileEnding;
+                music.Options.Ending.FilePath = MusicFileEnding;
             }
             if (TryGetVb6Setting("Music File Missing", out var MusicFileMissing))
             {
-                MusicOptions.Missing.FilePath = MusicFileMissing;
+                music.Options.Missing.FilePath = MusicFileMissing;
             }
             if (TryGetVb6Setting("Music File Game Over", out var MusicFileGameOver))
             {
-                MusicOptions.GameOver.FilePath = MusicFileGameOver;
+                music.Options.GameOver.FilePath = MusicFileGameOver;
             }
         }
 
@@ -1335,17 +1294,17 @@ namespace funya1_wpf
                 $"Reverse={Options.Reverse}",
 
                 // 音楽
-                $"MusicEnabled={MusicOptions.IsEnabled}",
-                $"MusicPlaying={MusicOptions.Playing.FilePath}",
-                $"MusicPlayingLoop={MusicOptions.Playing.IsLoop}",
-                $"MusicClear={MusicOptions.Clear.FilePath}",
-                $"MusicClearLoop={MusicOptions.Clear.IsLoop}",
-                $"MusicEnding={MusicOptions.Ending.FilePath}",
-                $"MusicEndingLoop={MusicOptions.Ending.IsLoop}",
-                $"MusicMissing={MusicOptions.Missing.FilePath}",
-                $"MusicMissingLoop={MusicOptions.Missing.IsLoop}",
-                $"MusicGameOver={MusicOptions.GameOver.FilePath}",
-                $"MusicGameOverLoop={MusicOptions.GameOver.IsLoop}",
+                $"MusicEnabled={music.Options.IsEnabled}",
+                $"MusicPlaying={music.Options.Playing.FilePath}",
+                $"MusicPlayingLoop={music.Options.Playing.IsLoop}",
+                $"MusicClear={music.Options.Clear.FilePath}",
+                $"MusicClearLoop={music.Options.Clear.IsLoop}",
+                $"MusicEnding={music.Options.Ending.FilePath}",
+                $"MusicEndingLoop={music.Options.Ending.IsLoop}",
+                $"MusicMissing={music.Options.Missing.FilePath}",
+                $"MusicMissingLoop={music.Options.Missing.IsLoop}",
+                $"MusicGameOver={music.Options.GameOver.FilePath}",
+                $"MusicGameOverLoop={music.Options.GameOver.IsLoop}",
 
                 // リザルト
                 $"GetTotal={Results.GetTotal}",
