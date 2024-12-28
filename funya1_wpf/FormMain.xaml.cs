@@ -205,7 +205,7 @@ namespace funya1_wpf
 
         private void Mine_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // TODO: 実装
+            OpenResultsCommand.Execute(null);
         }
 
         public ActionCommand MenuAbout_Click => new(_ =>
@@ -506,5 +506,15 @@ namespace funya1_wpf
             cleater.Options.WindowWidth = Width;
             cleater.Options.WindowHeight = Height;
         }
+
+        public ActionCommand OpenResultsCommand => new(_ =>
+        {
+            cleater.Pause();
+            var formResults = new FormResults(cleater.Results)
+            {
+                Owner = this,
+            };
+            formResults.ShowDialog();
+        });
     }
 }
