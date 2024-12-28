@@ -522,5 +522,29 @@ namespace funya1_wpf
             };
             formResults.ShowDialog();
         });
+
+        private void Window_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var fileNames = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var fileName = fileNames[0];
+                cleater.StageFile = fileName;
+                cleater.GameStart();
+            }
+        }
     }
 }

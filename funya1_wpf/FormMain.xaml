@@ -11,11 +11,14 @@
         SizeToContent="WidthAndHeight"
         Icon="/Resources/Stand.ICO"
         Background="Gray"
+        AllowDrop="True"
         StateChanged="Window_StateChanged"
         SizeChanged="Window_SizeChanged"
         Closed="Window_Closed"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp"
+        DragEnter="Window_DragEnter"
+        Drop="Window_Drop"
         Loaded="Window_Loaded"
         Unloaded="Window_Unloaded">
     <Window.InputBindings>
