@@ -48,7 +48,7 @@
                     <MenuItem x:Name="SizableScreen"  Header="可変(_S)" Command="{Binding SizableScreen_Click}"/>
                 </MenuItem>
                 <MenuItem x:Name="MenuSpeed" Header="スピード(_S)">
-                    <MenuItem Header="超速い" CommandParameter="16" Command="{Binding Speed_Click}"/>
+                    <MenuItem Header="超速い" CommandParameter="5" Command="{Binding Speed_Click}"/>
                     <MenuItem Header="速い" CommandParameter="25" Command="{Binding Speed_Click}"/>
                     <MenuItem Header="普通" CommandParameter="50" Command="{Binding Speed_Click}"/>
                     <MenuItem Header="遅い" CommandParameter="100" Command="{Binding Speed_Click}"/>
