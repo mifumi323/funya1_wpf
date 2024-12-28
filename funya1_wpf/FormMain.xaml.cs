@@ -17,6 +17,7 @@ namespace funya1_wpf
         private readonly Results results = new();
         private readonly Options options = new();
         private readonly Resources resources = new();
+        private readonly SaveData SaveData;
 
         readonly ElapsedFrameCounter frameCounter1;
         readonly ElapsedFrameCounter frameCounter2;
@@ -39,7 +40,8 @@ namespace funya1_wpf
             MouseHideTimer.Start();
 
             cleater = new Cleater(this, music, results, options, resources);
-            cleater.LoadSettings();
+            SaveData = new(music, results, options);
+            SaveData.Load();
 
             SetScreenSize(options.ScreenSize);
             WindowState = options.WindowState;
@@ -146,7 +148,7 @@ namespace funya1_wpf
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            cleater.SaveSettings();
+            SaveData.Save();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
