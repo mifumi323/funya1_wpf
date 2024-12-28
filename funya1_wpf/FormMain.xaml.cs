@@ -178,31 +178,16 @@ namespace funya1_wpf
                 Filter = "ふにゃステージファイル|*.stg",
                 Title = "ふにゃステージファイルを開く",
             };
+            string fileName;
             if (dialog.ShowDialog() == true)
             {
-                newCleater.StageFile = dialog.FileName;
+                fileName = dialog.FileName;
             }
             else
             {
-                newCleater.StageFile = "";
+                fileName = "";
             }
-            bool success;
-            try
-            {
-                success = newCleater.GameStart();
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-            if (success)
-            {
-                cleater = newCleater;
-            }
-            else
-            {
-                MessageBox.Show("ステージファイル読み込みに失敗しました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            OpenStageFile(fileName);
         });
 
         public ActionCommand Speed_Click => new(interval =>
@@ -565,25 +550,30 @@ namespace funya1_wpf
             {
                 var fileNames = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var fileName = fileNames[0];
-                var newCleater = new Cleater(this, music, results, options, resources);
-                newCleater.StageFile = fileName;
-                bool success;
-                try
-                {
-                    success = newCleater.GameStart();
-                }
-                catch (Exception)
-                {
-                    success = false;
-                }
-                if (success)
-                {
-                    cleater = newCleater;
-                }
-                else
-                {
-                    MessageBox.Show("ステージファイル読み込みに失敗しました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                OpenStageFile(fileName);
+            }
+        }
+
+        private void OpenStageFile(string fileName)
+        {
+            var newCleater = new Cleater(this, music, results, options, resources);
+            newCleater.StageFile = fileName;
+            bool success;
+            try
+            {
+                success = newCleater.GameStart();
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            if (success)
+            {
+                cleater = newCleater;
+            }
+            else
+            {
+                MessageBox.Show("ステージファイル読み込みに失敗しました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
