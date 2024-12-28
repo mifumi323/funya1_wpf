@@ -222,6 +222,7 @@ namespace funya1_wpf
             var formAbout = new FormAbout
             {
                 Owner = this,
+                resources = resources,
             };
             formAbout.ShowDialog();
         });

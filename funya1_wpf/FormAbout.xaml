@@ -12,6 +12,8 @@
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         Icon="/Resources/Stand.ICO"
+        Loaded="Window_Loaded"
+        Unloaded="Window_Unloaded"
         >
     <Grid>
         <Grid.ColumnDefinitions>
