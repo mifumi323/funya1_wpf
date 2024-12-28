@@ -543,18 +543,18 @@ namespace funya1_wpf
             formMain.Stage.Background = new ImageBrush(terrainImage);
         }
 
-        public void LoadFile()
+        public bool LoadFile()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var fileText = File.ReadAllText(StageFile, Encoding.GetEncoding(932));
             var reader = new Vb6TextReader(fileText);
             if (!reader.TryInputInt(out Friction))
             {
-                return;
+                return false;
             }
             if (!reader.TryInputString(out var MapBank))
             {
-                return;
+                return false;
             }
             var MapBankPath = Path.Combine(Path.GetDirectoryName(StageFile)!, MapBank);
             if (File.Exists(MapBankPath))
@@ -569,69 +569,75 @@ namespace funya1_wpf
             }
             if (!reader.TryInputInt(out StageCount))
             {
-                return;
+                return false;
+            }
+            if (StageCount < 1 || StageCount > 30)
+            {
+                return false;
             }
             if (!reader.TryInputInt(out RestMax))
             {
-                return;
+                return false;
             }
             if (!reader.TryInputInt(out int ColorValue))
             {
-                return;
+                return false;
             }
             StageColor = Color.FromRgb((byte)(ColorValue & 0xFF), (byte)((ColorValue >> 8) & 0xFF), (byte)((ColorValue >> 16) & 0xFF));
             for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
             {
                 if (!reader.TryInputString(out Map[StageNumber].Title))
                 {
-                    return;
+                    return false;
                 }
                 if (!reader.TryInputInt(out Map[StageNumber].Width))
                 {
-                    return;
+                    return false;
                 }
                 if (!reader.TryInputInt(out Map[StageNumber].Height))
                 {
-                    return;
+                    return false;
                 }
                 if (!reader.TryInputInt(out Map[StageNumber].StartX))
                 {
-                    return;
+                    return false;
                 }
                 if (!reader.TryInputInt(out Map[StageNumber].StartY))
                 {
-                    return;
+                    return false;
                 }
                 if (!reader.TryInputInt(out Map[StageNumber].TotalFood))
                 {
-                    return;
+                    return false;
                 }
                 for (int i = 1; i <= Map[StageNumber].TotalFood; i++)
                 {
                     if (!reader.TryInputInt(out Map[StageNumber].Food[i].x))
                     {
-                        return;
+                        return false;
                     }
                     if (!reader.TryInputInt(out Map[StageNumber].Food[i].y))
                     {
-                        return;
+                        return false;
                     }
                 }
                 for (int y = 0; y <= Map[StageNumber].Height; y++)
                 {
                     if (!reader.TryInputString(out MapText[StageNumber, y]))
                     {
-                        return;
+                        return false;
                     }
                 }
             }
             if (!reader.TryInputInt(out EndingType))
             {
-                return;
+                return false;
             }
+
+            return true;
         }
 
-        public void GameStart()
+        public bool GameStart()
         {
             if (string.IsNullOrEmpty(StageFile))
             {
@@ -639,7 +645,10 @@ namespace funya1_wpf
             }
             else
             {
-                LoadFile();
+                if (!LoadFile())
+                {
+                    return false;
+                }
             }
             SetMenuStage();
             Rest = RestMax;
@@ -647,6 +656,8 @@ namespace funya1_wpf
             SetStage();
             StartStage(CurrentStage);
             formMain.Client.Background = new SolidColorBrush(StageColor);
+
+            return true;
         }
 
         public void ResetStage()
