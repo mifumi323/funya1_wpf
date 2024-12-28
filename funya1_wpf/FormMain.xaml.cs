@@ -218,7 +218,12 @@ namespace funya1_wpf
 
         public ActionCommand MenuAbout_Click => new(_ =>
         {
-            // TODO: 実装
+            cleater.Pause();
+            var formAbout = new FormAbout
+            {
+                Owner = this,
+            };
+            formAbout.ShowDialog();
         });
 
         public ActionCommand HelpContents_Click => new(_ =>
