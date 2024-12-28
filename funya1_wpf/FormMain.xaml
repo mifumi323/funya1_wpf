@@ -23,6 +23,11 @@
         <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding MenuPause_Click}"/>
         <KeyBinding Key="Delete" Command="{Binding Death_Click}"/>
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding MenuOpen_Click}"/>
+        <KeyBinding Key="D1" CommandParameter="5" Command="{Binding Speed_Click}"/>
+        <KeyBinding Key="D2" CommandParameter="25" Command="{Binding Speed_Click}"/>
+        <KeyBinding Key="D3" CommandParameter="50" Command="{Binding Speed_Click}"/>
+        <KeyBinding Key="D4" CommandParameter="100" Command="{Binding Speed_Click}"/>
+        <KeyBinding Key="D5" CommandParameter="500" Command="{Binding Speed_Click}"/>
     </Window.InputBindings>
     <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
