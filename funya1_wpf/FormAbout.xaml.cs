@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Documents;
+﻿using System.Reflection;
+using System.Windows;
 using System.Windows.Media;
 
 namespace funya1_wpf
@@ -12,6 +12,9 @@ namespace funya1_wpf
         public required Resources resources { get; init; }
         private readonly ElapsedFrameCounter frameCounter1;
         private readonly Random random = new();
+
+        public string Version => $"バージョン {Assembly.GetExecutingAssembly().GetName().Version?.ToString(3)}";
+        public string Copyright => $"{Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}";
 
         private Status status = Status.Standing;
         private int frame = 0;
