@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -229,7 +231,11 @@ namespace funya1_wpf
 
         public ActionCommand HelpContents_Click => new(_ =>
         {
-            // TODO: 実装
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Help", "index.html"),
+                UseShellExecute = true,
+            });
         });
 
         public void UpdateMenuItems()
