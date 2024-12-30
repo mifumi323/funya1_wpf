@@ -5,8 +5,154 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:funya1_wpf"
         mc:Ignorable="d"
-        Title="ふにゃステージメーカー" Height="450" Width="800">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Icon="/Resources/funyaMaker.ICO"
+        Title="ふにゃステージメーカー" Height="600" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="ファイル(_F)">
+                <MenuItem Header="新規作成(_N)" Command="{Binding New_Click}" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="開く(_O)" Command="{Binding Open_Click}" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="上書き保存(_S)" Command="{Binding Save_Click}" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="名前を付けて保存(_A)" Command="{Binding SaveAs_Click}" InputGestureText="Ctrl+Shift+S"/>
+                <Separator/>
+                <MenuItem Header="ゲームに戻る(_X)" Command="{Binding Exit_Click}" InputGestureText="Alt+F4"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Button Command="{Binding New_Click}" ToolTip="新規作成" Margin="5,5,5,5">
+                    <Image Source="/Resources/New.png"/>
+                </Button>
+                <Button Command="{Binding Open_Click}" ToolTip="開く" Margin="5,5,5,5">
+                    <Image Source="/Resources/Open.png"/>
+                </Button>
+                <Button Command="{Binding Save_Click}" ToolTip="上書き保存" Margin="5,5,5,5">
+                    <Image Source="/Resources/Save.png"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Visible">
+                <Canvas x:Name="StageCanvas" Background="White" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" MouseUp="StageCanvas_MouseUp" Width="320" Height="320"/>
+            </ScrollViewer>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="マップチップ">
+                    <StackPanel Orientation="Vertical">
+                        <Canvas Width="320" Height="32">
+                            <Image x:Name="ChipImage" Source="{Binding ChipImage}" Stretch="None"/>
+                            <Image x:Name="ChipSelect" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32" Margin="{Binding ChipSelect}"/>
+                        </Canvas>
+                        <Button Command="{Binding LoadChip_Click}" Content="読み込み" Margin="5,5,5,5"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="キャラクター" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl x:Name="SelectMine" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="SelectFood1" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="SelectFood2" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="SelectFood3" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="SelectFood4" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="SelectFood5" Margin="5,5,5,5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <Button Content="－" Command="{Binding AddFood_Click}" Margin="5,5,5,5"/>
+                        <Button Content="＋" Command="{Binding AddFood_Click}" Margin="5,5,5,5"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="全般設定" Grid.Row="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="摩擦力" Grid.Column="0" Grid.Row="0"/>
+                        <TextBox x:Name="FrictionText" Text="{Binding Friction}" Grid.Column="1" Grid.Row="0" MaxLength="2"/>
+                        <Slider x:Name="Friction" Value="{Binding Friction}" Minimum="0" Maximum="20" TickFrequency="1" Grid.Column="2" Grid.Row="0"/>
+                        <Label Content="残り人数" Grid.Column="0" Grid.Row="1"/>
+                        <TextBox x:Name="RestText" Text="{Binding Rest}" Grid.Column="1" Grid.Row="1" MaxLength="3"/>
+                        <Slider x:Name="Rest" Value="{Binding Rest}" Minimum="1" Maximum="100" TickFrequency="1" Grid.Column="2" Grid.Row="1"/>
+                        <Label Content="背景色" Grid.Column="0" Grid.Row="2"/>
+                        <Button x:Name="BackColor" Command="{Binding BackColor_Click}" Grid.Column="2" Grid.Row="2" Background="{Binding BackColor}" Margin="5,5,5,5"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="マップセレクト" Grid.Row="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ListBox x:Name="MapList" ItemsSource="{Binding MapList}" SelectedIndex="{Binding MapIndex}" Grid.ColumnSpan="2"/>
+                        <Button x:Name="MapAdd" Command="{Binding MapAdd_Click}" Content="追加" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5"/>
+                        <Button x:Name="MapDel" Command="{Binding MapDel_Click}" Content="削除" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="マップ設定" Grid.Row="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="タイトル" Grid.Column="0" Grid.Row="0"/>
+                        <TextBox x:Name="MapName" Text="{Binding MapName}" Grid.Column="1" Grid.Row="0" MaxLength="20"/>
+                        <Label Content="大きさ" Grid.Column="0" Grid.Row="1"/>
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="MapWidth" Text="{Binding MapWidth}" MaxLength="2" Grid.Column="0"/>
+                            <Slider x:Name="MapWidthSlider" Value="{Binding MapWidth}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="1"/>
+                            <Label Content="×" Grid.Column="2"/>
+                            <TextBox x:Name="MapHeight" Text="{Binding MapHeight}" MaxLength="2" Grid.Column="3"/>
+                            <Slider x:Name="MapHeightSlider" Value="{Binding MapHeight}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="4"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
