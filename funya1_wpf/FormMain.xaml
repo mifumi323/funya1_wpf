@@ -91,7 +91,7 @@
                         </ContentControl>
                     </Canvas>
                 </Canvas>
-                <Button x:Name="MessageButton" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsDefault="True" Width="264" Height="88" Click="MessageButton_Click" Background="#E5DDDDDD">
+                <Button x:Name="MessageButton" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsDefault="True" Width="265" Height="88" Click="MessageButton_Click" Background="#E5DDDDDD">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="48"/>
