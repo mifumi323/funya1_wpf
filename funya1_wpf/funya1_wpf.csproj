@@ -16,9 +16,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Help\bug.html" />
+    <None Remove="Help\character.html" />
+    <None Remove="Help\conclusion.html" />
+    <None Remove="Help\copyright.html" />
     <None Remove="Help\favicon.ico" />
+    <None Remove="Help\funya.css" />
+    <None Remove="Help\history.html" />
+    <None Remove="Help\howto.html" />
     <None Remove="Help\index.html" />
+    <None Remove="Help\menu.html" />
     <None Remove="Help\playing.png" />
+    <None Remove="Help\stand.png" />
+    <None Remove="Help\story.html" />
     <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
@@ -53,13 +63,49 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Help\bug.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\character.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\conclusion.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\copyright.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\funya.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\history.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\howto.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\install.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\envronment.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Help\menu.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\playing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\stand.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\story.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
