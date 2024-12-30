@@ -588,5 +588,17 @@ namespace funya1_wpf
                 MessageBox.Show("ステージファイル読み込みに失敗しました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public ActionCommand MenuStageMaker_Click => new(_ =>
+        {
+            cleater.Pause();
+            var formEditor = new FormEditor
+            {
+                Owner = this,
+            };
+            Hide();
+            formEditor.ShowDialog();
+            Show();
+        });
     }
 }
