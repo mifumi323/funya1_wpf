@@ -56,6 +56,7 @@
     <None Remove="Resources\JumpR.png" />
     <None Remove="Resources\JumpRG.png" />
     <None Remove="Resources\New.png" />
+    <None Remove="Resources\NonOil.bmp" />
     <None Remove="Resources\Open.png" />
     <None Remove="Resources\RunLA.png" />
     <None Remove="Resources\RunLB.png" />
@@ -73,6 +74,7 @@
     <None Remove="Resources\WalkL.png" />
     <None Remove="Resources\WalkR.png" />
     <None Remove="Resources\Wink.png" />
+    <None Remove="Resources\ZeroG.stg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -167,6 +169,7 @@
     <Resource Include="Resources\JumpR.png" />
     <Resource Include="Resources\JumpRG.png" />
     <Resource Include="Resources\New.png" />
+    <Resource Include="Resources\NonOil.bmp" />
     <Resource Include="Resources\Open.png" />
     <Resource Include="Resources\RunLA.png" />
     <Resource Include="Resources\RunLB.png" />
@@ -184,6 +187,7 @@
     <Resource Include="Resources\WalkL.png" />
     <Resource Include="Resources\WalkR.png" />
     <Resource Include="Resources\Wink.png" />
+    <Resource Include="Resources\ZeroG.stg" />
   </ItemGroup>
 
 </Project>

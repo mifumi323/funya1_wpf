@@ -109,7 +109,7 @@ namespace funya1_wpf
             {
                 Results.ZeroGStage = true;
                 formMain.ShowMessage("Secret 5", MessageMode.Clear, "秘密機能 5 - ゼロ -");
-                // TODO: ゼロGステージを出す
+                CopyZeroGStage();
             }
             if (Results.GetTotal >= 5000 && !Results.Reverse && Rest == RestMax)
             {
@@ -117,6 +117,29 @@ namespace funya1_wpf
                 formMain.ShowMessage("Perfect!", MessageMode.Clear, "秘密機能 6 - リバース -");
             }
             formMain.UpdateMenuItems();
+        }
+
+        public static bool CopyZeroGStage()
+        {
+            var result = false;
+            result = result | CopyFileFromResource("ZeroG.stg");
+            result = result | CopyFileFromResource("NonOil.bmp");
+            return result;
+        }
+
+        private static bool CopyFileFromResource(string filename)
+        {
+            var uri = new Uri($"/Resources/{filename}", UriKind.Relative);
+            var info = Application.GetResourceStream(uri);
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "funyaMaker", filename);
+            // ファイルが存在しない場合のみコピー
+            if (!File.Exists(path))
+            {
+                using var fileStream = File.Create(path);
+                info.Stream.CopyTo(fileStream);
+                return true;
+            }
+            return false;
         }
 
         public void Ending()
