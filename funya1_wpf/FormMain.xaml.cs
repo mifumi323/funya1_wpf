@@ -60,8 +60,13 @@ namespace funya1_wpf
             Foods[5] = Food5;
 
             cleater.GameStart();
+            music.Stop();
             UpdateMenuItems();
             ShowMessage("ふにゃ", MessageMode.Info, "Enter/クリックで進む");
+            OnMessageClose = _ =>
+            {
+                music.Play(music.Options.Playing);
+            };
         }
 
         public ActionCommand MenuStage_Click => new(stageNumber =>
