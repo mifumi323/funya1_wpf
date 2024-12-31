@@ -65,7 +65,10 @@ namespace funya1_wpf
             ShowMessage("ふにゃ", MessageMode.Info, "Enter/クリックで進む");
             OnMessageClose = _ =>
             {
-                music.Play(music.Options.Playing);
+                if (cleater.GameState == GameState.Playing)
+                {
+                    music.Play(music.Options.Playing);
+                }
             };
         }
 
