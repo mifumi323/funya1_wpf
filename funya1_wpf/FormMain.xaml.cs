@@ -184,6 +184,7 @@ namespace funya1_wpf
             {
                 Filter = "ふにゃステージファイル|*.stg",
                 Title = "ふにゃステージファイルを開く",
+                DefaultDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "funyaMaker"),
             };
             string fileName;
             if (dialog.ShowDialog() == true)
