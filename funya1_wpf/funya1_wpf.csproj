@@ -16,6 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="funyaMaker\Cave.bmp" />
+    <None Remove="funyaMaker\Cave.stg" />
+    <None Remove="funyaMaker\Cave.txt" />
+    <None Remove="funyaMaker\CaveEasy.stg" />
+    <None Remove="funyaMaker\Ice.bmp" />
+    <None Remove="funyaMaker\Ice.stg" />
+    <None Remove="funyaMaker\Ice.txt" />
+    <None Remove="funyaMaker\裏Cave.stg" />
     <None Remove="Help\bug.html" />
     <None Remove="Help\character.html" />
     <None Remove="Help\conclusion.html" />
@@ -68,6 +76,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="funyaMaker\Cave.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\Cave.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\Cave.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\CaveEasy.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\Ice.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\Ice.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\Ice.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\裏Cave.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\bug.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
