@@ -598,7 +598,7 @@ namespace funya1_wpf
         public ActionCommand MenuStageMaker_Click => new(_ =>
         {
             cleater.Pause();
-            var formEditor = new FormEditor
+            var formEditor = new FormEditor(resources)
             {
                 Owner = this,
             };

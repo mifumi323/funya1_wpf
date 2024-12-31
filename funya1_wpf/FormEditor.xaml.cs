@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace funya1_wpf
@@ -8,9 +9,43 @@ namespace funya1_wpf
     /// </summary>
     public partial class FormEditor : Window
     {
-        public FormEditor()
+        private bool IsChanged = false;
+        public StageData StageData = new(null!);
+        public Resources resources;
+
+        public int Friction
+        {
+            get => StageData.Friction;
+            set
+            {
+                if (StageData.Friction == value)
+                {
+                    return;
+                }
+
+                StageData.Friction = value;
+                IsChanged = true;
+            }
+        }
+
+        public FormEditor(Resources resources)
         {
             InitializeComponent();
+            this.resources = resources;
+            NewData();
+        }
+
+        private void NewData()
+        {
+            StageData = new StageData(resources.BlockData1)
+            {
+                StageFile = "",
+                StageCount = 1,
+                Friction = 10,
+                RestMax = 10,
+                EndingType = 0,
+            };
+            IsChanged = false;
         }
 
         private void StageCanvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -27,5 +62,40 @@ namespace funya1_wpf
         {
 
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (IsChanged)
+            {
+                var result = MessageBox.Show(this, $"\"{StageData.StageFile}\"の内容は変更されているらしいです。\n保存するんですか？", "終了の前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // TODO: セーブ
+                }
+                else if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        public ICommand New_Click => new ActionCommand(_ => NewData());
+
+        public ICommand Open_Click => new ActionCommand(_ =>
+        {
+            // TODO: ファイルを開く
+        });
+
+        public ICommand Save_Click => new ActionCommand(_ =>
+        {
+            // TODO: ファイルを保存
+        });
+
+        public ICommand SaveAs_Click => new ActionCommand(_ =>
+        {
+            // TODO: 名前をつけて保存
+        });
+
+        public ICommand Exit_Click => new ActionCommand(_ => Close());
     }
 }

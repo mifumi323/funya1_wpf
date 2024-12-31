@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Icon="/Resources/funyaMaker.ICO"
-        Title="ふにゃステージメーカー" Height="600" Width="800">
+        Title="ふにゃステージメーカー" Height="600" Width="800" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -99,10 +99,10 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="摩擦力" Grid.Column="0" Grid.Row="0"/>
-                        <TextBox x:Name="FrictionText" Text="{Binding Friction}" Grid.Column="1" Grid.Row="0" MaxLength="2"/>
-                        <Slider x:Name="Friction" Value="{Binding Friction}" Minimum="0" Maximum="20" TickFrequency="1" Grid.Column="2" Grid.Row="0"/>
+                        <ComboBox x:Name="FrictionType" Text="{Binding Friction, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" IsEditable="True"/>
+                        <Slider x:Name="FrictionSlider" Value="{Binding Friction, Mode=TwoWay}" Minimum="0" Maximum="20" TickFrequency="1" Grid.Column="2" Grid.Row="0"/>
                         <Label Content="残り人数" Grid.Column="0" Grid.Row="1"/>
-                        <TextBox x:Name="RestText" Text="{Binding Rest}" Grid.Column="1" Grid.Row="1" MaxLength="3"/>
+                        <TextBox x:Name="RestText" DataContext="{Binding StageData}" Text="{Binding Friction, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" MaxLength="3"/>
                         <Slider x:Name="Rest" Value="{Binding Rest}" Minimum="1" Maximum="100" TickFrequency="1" Grid.Column="2" Grid.Row="1"/>
                         <Label Content="背景色" Grid.Column="0" Grid.Row="2"/>
                         <Button x:Name="BackColor" Command="{Binding BackColor_Click}" Grid.Column="2" Grid.Row="2" Background="{Binding BackColor}" Margin="5,5,5,5"/>
@@ -134,7 +134,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="タイトル" Grid.Column="0" Grid.Row="0"/>
-                        <TextBox x:Name="MapName" Text="{Binding MapName}" Grid.Column="1" Grid.Row="0" MaxLength="20"/>
+                        <TextBox x:Name="MapName" Text="{Binding StageData.Friction}" Grid.Column="1" Grid.Row="0" MaxLength="20"/>
                         <Label Content="大きさ" Grid.Column="0" Grid.Row="1"/>
                         <Grid Grid.Column="1" Grid.Row="1">
                             <Grid.ColumnDefinitions>
