@@ -37,6 +37,7 @@
     <None Remove="Help\playing.png" />
     <None Remove="Help\stand.png" />
     <None Remove="Help\story.html" />
+    <None Remove="readme.txt" />
     <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
@@ -145,6 +146,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\story.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
