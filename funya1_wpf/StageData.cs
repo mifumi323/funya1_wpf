@@ -79,6 +79,10 @@ namespace funya1_wpf
             {
                 return false;
             }
+            if (RestMax < 1)
+            {
+                return false;
+            }
             if (!reader.TryInputInt(out int ColorValue))
             {
                 return false;
@@ -94,7 +98,15 @@ namespace funya1_wpf
                 {
                     return false;
                 }
+                if (Map[StageNumber].Width < 2 || 39 < Map[StageNumber].Width)
+                {
+                    return false;
+                }
                 if (!reader.TryInputInt(out Map[StageNumber].Height))
+                {
+                    return false;
+                }
+                if (Map[StageNumber].Height < 2 || 39 < Map[StageNumber].Height)
                 {
                     return false;
                 }
@@ -102,11 +114,23 @@ namespace funya1_wpf
                 {
                     return false;
                 }
+                if (Map[StageNumber].StartX <= 0 || Map[StageNumber].Width <= Map[StageNumber].StartX)
+                {
+                    return false;
+                }
                 if (!reader.TryInputInt(out Map[StageNumber].StartY))
                 {
                     return false;
                 }
+                if (Map[StageNumber].StartY <= 0 || Map[StageNumber].Height <= Map[StageNumber].StartY)
+                {
+                    return false;
+                }
                 if (!reader.TryInputInt(out Map[StageNumber].TotalFood))
+                {
+                    return false;
+                }
+                if (Map[StageNumber].TotalFood < 1 || 5 < Map[StageNumber].TotalFood)
                 {
                     return false;
                 }
