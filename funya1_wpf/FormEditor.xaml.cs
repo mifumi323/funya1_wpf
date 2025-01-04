@@ -78,7 +78,7 @@ namespace funya1_wpf
                 var result = MessageBox.Show(this, $"\"{StageData.StageFile}\"の内容は変更されているらしいです。\n保存するんですか？", "終了の前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // TODO: セーブ
+                    Save();
                 }
                 else if (result == MessageBoxResult.Cancel)
                 {
