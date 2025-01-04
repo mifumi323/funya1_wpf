@@ -28,6 +28,7 @@
                 <MenuItem Header="名前を付けて保存(_A)" Command="{Binding SaveAs_Click}" InputGestureText="Ctrl+Shift+S"/>
                 <Separator/>
                 <MenuItem Header="ゲームに戻る(_X)" Command="{Binding Exit_Click}" InputGestureText="Alt+F4"/>
+                <MenuItem Header="ゲームに戻らず終了する(_Q)" Command="{Binding ExitAll_Click}" InputGestureText="Alt+Q"/>
             </MenuItem>
         </Menu>
         <ToolBarTray Grid.Row="1">

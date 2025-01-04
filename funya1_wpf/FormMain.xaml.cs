@@ -606,8 +606,15 @@ namespace funya1_wpf
                 Owner = this,
             };
             Hide();
-            formEditor.ShowDialog();
-            Show();
+            var result = formEditor.ShowDialog();
+            if (result == true)
+            {
+                Close();
+            }
+            else
+            {
+                Show();
+            }
         });
     }
 }

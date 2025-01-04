@@ -83,6 +83,7 @@ namespace funya1_wpf
                 else if (result == MessageBoxResult.Cancel)
                 {
                     e.Cancel = true;
+                    DialogResult = false;
                 }
             }
         }
@@ -150,7 +151,17 @@ namespace funya1_wpf
             }
         }
 
-        public ICommand Exit_Click => new ActionCommand(_ => Close());
+        public ICommand Exit_Click => new ActionCommand(_ =>
+        {
+            DialogResult = false;
+            Close();
+        });
+
+        public ICommand ExitAll_Click => new ActionCommand(_ =>
+        {
+            DialogResult = true;
+            Close();
+        });
 
         public ICommand FrictionPreset_Click => new ActionCommand(friction =>
         {
