@@ -43,7 +43,28 @@ namespace funya1_wpf
 
         private Color stageColor = Color.FromRgb(0, 0, 0);
         public Color StageColor { get => stageColor; set { stageColor = value; OnPropertyChanged(); } }
-        public BitmapSource image = null!;
+        private string imagePath = "";
+        public string ImagePath
+        {
+            get => imagePath;
+            set
+            {
+                imagePath = value;
+                var MapBankPath = Path.Combine(Path.GetDirectoryName(StageFile)!, imagePath);
+                if (File.Exists(MapBankPath))
+                {
+                    using var stream = File.OpenRead(MapBankPath);
+                    Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                    LoadCroppedBitmaps();
+                }
+                else
+                {
+                    LoadSampleImage();
+                }
+                OnPropertyChanged();
+            }
+        }
+        private BitmapSource image = null!;
         public BitmapSource Image { get => image; set { image = value; OnPropertyChanged(); } }
         public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
 
@@ -83,17 +104,7 @@ namespace funya1_wpf
             {
                 return false;
             }
-            var MapBankPath = Path.Combine(Path.GetDirectoryName(StageFile)!, MapBank);
-            if (File.Exists(MapBankPath))
-            {
-                using var stream = File.OpenRead(MapBankPath);
-                Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                LoadCroppedBitmaps();
-            }
-            else
-            {
-                LoadSampleImage();
-            }
+            ImagePath = MapBank;
             if (!reader.TryInputInt(out var stageCount))
             {
                 return false;
