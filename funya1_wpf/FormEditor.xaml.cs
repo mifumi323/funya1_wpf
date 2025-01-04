@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace funya1_wpf
 {
@@ -10,24 +11,17 @@ namespace funya1_wpf
     public partial class FormEditor : Window
     {
         private bool IsChanged = false;
-        public StageData StageData = new(null!);
         public Resources resources;
         private readonly Options options;
 
-        public int Friction
+        public StageData StageData
         {
-            get => StageData.Friction;
-            set
-            {
-                if (StageData.Friction == value)
-                {
-                    return;
-                }
-
-                StageData.Friction = value;
-                IsChanged = true;
-            }
+            get => (StageData)GetValue(StageDataProperty);
+            set => SetValue(StageDataProperty, value);
         }
+        public static readonly DependencyProperty StageDataProperty =
+            DependencyProperty.Register("StageData", typeof(StageData), typeof(FormEditor), new PropertyMetadata(null));
+
 
         public FormEditor(Resources resources, Options options)
         {
@@ -51,7 +45,9 @@ namespace funya1_wpf
                 Friction = 10,
                 RestMax = 10,
                 EndingType = 0,
+                StageColor = Color.FromRgb(0, 0, 0),
             };
+            StageData.LoadSampleImage();
             IsChanged = false;
         }
 

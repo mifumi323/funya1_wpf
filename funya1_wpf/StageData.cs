@@ -1,24 +1,34 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
-    public class StageData(BitmapSource BlockData1)
+    public class StageData(BitmapSource BlockData1) : INotifyPropertyChanged
     {
         public string StageFile = "";
 
-        public RangeArray<MapData> Map = new(0, 30, i => new MapData()); // 1~30: 通常マップ、0: 演出用マップ
-        public string[,] MapText = new string[31, 40]; // 0 To 30, 0 To 39
+        private RangeArray<MapData> map = new(0, 30, i => new MapData()); // 1~30: 通常マップ、0: 演出用マップ
+        public RangeArray<MapData> Map { get => map; set { map = value; OnPropertyChanged(); } }
+        private string[,] mapText = new string[31, 40]; // 0 To 30, 0 To 39
+        public string[,] MapText { get => mapText; set { mapText = value; OnPropertyChanged(); } }
 
-        public int StageCount;
-        public int Friction;
-        public int RestMax;
-        public int EndingType;
+        private int stageCount;
+        public int StageCount { get => stageCount; set { stageCount = value; OnPropertyChanged(); } }
+        private int friction;
+        public int Friction { get => friction; set { friction = value; OnPropertyChanged(); } }
+        private int restMax;
+        public int RestMax { get => restMax; set { restMax = value; OnPropertyChanged(); } }
+        private int endingType;
+        public int EndingType { get => endingType; set { endingType = value; OnPropertyChanged(); } }
 
-        public Color StageColor = Color.FromRgb(0, 0, 0);
-        public BitmapSource Image = null!;
+        private Color stageColor = Color.FromRgb(0, 0, 0);
+        public Color StageColor { get => stageColor; set { stageColor = value; OnPropertyChanged(); } }
+        public BitmapSource image = null!;
+        public BitmapSource Image { get => image; set { image = value; OnPropertyChanged(); } }
         public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
 
         public void SetStage()
@@ -48,10 +58,11 @@ namespace funya1_wpf
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var fileText = File.ReadAllText(StageFile, Encoding.GetEncoding(932));
             var reader = new Vb6TextReader(fileText);
-            if (!reader.TryInputInt(out Friction))
+            if (!reader.TryInputInt(out var friction))
             {
                 return false;
             }
+            Friction = friction;
             if (!reader.TryInputString(out var MapBank))
             {
                 return false;
@@ -67,18 +78,20 @@ namespace funya1_wpf
             {
                 LoadSampleImage();
             }
-            if (!reader.TryInputInt(out StageCount))
+            if (!reader.TryInputInt(out var stageCount))
             {
                 return false;
             }
+            StageCount = stageCount;
             if (StageCount < 1 || StageCount > 30)
             {
                 return false;
             }
-            if (!reader.TryInputInt(out RestMax))
+            if (!reader.TryInputInt(out var restMax))
             {
                 return false;
             }
+            RestMax = restMax;
             if (RestMax < 1)
             {
                 return false;
@@ -153,10 +166,11 @@ namespace funya1_wpf
                     }
                 }
             }
-            if (!reader.TryInputInt(out EndingType))
+            if (!reader.TryInputInt(out var endingType))
             {
                 return false;
             }
+            EndingType = endingType;
 
             return true;
         }
@@ -188,5 +202,8 @@ namespace funya1_wpf
                 croppedBitmaps[i] = (i + 1) * 32 <= Image.PixelWidth ? new(Image, new(i * 32, 0, 32, 32)) : null;
             }
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
