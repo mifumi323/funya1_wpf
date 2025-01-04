@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Win32;
+using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -92,15 +94,37 @@ namespace funya1_wpf
             // TODO: ファイルを開く
         });
 
-        public ICommand Save_Click => new ActionCommand(_ =>
-        {
-            // TODO: ファイルを保存
-        });
+        public ICommand Save_Click => new ActionCommand(_ => Save());
 
-        public ICommand SaveAs_Click => new ActionCommand(_ =>
+        private void Save()
         {
-            // TODO: 名前をつけて保存
-        });
+            if (string.IsNullOrEmpty(StageData.StageFile))
+            {
+                SaveAs();
+            }
+            else
+            {
+                StageData.Save();
+            }
+        }
+
+        public ICommand SaveAs_Click => new ActionCommand(_ => SaveAs());
+
+        private void SaveAs()
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "ふにゃステージファイル|*.stg",
+                DefaultExt = ".stg",
+                FileName = StageData.StageFile,
+                DefaultDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "funyaMaker"),
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                StageData.StageFile = dialog.FileName;
+                StageData.Save();
+            }
+        }
 
         public ICommand Exit_Click => new ActionCommand(_ => Close());
 

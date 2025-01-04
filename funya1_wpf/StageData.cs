@@ -219,6 +219,12 @@ namespace funya1_wpf
             }
         }
 
+        public void Save()
+        {
+            // TODO: セーブ
+            throw new NotImplementedException();
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
