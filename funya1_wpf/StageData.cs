@@ -127,7 +127,7 @@ namespace funya1_wpf
             {
                 return false;
             }
-            StageColor = Color.FromRgb((byte)(ColorValue & 0xFF), (byte)((ColorValue >> 8) & 0xFF), (byte)((ColorValue >> 16) & 0xFF));
+            StageColor = IntToColor(ColorValue);
             for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
             {
                 if (!reader.TryInputString(out Map[StageNumber].Title))
@@ -200,6 +200,11 @@ namespace funya1_wpf
             EndingType = endingType;
 
             return true;
+        }
+
+        private static Color IntToColor(int ColorValue)
+        {
+            return Color.FromRgb((byte)(ColorValue & 0xFF), (byte)((ColorValue >> 8) & 0xFF), (byte)((ColorValue >> 16) & 0xFF));
         }
 
         public void ResetStage()
