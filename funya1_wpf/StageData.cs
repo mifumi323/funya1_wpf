@@ -29,9 +29,9 @@ namespace funya1_wpf
                 {
                     friction = 0;
                 }
-                if (friction > 20)
+                if (friction > 100)
                 {
-                    friction = 20;
+                    friction = 100;
                 }
                 OnPropertyChanged();
             }

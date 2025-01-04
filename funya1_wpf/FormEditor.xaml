@@ -106,7 +106,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="摩擦力" Grid.Column="0" Grid.Row="0"/>
-                        <TextBox x:Name="FrictionType" DataContext="{Binding StageData}" Text="{Binding Friction, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" MaxLength="2"/>
+                        <TextBox x:Name="FrictionType" DataContext="{Binding StageData}" Text="{Binding Friction, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" MaxLength="3"/>
                         <Menu Grid.Column="2">
                             <MenuItem x:Name="FrictionPreset" Header="▼" SubmenuOpened="FrictionPreset_SubmenuOpened">
                                 <MenuItem Header="0:すべりっぱなし(_0)" Command="{Binding FrictionPreset_Click}" CommandParameter="0"/>
