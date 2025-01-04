@@ -237,8 +237,41 @@ namespace funya1_wpf
 
         public void Save()
         {
-            // TODO: セーブ
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            sb.AppendLine(Friction.ToString());
+            sb.AppendLine(ImagePath);
+            sb.AppendLine($"{StageCount},{RestMax}");
+            sb.AppendLine(ColorToInt(StageColor).ToString());
+            for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
+            {
+                sb.AppendLine(Map[StageNumber].Title);
+                sb.AppendLine($"{Map[StageNumber].Width},{Map[StageNumber].Height},{Map[StageNumber].StartX},{Map[StageNumber].StartY}");
+                sb.AppendLine(Map[StageNumber].TotalFood.ToString());
+                for (int i = 1; i <= Map[StageNumber].TotalFood; i++)
+                {
+                    sb.AppendLine($"{Map[StageNumber].Food[i].x},{Map[StageNumber].Food[i].y}");
+                }
+                for (int y = 0; y <= Map[StageNumber].Height; y++)
+                {
+                    var line = new StringBuilder();
+                    for (int x = 0; x <= Map[StageNumber].Width; x++)
+                    {
+                        var chipNumber = Map[StageNumber].Data[x, y];
+                        var chipChar = chipNumber == 0 && x > 0 ? ' ' : (char)('0' + chipNumber);
+                        line.Append(chipChar);
+                    }
+                    sb.AppendLine(line.ToString().TrimEnd());
+                }
+            }
+            sb.AppendLine(EndingType == 0 ? "End" : EndingType.ToString());
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            File.WriteAllText(StageFile, sb.ToString(), Encoding.GetEncoding(932));
+        }
+
+        private static int ColorToInt(Color color)
+        {
+            return color.R + (color.G << 8) + (color.B << 16);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
