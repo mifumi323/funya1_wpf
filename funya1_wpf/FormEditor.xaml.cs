@@ -12,6 +12,7 @@ namespace funya1_wpf
         private bool IsChanged = false;
         public StageData StageData = new(null!);
         public Resources resources;
+        private readonly Options options;
 
         public int Friction
         {
@@ -28,10 +29,16 @@ namespace funya1_wpf
             }
         }
 
-        public FormEditor(Resources resources)
+        public FormEditor(Resources resources, Options options)
         {
             InitializeComponent();
             this.resources = resources;
+            this.options = options;
+
+            WindowState = options.StageMakerState;
+            Width = options.StageMakerWidth;
+            Height = options.StageMakerHeight;
+
             NewData();
         }
 
@@ -97,5 +104,19 @@ namespace funya1_wpf
         });
 
         public ICommand Exit_Click => new ActionCommand(_ => Close());
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState != WindowState.Minimized)
+            {
+                options.StageMakerState = WindowState;
+            }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            options.StageMakerWidth = Width;
+            options.StageMakerHeight = Height;
+        }
     }
 }

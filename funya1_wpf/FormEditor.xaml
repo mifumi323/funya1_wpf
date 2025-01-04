@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Icon="/Resources/funyaMaker.ICO"
-        Title="ふにゃステージメーカー" Height="600" Width="800" Closing="Window_Closing">
+        Title="ふにゃステージメーカー"
+        Height="600"
+        Width="800"
+        Closing="Window_Closing"
+        StateChanged="Window_StateChanged"
+        SizeChanged="Window_SizeChanged"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
