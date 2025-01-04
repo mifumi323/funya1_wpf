@@ -19,7 +19,23 @@ namespace funya1_wpf
         private int stageCount;
         public int StageCount { get => stageCount; set { stageCount = value; OnPropertyChanged(); } }
         private int friction;
-        public int Friction { get => friction; set { friction = value; OnPropertyChanged(); } }
+        public int Friction
+        {
+            get => friction;
+            set
+            {
+                friction = value;
+                if (friction < 0)
+                {
+                    friction = 0;
+                }
+                if (friction > 20)
+                {
+                    friction = 20;
+                }
+                OnPropertyChanged();
+            }
+        }
         private int restMax;
         public int RestMax { get => restMax; set { restMax = value; OnPropertyChanged(); } }
         private int endingType;

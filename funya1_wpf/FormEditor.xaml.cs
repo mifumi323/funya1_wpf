@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -26,6 +28,7 @@ namespace funya1_wpf
         public FormEditor(Resources resources, Options options)
         {
             InitializeComponent();
+
             this.resources = resources;
             this.options = options;
 
@@ -100,6 +103,22 @@ namespace funya1_wpf
         });
 
         public ICommand Exit_Click => new ActionCommand(_ => Close());
+
+        public ICommand FrictionPreset_Click => new ActionCommand(friction =>
+        {
+            StageData.Friction = int.Parse((friction as string)!);
+        });
+
+        private void FrictionPreset_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in FrictionPreset.Items)
+            {
+                if (item is MenuItem menuItem)
+                {
+                    menuItem.IsChecked = menuItem.CommandParameter.ToString() == StageData.Friction.ToString();
+                }
+            }
+        }
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
