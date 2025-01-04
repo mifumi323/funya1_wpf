@@ -89,10 +89,34 @@ namespace funya1_wpf
 
         public ICommand New_Click => new ActionCommand(_ => NewData());
 
-        public ICommand Open_Click => new ActionCommand(_ =>
+        public ICommand Open_Click => new ActionCommand(_ => Open());
+
+        private void Open()
         {
-            // TODO: ファイルを開く
-        });
+            var dialog = new OpenFileDialog
+            {
+                Filter = "ふにゃステージファイル|*.stg",
+                DefaultExt = ".stg",
+                DefaultDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "funyaMaker"),
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var stageData = new StageData(resources.BlockData1)
+                    {
+                        StageFile = dialog.FileName,
+                    };
+                    stageData.LoadFile();
+                    IsChanged = false;
+                    StageData = stageData;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         public ICommand Save_Click => new ActionCommand(_ => Save());
 
