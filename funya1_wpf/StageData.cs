@@ -130,51 +130,57 @@ namespace funya1_wpf
             StageColor = IntToColor(ColorValue);
             for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
             {
-                if (!reader.TryInputString(out Map[StageNumber].Title))
+                if (!reader.TryInputString(out var title))
                 {
                     return false;
                 }
-                if (!reader.TryInputInt(out Map[StageNumber].Width))
+                Map[StageNumber].Title = title;
+                if (!reader.TryInputInt(out var width))
                 {
                     return false;
                 }
-                if (Map[StageNumber].Width < 2 || 39 < Map[StageNumber].Width)
+                if (width < 2 || 39 < width)
                 {
                     return false;
                 }
-                if (!reader.TryInputInt(out Map[StageNumber].Height))
+                Map[StageNumber].Width = width;
+                if (!reader.TryInputInt(out var height))
                 {
                     return false;
                 }
-                if (Map[StageNumber].Height < 2 || 39 < Map[StageNumber].Height)
+                if (height < 2 || 39 < height)
                 {
                     return false;
                 }
-                if (!reader.TryInputInt(out Map[StageNumber].StartX))
+                Map[StageNumber].Height = height;
+                if (!reader.TryInputInt(out var startX))
                 {
                     return false;
                 }
-                if (Map[StageNumber].StartX <= 0 || Map[StageNumber].Width <= Map[StageNumber].StartX)
+                if (startX <= 0 || width <= startX)
                 {
                     return false;
                 }
-                if (!reader.TryInputInt(out Map[StageNumber].StartY))
+                Map[StageNumber].StartX = startX;
+                if (!reader.TryInputInt(out var startY))
                 {
                     return false;
                 }
-                if (Map[StageNumber].StartY <= 0 || Map[StageNumber].Height <= Map[StageNumber].StartY)
+                if (startY <= 0 || height <= startY)
                 {
                     return false;
                 }
-                if (!reader.TryInputInt(out Map[StageNumber].TotalFood))
+                Map[StageNumber].StartY = startY;
+                if (!reader.TryInputInt(out var totalFood))
                 {
                     return false;
                 }
-                if (Map[StageNumber].TotalFood < 1 || 5 < Map[StageNumber].TotalFood)
+                if (totalFood < 1 || 5 < totalFood)
                 {
                     return false;
                 }
-                for (int i = 1; i <= Map[StageNumber].TotalFood; i++)
+                Map[StageNumber].TotalFood = totalFood;
+                for (int i = 1; i <= totalFood; i++)
                 {
                     if (!reader.TryInputInt(out Map[StageNumber].Food[i].x))
                     {
