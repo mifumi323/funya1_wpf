@@ -26,6 +26,21 @@ namespace funya1_wpf
         public static readonly DependencyProperty StageDataProperty =
             DependencyProperty.Register("StageData", typeof(StageData), typeof(FormEditor), new PropertyMetadata(null));
 
+        public RangeArray<MapData> Maps
+        {
+            get => (RangeArray<MapData>)GetValue(MapsProperty);
+            set => SetValue(MapsProperty, value);
+        }
+        public static readonly DependencyProperty MapsProperty =
+            DependencyProperty.Register("Maps", typeof(RangeArray<MapData>), typeof(FormEditor), new PropertyMetadata(null));
+
+        public KeyValuePair<int, MapData> SelectedMap
+        {
+            get => (KeyValuePair<int, MapData>)GetValue(SelectedMapProperty);
+            set => SetValue(SelectedMapProperty, value);
+        }
+        public static readonly DependencyProperty SelectedMapProperty =
+            DependencyProperty.Register("SelectedMap", typeof(KeyValuePair<int, MapData>), typeof(FormEditor), new PropertyMetadata(default(KeyValuePair<int, MapData>)));
 
         public FormEditor(Resources resources, Options options)
         {
@@ -53,6 +68,9 @@ namespace funya1_wpf
                 StageColor = Color.FromRgb(0, 0, 0),
             };
             StageData.LoadSampleImage();
+            StageData.Map[1].Title = "マップ1";
+            Maps = StageData.GetValidMaps();
+            SelectedMap = Maps.First();
             IsChanged = false;
         }
 
@@ -111,6 +129,8 @@ namespace funya1_wpf
                     stageData.LoadFile();
                     IsChanged = false;
                     StageData = stageData;
+                    Maps = StageData.GetValidMaps();
+                    SelectedMap = Maps.First();
                 }
                 catch (Exception ex)
                 {

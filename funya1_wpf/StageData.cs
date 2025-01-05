@@ -280,6 +280,11 @@ namespace funya1_wpf
             return color.R + (color.G << 8) + (color.B << 16);
         }
 
+        public RangeArray<MapData> GetValidMaps()
+        {
+            return new RangeArray<MapData>(1, StageCount, i => Map[i]);
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

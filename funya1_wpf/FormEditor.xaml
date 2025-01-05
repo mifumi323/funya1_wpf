@@ -138,7 +138,16 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListBox x:Name="MapList" ItemsSource="{Binding MapList}" SelectedIndex="{Binding MapIndex}" Grid.ColumnSpan="2"/>
+                            <ListBox x:Name="MapList" ItemsSource="{Binding Maps}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="2">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}" Width="20"/>
+                                            <TextBlock Text="{Binding Value.Title}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <Button x:Name="MapAdd" Command="{Binding MapAdd_Click}" Content="追加" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5"/>
                             <Button x:Name="MapDel" Command="{Binding MapDel_Click}" Content="削除" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5"/>
                         </Grid>
@@ -154,7 +163,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Label Content="タイトル" Grid.Column="0" Grid.Row="0"/>
-                            <TextBox x:Name="MapName" Text="{Binding StageData.Friction}" Grid.Column="1" Grid.Row="0" MaxLength="20"/>
+                            <TextBox x:Name="MapName" Text="{Binding SelectedMap.Value.Title}" Grid.Column="1" Grid.Row="0" MaxLength="20"/>
                             <Label Content="大きさ" Grid.Column="0" Grid.Row="1"/>
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.ColumnDefinitions>
@@ -164,11 +173,11 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox x:Name="MapWidth" Text="{Binding MapWidth}" MaxLength="2" Grid.Column="0"/>
-                                <Slider x:Name="MapWidthSlider" Value="{Binding MapWidth}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="1"/>
+                                <TextBox x:Name="MapWidth" Text="{Binding SelectedMap.Value.Width}" MaxLength="2" Grid.Column="0"/>
+                                <Slider x:Name="MapWidthSlider" Value="{Binding SelectedMap.Value.Width}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="1"/>
                                 <Label Content="×" Grid.Column="2"/>
-                                <TextBox x:Name="MapHeight" Text="{Binding MapHeight}" MaxLength="2" Grid.Column="3"/>
-                                <Slider x:Name="MapHeightSlider" Value="{Binding MapHeight}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="4"/>
+                                <TextBox x:Name="MapHeight" Text="{Binding SelectedMap.Value.Height}" MaxLength="2" Grid.Column="3"/>
+                                <Slider x:Name="MapHeightSlider" Value="{Binding SelectedMap.Value.Height}" Minimum="3" Maximum="40" TickFrequency="1" Grid.Column="4"/>
                             </Grid>
                         </Grid>
                     </GroupBox>
