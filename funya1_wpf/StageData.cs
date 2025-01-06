@@ -74,9 +74,9 @@ namespace funya1_wpf
             {
                 var StageNumber = map.Key;
                 var MapValue = map.Value;
-                for (int x = 0; x <= MapValue.Width; x++)
+                for (int x = 0; x <= MapValue.MaxX; x++)
                 {
-                    for (int y = 0; y <= MapValue.Height; y++)
+                    for (int y = 0; y <= MapValue.MaxY; y++)
                     {
                         int n =
                             string.IsNullOrEmpty(MapText[StageNumber, y]) ? 0 :
@@ -143,7 +143,7 @@ namespace funya1_wpf
                 {
                     return false;
                 }
-                Map[StageNumber].Width = width;
+                Map[StageNumber].MaxX = width;
                 if (!reader.TryInputInt(out var height))
                 {
                     return false;
@@ -152,7 +152,7 @@ namespace funya1_wpf
                 {
                     return false;
                 }
-                Map[StageNumber].Height = height;
+                Map[StageNumber].MaxY = height;
                 if (!reader.TryInputInt(out var startX))
                 {
                     return false;
@@ -191,7 +191,7 @@ namespace funya1_wpf
                         return false;
                     }
                 }
-                for (int y = 0; y <= Map[StageNumber].Height; y++)
+                for (int y = 0; y <= Map[StageNumber].MaxY; y++)
                 {
                     if (!reader.TryInputString(out MapText[StageNumber, y]))
                     {
@@ -251,16 +251,16 @@ namespace funya1_wpf
             for (int StageNumber = 1; StageNumber <= StageCount; StageNumber++)
             {
                 sb.AppendLine(Map[StageNumber].Title);
-                sb.AppendLine($"{Map[StageNumber].Width},{Map[StageNumber].Height},{Map[StageNumber].StartX},{Map[StageNumber].StartY}");
+                sb.AppendLine($"{Map[StageNumber].MaxX},{Map[StageNumber].MaxY},{Map[StageNumber].StartX},{Map[StageNumber].StartY}");
                 sb.AppendLine(Map[StageNumber].TotalFood.ToString());
                 for (int i = 1; i <= Map[StageNumber].TotalFood; i++)
                 {
                     sb.AppendLine($"{Map[StageNumber].Food[i].x},{Map[StageNumber].Food[i].y}");
                 }
-                for (int y = 0; y <= Map[StageNumber].Height; y++)
+                for (int y = 0; y <= Map[StageNumber].MaxY; y++)
                 {
                     var line = new StringBuilder();
-                    for (int x = 0; x <= Map[StageNumber].Width; x++)
+                    for (int x = 0; x <= Map[StageNumber].MaxX; x++)
                     {
                         var chipNumber = Map[StageNumber].Data[x, y];
                         var chipChar = chipNumber == 0 && x > 0 ? ' ' : (char)('0' + chipNumber);

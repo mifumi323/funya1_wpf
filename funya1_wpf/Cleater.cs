@@ -130,8 +130,8 @@ namespace funya1_wpf
 
         public void Ending()
         {
-            Map[0].Width = 13;
-            Map[0].Height = 9;
+            Map[0].MaxX = 13;
+            Map[0].MaxY = 9;
             for (var r = 0; r <= 3; r++)
             {
                 MapText[0, r] = "55555555555555";
@@ -299,7 +299,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].Width || MainIndexY == Map[CurrentStage].Height + 2)
+            if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].MaxX || MainIndexY == Map[CurrentStage].MaxY + 2)
             {
                 Die();
             }
@@ -504,18 +504,18 @@ namespace funya1_wpf
 
         private void DrawTerrain(int NextStage)
         {
-            int terrainWidth = 32 * (Map[NextStage].Width + 1);
+            int terrainWidth = 32 * (Map[NextStage].MaxX + 1);
             formMain.Stage.Width = terrainWidth;
-            int terrainHeight = 32 * (Map[NextStage].Height + 1);
+            int terrainHeight = 32 * (Map[NextStage].MaxY + 1);
             formMain.Stage.Height = terrainHeight;
 
             var terrainImage = new RenderTargetBitmap(terrainWidth, terrainHeight, 96, 96, PixelFormats.Pbgra32);
             var dv = new DrawingVisual();
             using (var dc = dv.RenderOpen())
             {
-                for (int x = 0; x <= Map[NextStage].Width; x++)
+                for (int x = 0; x <= Map[NextStage].MaxX; x++)
                 {
-                    for (int y = 0; y <= Map[NextStage].Height; y++)
+                    for (int y = 0; y <= Map[NextStage].MaxY; y++)
                     {
                         CroppedBitmap? imageSource = croppedBitmaps[Map[NextStage].Data[x, y]];
                         if (imageSource != null)
@@ -557,8 +557,8 @@ namespace funya1_wpf
         {
             StageCount = 1;
             Map[1].Title = "サンプルステージ";
-            Map[1].Width = 15;
-            Map[1].Height = 8;
+            Map[1].MaxX = 15;
+            Map[1].MaxY = 8;
             Map[1].StartX = 4;
             Map[1].StartY = 6;
             MapText[1, 0] = "2211111200000000";
