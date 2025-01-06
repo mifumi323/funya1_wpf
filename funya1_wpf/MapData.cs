@@ -25,6 +25,20 @@ namespace funya1_wpf
         public int Width { get => MaxX + 1; set => MaxX = value - 1; }
         public int Height { get => MaxY + 1; set => MaxY = value - 1; }
 
+        public void ImportLine(int y, string line)
+        {
+            for (int x = 0; x < line.Length; x++)
+            {
+                int n =
+                    string.IsNullOrEmpty(line) ? 0 :
+                    x >= line.Length ? 0 :
+                    line[x] < '0' ? 0 :
+                    line[x] > '9' ? 0 :
+                    line[x] - '0';
+                Data[x, y] = n;
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

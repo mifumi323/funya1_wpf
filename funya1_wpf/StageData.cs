@@ -13,8 +13,6 @@ namespace funya1_wpf
 
         private RangeArray<MapData> map = new(0, 30, i => new MapData()); // 1~30: 通常マップ、0: 演出用マップ
         public RangeArray<MapData> Map { get => map; set { map = value; OnPropertyChanged(); } }
-        private string[,] mapText = new string[31, 40]; // 0 To 30, 0 To 39
-        public string[,] MapText { get => mapText; set { mapText = value; OnPropertyChanged(); } }
 
         private int stageCount;
         public int StageCount { get => stageCount; set { stageCount = value; OnPropertyChanged(); } }
@@ -67,28 +65,6 @@ namespace funya1_wpf
         private BitmapSource image = null!;
         public BitmapSource Image { get => image; set { image = value; OnPropertyChanged(); } }
         public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
-
-        public void SetStage()
-        {
-            foreach (var map in Map)
-            {
-                var StageNumber = map.Key;
-                var MapValue = map.Value;
-                for (int x = 0; x <= MapValue.MaxX; x++)
-                {
-                    for (int y = 0; y <= MapValue.MaxY; y++)
-                    {
-                        int n =
-                            string.IsNullOrEmpty(MapText[StageNumber, y]) ? 0 :
-                            x >= MapText[StageNumber, y].Length ? 0 :
-                            MapText[StageNumber, y][x] < '0' ? 0 :
-                            MapText[StageNumber, y][x] > '9' ? 0 :
-                            MapText[StageNumber, y][x] - '0';
-                        MapValue.Data[x, y] = n;
-                    }
-                }
-            }
-        }
 
         public bool LoadFile()
         {
@@ -193,10 +169,11 @@ namespace funya1_wpf
                 }
                 for (int y = 0; y <= Map[StageNumber].MaxY; y++)
                 {
-                    if (!reader.TryInputString(out MapText[StageNumber, y]))
+                    if (!reader.TryInputString(out var mapText))
                     {
                         return false;
                     }
+                    Map[StageNumber].ImportLine(y, mapText);
                 }
             }
             if (!reader.TryInputInt(out var endingType))
@@ -211,20 +188,6 @@ namespace funya1_wpf
         private static Color IntToColor(int ColorValue)
         {
             return Color.FromRgb((byte)(ColorValue & 0xFF), (byte)((ColorValue >> 8) & 0xFF), (byte)((ColorValue >> 16) & 0xFF));
-        }
-
-        public void ResetStage()
-        {
-            foreach (var map in Map)
-            {
-                for (int x = 0; x <= 39; x++)
-                {
-                    for (int y = 0; y <= 39; y++)
-                    {
-                        map.Value.Data[x, y] = 0;
-                    }
-                }
-            }
         }
 
         public void LoadSampleImage()

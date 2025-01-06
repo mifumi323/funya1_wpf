@@ -134,16 +134,15 @@ namespace funya1_wpf
             Map[0].MaxY = 9;
             for (var r = 0; r <= 3; r++)
             {
-                MapText[0, r] = "55555555555555";
+                Map[0].ImportLine(r, "55555555555555");
             }
-            MapText[0, 4] = "11111111555555";
-            MapText[0, 5] = "00000000555555";
-            MapText[0, 6] = "11111111111111";
+            Map[0].ImportLine(4,"11111111555555");
+            Map[0].ImportLine(5,"00000000555555");
+            Map[0].ImportLine(6,"11111111111111");
             for (var r = 7; r <= 9; r++)
             {
-                MapText[0, r] = "55555555555555";
+                Map[0].ImportLine(r,"55555555555555");
             }
-            SetStage();
             Map[0].StartX = 5;
             Map[0].StartY = 5;
             Map[0].TotalFood = 1;
@@ -545,8 +544,6 @@ namespace funya1_wpf
             }
             SetMenuStage();
             Rest = RestMax;
-            ResetStage();
-            SetStage();
             StartStage(CurrentStage);
             formMain.Client.Background = new SolidColorBrush(StageColor);
 
@@ -561,15 +558,15 @@ namespace funya1_wpf
             Map[1].MaxY = 8;
             Map[1].StartX = 4;
             Map[1].StartY = 6;
-            MapText[1, 0] = "2211111200000000";
-            MapText[1, 1] = "2000000200000000";
-            MapText[1, 2] = "1000111222200002";
-            MapText[1, 3] = "2000000002222001";
-            MapText[1, 4] = "2100000102222001";
-            MapText[1, 5] = "2200000100000001";
-            MapText[1, 6] = "2211000100011111";
-            MapText[1, 7] = "2222111100010000";
-            MapText[1, 8] = "0000000111110000";
+            Map[1].ImportLine(0,"2211111200000000");
+            Map[1].ImportLine(1,"2000000200000000");
+            Map[1].ImportLine(2,"1000111222200002");
+            Map[1].ImportLine(3,"2000000002222001");
+            Map[1].ImportLine(4,"2100000102222001");
+            Map[1].ImportLine(5,"2200000100000001");
+            Map[1].ImportLine(6,"2211000100011111");
+            Map[1].ImportLine(7,"2222111100010000");
+            Map[1].ImportLine(8,"0000000111110000");
             Map[1].TotalFood = 3;
             Map[1].Food[1].x = 1;
             Map[1].Food[1].y = 3;
