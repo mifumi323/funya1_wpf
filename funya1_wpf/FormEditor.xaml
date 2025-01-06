@@ -16,6 +16,13 @@
         StateChanged="Window_StateChanged"
         SizeChanged="Window_SizeChanged"
         >
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding New_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding Open_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding Save_Click}"/>
+        <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAs_Click}"/>
+        <KeyBinding Modifiers="Alt" Key="Q" Command="{Binding ExitAll_Click}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
