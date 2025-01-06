@@ -145,7 +145,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListBox x:Name="MapList" ItemsSource="{Binding Maps}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="2">
+                            <ListBox x:Name="MapList" ItemsSource="{Binding Maps}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="2" SelectionChanged="MapList_SelectionChanged">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

@@ -17,6 +17,7 @@ namespace funya1_wpf
         private bool IsChanged = false;
         public Resources resources;
         private readonly Options options;
+        private readonly Image[,] cells = new Image[40, 40];
 
         public StageData StageData
         {
@@ -45,6 +46,23 @@ namespace funya1_wpf
         public FormEditor(Resources resources, Options options)
         {
             InitializeComponent();
+
+            // cellsの各要素を生成
+            for (int y = 0; y < 40; y++)
+            {
+                for (int x = 0; x < 40; x++)
+                {
+                    var image = new Image
+                    {
+                        Width = 32,
+                        Height = 32,
+                    };
+                    cells[x, y] = image;
+                    Canvas.SetLeft(image, x * 32);
+                    Canvas.SetTop(image, y * 32);
+                    StageCanvas.Children.Add(image);
+                }
+            }
 
             this.resources = resources;
             this.options = options;
@@ -211,6 +229,37 @@ namespace funya1_wpf
         {
             options.StageMakerWidth = Width;
             options.StageMakerHeight = Height;
+        }
+
+        private void MapList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StageCanvas.Width = SelectedMap.Value.Width * 32;
+            StageCanvas.Height = SelectedMap.Value.Height * 32;
+
+            for (int y = 0; y < 40; y++)
+            {
+                for (int x = 0; x < 40; x++)
+                {
+                    if (x < SelectedMap.Value.Width && y < SelectedMap.Value.Height)
+                    {
+                        cells[x, y].Visibility = Visibility.Visible;
+                        UpdateCell(x, y);
+                    }
+                    else
+                    {
+                        cells[x, y].Visibility = Visibility.Collapsed;
+                        cells[x, y].Source = null;
+                    }
+                }
+            }
+        }
+
+        private void UpdateCell(int x, int y)
+        {
+            var map = SelectedMap.Value;
+            var block = map.Data[x, y];
+            var image = cells[x, y];
+            image.Source = StageData.croppedBitmaps[block];
         }
     }
 }
