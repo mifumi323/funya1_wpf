@@ -87,6 +87,8 @@ namespace funya1_wpf
             };
             StageData.LoadSampleImage();
             StageData.Map[1].Title = "マップ1";
+            StageData.Map[1].MaxX = 9;
+            StageData.Map[1].MaxY = 9;
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.First();
             IsChanged = false;
