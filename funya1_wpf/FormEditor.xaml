@@ -74,7 +74,7 @@
                         <StackPanel Orientation="Vertical">
                             <Canvas Width="320" Height="32">
                                 <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Stretch="None"/>
-                                <Image x:Name="ChipSelect" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32" Margin="{Binding ChipSelect}"/>
+                                <Image x:Name="ChipSelector" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32"/>
                             </Canvas>
                             <Button Command="{Binding LoadChip_Click}" Content="読み込み" Margin="5,5,5,5"/>
                         </StackPanel>

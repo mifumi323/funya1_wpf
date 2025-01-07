@@ -114,6 +114,21 @@ namespace funya1_wpf
             {
                 drawing = false;
             }
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                var x = (int)e.GetPosition(StageCanvas).X / 32;
+                var y = (int)e.GetPosition(StageCanvas).Y / 32;
+                if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
+                {
+                    SelectChip(SelectedMap.Value.Data[x, y]);
+                }
+            }
+        }
+
+        private void SelectChip(int newChip)
+        {
+            SelectedChip = newChip;
+            Canvas.SetLeft(ChipSelector, 32 * newChip);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
