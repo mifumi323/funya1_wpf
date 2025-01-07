@@ -286,5 +286,19 @@ namespace funya1_wpf
                 StageCanvas.Height = SelectedMap.Value.Height * 32;
             }
         }
+
+        private void ChipContainer_MouseDown(object sender, MouseButtonEventArgs e) => ChipContainer_MouseMove(sender, e);
+
+        private void ChipContainer_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var x = (int)e.GetPosition(ChipContainer).X / 32;
+                if (x >= 0 && x < 10)
+                {
+                    SelectChip(x);
+                }
+            }
+        }
     }
 }

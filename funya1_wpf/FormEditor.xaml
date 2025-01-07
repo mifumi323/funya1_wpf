@@ -72,7 +72,7 @@
                     </Grid.RowDefinitions>
                     <GroupBox Header="マップチップ">
                         <StackPanel Orientation="Vertical">
-                            <Canvas Width="320" Height="32">
+                            <Canvas x:Name="ChipContainer" Width="320" Height="32" MouseDown="ChipContainer_MouseDown" MouseMove="ChipContainer_MouseMove">
                                 <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Stretch="None"/>
                                 <Image x:Name="ChipSelector" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32"/>
                             </Canvas>
