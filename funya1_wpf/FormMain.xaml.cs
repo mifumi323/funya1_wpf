@@ -591,6 +591,7 @@ namespace funya1_wpf
             if (success)
             {
                 cleater = newCleater;
+                UpdateMenuItems();
             }
             else
             {
