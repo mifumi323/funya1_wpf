@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
@@ -17,6 +17,8 @@ namespace funya1_wpf
         private bool IsChanged = false;
         public Resources resources;
         private readonly Options options;
+        private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
+        private bool drawing = false;
 
         public StageData StageData
         {
@@ -41,6 +43,14 @@ namespace funya1_wpf
         }
         public static readonly DependencyProperty SelectedMapProperty =
             DependencyProperty.Register("SelectedMap", typeof(KeyValuePair<int, MapData>), typeof(FormEditor), new PropertyMetadata(default(KeyValuePair<int, MapData>)));
+
+        public int SelectedChip
+        {
+            get => (int)GetValue(SelectedChipProperty);
+            set => SetValue(SelectedChipProperty, value);
+        }
+        public static readonly DependencyProperty SelectedChipProperty =
+            DependencyProperty.Register("SelectedChip", typeof(int), typeof(FormEditor), new PropertyMetadata(0));
 
         public FormEditor(Resources resources, Options options)
         {
@@ -78,17 +88,32 @@ namespace funya1_wpf
 
         private void StageCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            drawing = true;
+            StageCanvas_MouseMove(sender, e);
         }
 
         private void StageCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-
-        }
-
-        private void StageCanvas_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-
+            if (e.LeftButton == MouseButtonState.Pressed && drawing)
+            {
+                var x = (int)e.GetPosition(StageCanvas).X / 32;
+                var y = (int)e.GetPosition(StageCanvas).Y / 32;
+                if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
+                {
+                    SelectedMap.Value.Data[x, y] = SelectedChip;
+                    var dv = new DrawingVisual();
+                    using (var dc = dv.RenderOpen())
+                    {
+                        SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                    }
+                    terrainImage.Render(dv);
+                    IsChanged = true;
+                }
+            }
+            else
+            {
+                drawing = false;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -232,6 +257,7 @@ namespace funya1_wpf
                 }
             }
             SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+            terrainImage = (StageCanvas.Background as ImageBrush)?.ImageSource as RenderTargetBitmap ?? terrainImage;
         }
 
         private void SelectedMap_PropertyChanged(object? sender, PropertyChangedEventArgs e)

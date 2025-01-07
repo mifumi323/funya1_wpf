@@ -106,15 +106,20 @@ namespace funya1_wpf
                 {
                     for (int y = 0; y <= maxY; y++)
                     {
-                        CroppedBitmap? imageSource = croppedBitmaps[Data[x, y]];
-                        if (imageSource != null)
-                        {
-                            dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
-                        }
+                        DrawTile(croppedBitmaps, dc, x, y);
                     }
                 }
             }
             terrainImage.Render(dv);
+        }
+
+        public void DrawTile(CroppedBitmap?[] croppedBitmaps, DrawingContext dc, int x, int y)
+        {
+            CroppedBitmap? imageSource = croppedBitmaps[Data[x, y]];
+            if (imageSource != null)
+            {
+                dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

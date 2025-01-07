@@ -59,7 +59,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Visible">
-                <Canvas x:Name="StageCanvas" Background="White" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" MouseUp="StageCanvas_MouseUp" Width="320" Height="320"/>
+                <Canvas x:Name="StageCanvas" Background="White" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320"/>
             </ScrollViewer>
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
                 <Grid>
