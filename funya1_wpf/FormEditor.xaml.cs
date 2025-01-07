@@ -217,7 +217,33 @@ namespace funya1_wpf
 
         private void MapList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedMap.Value.DrawTerrain(StageCanvas, StageData.croppedBitmaps);
+            foreach (var item in e.RemovedItems)
+            {
+                if (item is KeyValuePair<int, MapData> map)
+                {
+                    map.Value.PropertyChanged -= SelectedMap_PropertyChanged;
+                }
+            }
+            foreach (var item in e.AddedItems)
+            {
+                if (item is KeyValuePair<int, MapData> map)
+                {
+                    map.Value.PropertyChanged += SelectedMap_PropertyChanged;
+                }
+            }
+            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+        }
+
+        private void SelectedMap_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MapData.Width))
+            {
+                StageCanvas.Width = SelectedMap.Value.Width * 32;
+            }
+            else if (e.PropertyName == nameof(MapData.Height))
+            {
+                StageCanvas.Height = SelectedMap.Value.Height * 32;
+            }
         }
     }
 }
