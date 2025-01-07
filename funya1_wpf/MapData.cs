@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace funya1_wpf
 {
@@ -71,6 +74,34 @@ namespace funya1_wpf
                     line[x] - '0';
                 Data[x, y] = n;
             }
+        }
+
+        public void DrawTerrain(Panel Stage, CroppedBitmap?[] croppedBitmaps)
+        {
+            int terrainWidth = 32 * Width;
+            Stage.Width = terrainWidth;
+            int terrainHeight = 32 * Height;
+            Stage.Height = terrainHeight;
+
+            var terrainImage = new RenderTargetBitmap(terrainWidth, terrainHeight, 96, 96, PixelFormats.Pbgra32);
+            var dv = new DrawingVisual();
+            using (var dc = dv.RenderOpen())
+            {
+                for (int x = 0; x <= MaxX; x++)
+                {
+                    for (int y = 0; y <= MaxY; y++)
+                    {
+                        CroppedBitmap? imageSource = croppedBitmaps[Data[x, y]];
+                        if (imageSource != null)
+                        {
+                            dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
+                        }
+                    }
+                }
+            }
+            terrainImage.Render(dv);
+
+            Stage.Background = new ImageBrush(terrainImage);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

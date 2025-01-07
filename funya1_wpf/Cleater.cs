@@ -503,30 +503,7 @@ namespace funya1_wpf
 
         private void DrawTerrain(int NextStage)
         {
-            int terrainWidth = 32 * (Map[NextStage].MaxX + 1);
-            formMain.Stage.Width = terrainWidth;
-            int terrainHeight = 32 * (Map[NextStage].MaxY + 1);
-            formMain.Stage.Height = terrainHeight;
-
-            var terrainImage = new RenderTargetBitmap(terrainWidth, terrainHeight, 96, 96, PixelFormats.Pbgra32);
-            var dv = new DrawingVisual();
-            using (var dc = dv.RenderOpen())
-            {
-                for (int x = 0; x <= Map[NextStage].MaxX; x++)
-                {
-                    for (int y = 0; y <= Map[NextStage].MaxY; y++)
-                    {
-                        CroppedBitmap? imageSource = croppedBitmaps[Map[NextStage].Data[x, y]];
-                        if (imageSource != null)
-                        {
-                            dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
-                        }
-                    }
-                }
-            }
-            terrainImage.Render(dv);
-
-            formMain.Stage.Background = new ImageBrush(terrainImage);
+            Map[NextStage].DrawTerrain(formMain.Stage, croppedBitmaps);
         }
 
         public bool GameStart()
