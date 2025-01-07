@@ -12,9 +12,43 @@ namespace funya1_wpf
         private int startY;
         public int StartY { get => startY; set { startY = value; OnPropertyChanged(); } }
         private int maxX;
-        public int MaxX { get => maxX; set { maxX = value; OnPropertyChanged(); OnPropertyChanged(nameof(Width)); } }
+        public int MaxX
+        {
+            get => maxX;
+            set
+            {
+                maxX = value;
+                if (maxX < 2)
+                {
+                    maxX = 2;
+                }
+                if (maxX > 39)
+                {
+                    maxX = 39;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Width));
+            }
+        }
         private int maxY;
-        public int MaxY { get => maxY; set { maxY = value; OnPropertyChanged(); OnPropertyChanged(nameof(Height)); } }
+        public int MaxY
+        {
+            get => maxY;
+            set
+            {
+                maxY = value;
+                if (maxY < 2)
+                {
+                    maxY = 2;
+                }
+                if (maxY > 39)
+                {
+                    maxY = 39;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Height));
+            }
+        }
         private int[,] data = new int[40, 40]; // 0 To 39, 0 To 39
         public int[,] Data { get => data; set { data = value; OnPropertyChanged(); } }
         private int totalFood;
