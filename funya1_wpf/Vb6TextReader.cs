@@ -62,7 +62,7 @@ namespace funya1_wpf
                 return true;
             }
 
-            value = int.TryParse(s, out int i) ? i : 0;
+            value = int.TryParse(s.Trim(), out int i) ? i : 0;
             return true;
         }
 
