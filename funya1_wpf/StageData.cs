@@ -68,7 +68,6 @@ namespace funya1_wpf
 
         public bool LoadFile()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var fileText = File.ReadAllText(StageFile, Encoding.GetEncoding(932));
             var reader = new Vb6TextReader(fileText);
             if (!reader.TryInputInt(out var friction))
@@ -234,7 +233,6 @@ namespace funya1_wpf
             }
             sb.AppendLine(EndingType == 0 ? "End" : EndingType.ToString());
 
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             File.WriteAllText(StageFile, sb.ToString(), Encoding.GetEncoding(932));
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,6 +38,7 @@ namespace funya1_wpf
 
         public FormMain()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             InitializeComponent();
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
