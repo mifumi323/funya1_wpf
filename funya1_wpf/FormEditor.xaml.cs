@@ -44,6 +44,14 @@ namespace funya1_wpf
         public static readonly DependencyProperty SelectedMapProperty =
             DependencyProperty.Register("SelectedMap", typeof(KeyValuePair<int, MapData>), typeof(FormEditor), new PropertyMetadata(default(KeyValuePair<int, MapData>)));
 
+        public SolidColorBrush StageColorBrush
+        {
+            get => (SolidColorBrush)GetValue(StageColorBrushProperty);
+            set => SetValue(StageColorBrushProperty, value);
+        }
+        public static readonly DependencyProperty StageColorBrushProperty =
+            DependencyProperty.Register("StageColorBrush", typeof(SolidColorBrush), typeof(FormEditor), new PropertyMetadata(null));
+
         public int SelectedChip
         {
             get => (int)GetValue(SelectedChipProperty);
@@ -83,6 +91,7 @@ namespace funya1_wpf
             StageData.Map[1].MaxY = 9;
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.First();
+            UpdateColor();
             IsChanged = false;
         }
 
@@ -173,6 +182,7 @@ namespace funya1_wpf
                     StageData = stageData;
                     Maps = StageData.GetValidMaps();
                     SelectedMap = Maps.First();
+                    UpdateColor();
                 }
                 catch (Exception ex)
                 {
@@ -299,6 +309,17 @@ namespace funya1_wpf
                     SelectChip(x);
                 }
             }
+        }
+
+        public ICommand BackColor_Click => new ActionCommand(friction =>
+        {
+            // TODO: 色指定できるといいな
+            UpdateColor();
+        });
+
+        private void UpdateColor()
+        {
+            StageColorBrush = new SolidColorBrush(StageData.StageColor);
         }
     }
 }
