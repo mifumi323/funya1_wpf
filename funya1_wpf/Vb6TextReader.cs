@@ -1,6 +1,9 @@
-﻿namespace funya1_wpf
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+
+namespace funya1_wpf
 {
-    public class Vb6TextReader(string text)
+    public partial class Vb6TextReader(string text)
     {
         private int index = 0;
 
@@ -50,8 +53,20 @@
                 value = 0;
                 return false;
             }
-            value = int.TryParse(s.Trim(), out int i) ? i : 0;
+
+            // VB6 の仕様に合わせて、&H で始まる文字列を16進数として解釈
+            var match = HexadecimalRegex().Match(s.Trim());
+            if (match.Success)
+            {
+                value = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
+                return true;
+            }
+
+            value = int.TryParse(s, out int i) ? i : 0;
             return true;
         }
+
+        [GeneratedRegex(@"^&H([0-9A-F]{1,8})&?$", RegexOptions.IgnoreCase, "ja-JP")]
+        private static partial Regex HexadecimalRegex();
     }
 }
