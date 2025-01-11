@@ -44,22 +44,17 @@ namespace funya1_wpf
             InitializeComponent();
             Color = color;
             CancelButton.Background = new SolidColorBrush(Color);
-            CancelButton.Foreground = new SolidColorBrush(TextColor(Color));
+            CancelButton.Foreground = new SolidColorBrush(Color.FarColor());
             OnColorChanged();
         }
 
         private void OnColorChanged()
         {
             OkButton.Background = new SolidColorBrush(Color);
-            OkButton.Foreground = new SolidColorBrush(TextColor(Color));
+            OkButton.Foreground = new SolidColorBrush(Color.FarColor());
             RSlider.Background = new LinearGradientBrush(Color.FromRgb(0, G, B), Color.FromRgb(255, G, B), 0);
             GSlider.Background = new LinearGradientBrush(Color.FromRgb(R, 0, B), Color.FromRgb(R, 255, B), 0);
             BSlider.Background = new LinearGradientBrush(Color.FromRgb(R, G, 0), Color.FromRgb(R, G, 255), 0);
-        }
-
-        private static Color TextColor(Color color)
-        {
-            return (color.R + color.G + color.B) / 3 < 128 ? Colors.White : Colors.Black;
         }
 
         public ICommand OkButton_Click => new ActionCommand(friction =>
