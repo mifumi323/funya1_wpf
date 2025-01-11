@@ -313,7 +313,11 @@ namespace funya1_wpf
 
         public ICommand BackColor_Click => new ActionCommand(friction =>
         {
-            // TODO: 色指定できるといいな
+            var dialog = new FormColor(StageData.StageColor);
+            if (dialog.ShowDialog() == true)
+            {
+                StageData.StageColor = dialog.Color;
+            }
             UpdateColor();
         });
 

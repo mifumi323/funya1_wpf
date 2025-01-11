@@ -1,0 +1,40 @@
+﻿<Window x:Class="funya1_wpf.FormColor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:funya1_wpf"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="色指定" Height="150" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="赤(_R)" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding R, Mode=TwoWay}"/>
+        <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding R, Mode=TwoWay}" x:Name="RSlider"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="緑(_G)" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding G, Mode=TwoWay}"/>
+        <Slider Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding G, Mode=TwoWay}" x:Name="GSlider"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="青(_B)" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding B, Mode=TwoWay}"/>
+        <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding B, Mode=TwoWay}" x:Name="BSlider"/>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="OK" x:Name="OkButton" IsDefault="True" Command="{Binding OkButton_Click}"/>
+            <Button Content="キャンセル" Grid.Column="1" x:Name="CancelButton" IsCancel="True"/>
+        </Grid>
+    </Grid>
+</Window>
