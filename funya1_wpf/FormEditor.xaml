@@ -59,7 +59,26 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer x:Name="StageContainer" Grid.Column="0" HorizontalScrollBarVisibility="Visible" Background="{Binding StageColorBrush}">
-                <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320"/>
+                <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
+                    <ContentControl x:Name="PlaceMine">
+                        <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
+                    </ContentControl>
+                    <ContentControl x:Name="PlaceFood1">
+                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                    </ContentControl>
+                    <ContentControl x:Name="PlaceFood2">
+                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                    </ContentControl>
+                    <ContentControl x:Name="PlaceFood3">
+                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                    </ContentControl>
+                    <ContentControl x:Name="PlaceFood4">
+                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                    </ContentControl>
+                    <ContentControl x:Name="PlaceFood5">
+                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                    </ContentControl>
+                </Canvas>
             </ScrollViewer>
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
                 <Grid>

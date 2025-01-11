@@ -285,7 +285,24 @@ namespace funya1_wpf
             }
             SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
             terrainImage = (StageCanvas.Background as ImageBrush)?.ImageSource as RenderTargetBitmap ?? terrainImage;
+            MoveCharacters();
             UpdateFoodsVisibility();
+        }
+
+        private void MoveCharacters()
+        {
+            Canvas.SetLeft(PlaceMine, SelectedMap.Value.StartX * 32);
+            Canvas.SetTop(PlaceMine, SelectedMap.Value.StartY * 32);
+            Canvas.SetLeft(PlaceFood1, SelectedMap.Value.Food[1].x * 32);
+            Canvas.SetTop(PlaceFood1, SelectedMap.Value.Food[1].y * 32);
+            Canvas.SetLeft(PlaceFood2, SelectedMap.Value.Food[2].x * 32);
+            Canvas.SetTop(PlaceFood2, SelectedMap.Value.Food[2].y * 32);
+            Canvas.SetLeft(PlaceFood3, SelectedMap.Value.Food[3].x * 32);
+            Canvas.SetTop(PlaceFood3, SelectedMap.Value.Food[3].y * 32);
+            Canvas.SetLeft(PlaceFood4, SelectedMap.Value.Food[4].x * 32);
+            Canvas.SetTop(PlaceFood4, SelectedMap.Value.Food[4].y * 32);
+            Canvas.SetLeft(PlaceFood5, SelectedMap.Value.Food[5].x * 32);
+            Canvas.SetTop(PlaceFood5, SelectedMap.Value.Food[5].y * 32);
         }
 
         private void SelectedMap_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -306,11 +323,11 @@ namespace funya1_wpf
 
         private void UpdateFoodsVisibility()
         {
-            SelectFood1.Visibility = SelectedMap.Value.TotalFood >= 1 ? Visibility.Visible : Visibility.Collapsed;
-            SelectFood2.Visibility = SelectedMap.Value.TotalFood >= 2 ? Visibility.Visible : Visibility.Collapsed;
-            SelectFood3.Visibility = SelectedMap.Value.TotalFood >= 3 ? Visibility.Visible : Visibility.Collapsed;
-            SelectFood4.Visibility = SelectedMap.Value.TotalFood >= 4 ? Visibility.Visible : Visibility.Collapsed;
-            SelectFood5.Visibility = SelectedMap.Value.TotalFood >= 5 ? Visibility.Visible : Visibility.Collapsed;
+            PlaceFood1.Visibility = SelectFood1.Visibility = SelectedMap.Value.TotalFood >= 1 ? Visibility.Visible : Visibility.Collapsed;
+            PlaceFood2.Visibility = SelectFood2.Visibility = SelectedMap.Value.TotalFood >= 2 ? Visibility.Visible : Visibility.Collapsed;
+            PlaceFood3.Visibility = SelectFood3.Visibility = SelectedMap.Value.TotalFood >= 3 ? Visibility.Visible : Visibility.Collapsed;
+            PlaceFood4.Visibility = SelectFood4.Visibility = SelectedMap.Value.TotalFood >= 4 ? Visibility.Visible : Visibility.Collapsed;
+            PlaceFood5.Visibility = SelectFood5.Visibility = SelectedMap.Value.TotalFood >= 5 ? Visibility.Visible : Visibility.Collapsed;
             ReduceFood.IsEnabled = SelectedMap.Value.TotalFood > 1;
             AddFood.IsEnabled = SelectedMap.Value.TotalFood < 5;
         }
