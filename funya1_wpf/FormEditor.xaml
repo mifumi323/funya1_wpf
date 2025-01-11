@@ -99,8 +99,8 @@
                             <ContentControl x:Name="SelectFood5" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ContentControl>
-                            <Button Content="－" Command="{Binding AddFood_Click}" Margin="5,5,5,5"/>
-                            <Button Content="＋" Command="{Binding AddFood_Click}" Margin="5,5,5,5"/>
+                            <Button Content="－" Command="{Binding ReduceFood_Click}" Margin="5,5,5,5" x:Name="ReduceFood"/>
+                            <Button Content="＋" Command="{Binding AddFood_Click}" Margin="5,5,5,5" x:Name="AddFood"/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="全般設定" Grid.Row="2">

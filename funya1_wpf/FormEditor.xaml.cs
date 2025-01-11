@@ -90,6 +90,7 @@ namespace funya1_wpf
             StageData.Map[1].Title = "マップ1";
             StageData.Map[1].MaxX = 9;
             StageData.Map[1].MaxY = 9;
+            StageData.Map[1].TotalFood = 1;
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.First();
             UpdateColor();
@@ -284,6 +285,7 @@ namespace funya1_wpf
             }
             SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
             terrainImage = (StageCanvas.Background as ImageBrush)?.ImageSource as RenderTargetBitmap ?? terrainImage;
+            UpdateFoodsVisibility();
         }
 
         private void SelectedMap_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -296,6 +298,21 @@ namespace funya1_wpf
             {
                 StageCanvas.Height = SelectedMap.Value.Height * 32;
             }
+            else if (e.PropertyName == nameof(MapData.TotalFood))
+            {
+                UpdateFoodsVisibility();
+            }
+        }
+
+        private void UpdateFoodsVisibility()
+        {
+            SelectFood1.Visibility = SelectedMap.Value.TotalFood >= 1 ? Visibility.Visible : Visibility.Collapsed;
+            SelectFood2.Visibility = SelectedMap.Value.TotalFood >= 2 ? Visibility.Visible : Visibility.Collapsed;
+            SelectFood3.Visibility = SelectedMap.Value.TotalFood >= 3 ? Visibility.Visible : Visibility.Collapsed;
+            SelectFood4.Visibility = SelectedMap.Value.TotalFood >= 4 ? Visibility.Visible : Visibility.Collapsed;
+            SelectFood5.Visibility = SelectedMap.Value.TotalFood >= 5 ? Visibility.Visible : Visibility.Collapsed;
+            ReduceFood.IsEnabled = SelectedMap.Value.TotalFood > 1;
+            AddFood.IsEnabled = SelectedMap.Value.TotalFood < 5;
         }
 
         private void ChipContainer_MouseDown(object sender, MouseButtonEventArgs e) => ChipContainer_MouseMove(sender, e);
@@ -333,5 +350,9 @@ namespace funya1_wpf
                 Opacity = 0.5,
             };
         }
+
+        public ICommand AddFood_Click => new ActionCommand(_ => SelectedMap.Value.TotalFood++);
+
+        public ICommand ReduceFood_Click => new ActionCommand(_ => SelectedMap.Value.TotalFood--);
     }
 }
