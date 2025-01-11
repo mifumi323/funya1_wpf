@@ -21,6 +21,21 @@ namespace funya1_wpf
         private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
         private bool drawing = false;
 
+        private readonly Effect darkEffect = new DropShadowEffect
+        {
+            Color = Colors.Black,
+            ShadowDepth = 0,
+            BlurRadius = 16,
+            Opacity = 0.5,
+        };
+        private readonly Effect lightEffect = new DropShadowEffect
+        {
+            Color = Colors.White,
+            ShadowDepth = 0,
+            BlurRadius = 16,
+            Opacity = 0.5,
+        };
+
         public StageData StageData
         {
             get => (StageData)GetValue(StageDataProperty);
@@ -359,13 +374,7 @@ namespace funya1_wpf
         private void UpdateColor()
         {
             StageColorBrush = new SolidColorBrush(StageData.StageColor);
-            StageCanvas.Effect = new DropShadowEffect
-            {
-                Color = StageData.StageColor.FarColor(),
-                ShadowDepth = 0,
-                BlurRadius = 16,
-                Opacity = 0.5,
-            };
+            StageCanvas.Effect = StageData.StageColor.IsDark() ? lightEffect : darkEffect;
         }
 
         public ICommand AddFood_Click => new ActionCommand(_ => SelectedMap.Value.TotalFood++);
