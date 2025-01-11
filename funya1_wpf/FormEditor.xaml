@@ -59,11 +59,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer x:Name="StageContainer" Grid.Column="0" HorizontalScrollBarVisibility="Visible" Background="{Binding StageColorBrush}">
-                <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
-                    <Canvas.Effect>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="16"  Color="White" Opacity="0.5"/>
-                    </Canvas.Effect>
-                </Canvas>
+                <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320"/>
             </ScrollViewer>
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
                 <Grid>
