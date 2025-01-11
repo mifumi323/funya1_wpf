@@ -21,13 +21,13 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="赤(_R)" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding R, Mode=TwoWay}"/>
-        <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding R, Mode=TwoWay}" x:Name="RSlider"/>
+        <Slider Grid.Row="0" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding R, Mode=TwoWay}" x:Name="RSlider" LargeChange="15"/>
         <Label Grid.Row="1" Grid.Column="0" Content="緑(_G)" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding G, Mode=TwoWay}"/>
-        <Slider Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding G, Mode=TwoWay}" x:Name="GSlider"/>
+        <Slider Grid.Row="1" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding G, Mode=TwoWay}" x:Name="GSlider" LargeChange="15"/>
         <Label Grid.Row="2" Grid.Column="0" Content="青(_B)" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding B, Mode=TwoWay}"/>
-        <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding B, Mode=TwoWay}" x:Name="BSlider"/>
+        <Slider Grid.Row="2" Grid.Column="2" Minimum="0" Maximum="255" Value="{Binding B, Mode=TwoWay}" x:Name="BSlider" LargeChange="15"/>
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
