@@ -26,11 +26,13 @@
         <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding MenuPause_Click}"/>
         <KeyBinding Key="Delete" Command="{Binding Death_Click}"/>
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding MenuOpen_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="M" Command="{Binding MenuStageMaker_Click}"/>
         <KeyBinding Key="D1" CommandParameter="5" Command="{Binding Speed_Click}"/>
         <KeyBinding Key="D2" CommandParameter="25" Command="{Binding Speed_Click}"/>
         <KeyBinding Key="D3" CommandParameter="50" Command="{Binding Speed_Click}"/>
         <KeyBinding Key="D4" CommandParameter="100" Command="{Binding Speed_Click}"/>
         <KeyBinding Key="D5" CommandParameter="500" Command="{Binding Speed_Click}"/>
+        <KeyBinding Key="F1" Command="{Binding HelpContents_Click}"/>
     </Window.InputBindings>
     <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
@@ -48,7 +50,7 @@
                 <Separator/>
                 <MenuItem Header="プレイ記録(_K)" Command="{Binding OpenResultsCommand}"/>
                 <Separator/>
-                <MenuItem Header="ステージメーカーを開く(_M)" Command="{Binding MenuStageMaker_Click}"/>
+                <MenuItem Header="ステージメーカーを開く(_M)" Command="{Binding MenuStageMaker_Click}" InputGestureText="Ctrl+M"/>
                 <Separator/>
                 <MenuItem Header="終了(_X)" Command="{Binding GameExit_Click}"/>
             </MenuItem>
@@ -74,7 +76,7 @@
                 <MenuItem Header="音楽の設定(_M)" Command="{Binding MenuMusic_Click}"/>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
-                <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}"/>
+                <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
                 <Separator/>
                 <MenuItem Header="バージョン情報(_A)" Command="{Binding MenuAbout_Click}"/>
             </MenuItem>
