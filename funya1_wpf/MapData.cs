@@ -122,6 +122,27 @@ namespace funya1_wpf
             }
         }
 
+        public void Reset()
+        {
+            MaxX = 9;
+            MaxY = 9;
+            StartX = 1;
+            StartY = 1;
+            for (var i = 1; i <= 5; i++)
+            {
+                Food[i].x = 1;
+                Food[i].y = 1;
+            }
+            TotalFood = 1;
+            for (var x = 0; x <= MaxX; x++)
+            {
+                for (var y = 0; y <= MaxY; y++)
+                {
+                    Data[x, y] = 0;
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

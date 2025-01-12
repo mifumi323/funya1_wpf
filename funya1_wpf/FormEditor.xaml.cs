@@ -103,10 +103,8 @@ namespace funya1_wpf
                 StageColor = Color.FromRgb(0, 0, 0),
             };
             StageData.LoadSampleImage();
+            StageData.Map[1].Reset();
             StageData.Map[1].Title = "マップ1";
-            StageData.Map[1].MaxX = 9;
-            StageData.Map[1].MaxY = 9;
-            StageData.Map[1].TotalFood = 1;
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.First();
             UpdateColor();
