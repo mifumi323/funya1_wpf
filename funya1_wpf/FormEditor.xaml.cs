@@ -140,8 +140,11 @@ namespace funya1_wpf
                             terrainImage.Render(dv);
                             break;
                         case EditMode.Mine:
-                            SelectedMap.Value.StartX = x;
-                            SelectedMap.Value.StartY = y;
+                            if (x >= 1 && x < SelectedMap.Value.Width - 1 && y >= 1 && y < SelectedMap.Value.Height - 1)
+                            {
+                                SelectedMap.Value.StartX = x;
+                                SelectedMap.Value.StartY = y;
+                            }
                             MoveCharacters();
                             break;
                         case EditMode.Food:
