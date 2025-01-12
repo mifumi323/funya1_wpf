@@ -467,5 +467,11 @@ namespace funya1_wpf
         public ICommand SelectMine_Click => new ActionCommand(_ => Select(0, EditMode.Mine));
 
         public ICommand SelectFood_Click => new ActionCommand(number => Select(int.Parse(number as string ?? "1"), EditMode.Food));
+
+        public ICommand MapAdd_Click => new ActionCommand(number =>
+        {
+            AddMap();
+            SelectedMap = Maps.Last();
+        });
     }
 }
