@@ -96,20 +96,26 @@ namespace funya1_wpf
             StageData = new StageData(resources.BlockData1)
             {
                 StageFile = "",
-                StageCount = 1,
+                StageCount = 0,
                 Friction = 10,
                 RestMax = 10,
                 EndingType = 0,
                 StageColor = Color.FromRgb(0, 0, 0),
             };
             StageData.LoadSampleImage();
-            StageData.Map[1].Reset();
-            StageData.Map[1].Title = "マップ1";
-            Maps = StageData.GetValidMaps();
+            AddMap();
             SelectedMap = Maps.First();
             UpdateColor();
             Select(0, EditMode.Chip);
             IsChanged = false;
+        }
+
+        private void AddMap()
+        {
+            StageData.StageCount++;
+            StageData.Map[StageData.StageCount].Reset();
+            StageData.Map[StageData.StageCount].Title = $"マップ{StageData.StageCount}";
+            Maps = StageData.GetValidMaps();
         }
 
         private void StageCanvas_MouseDown(object sender, MouseButtonEventArgs e)
