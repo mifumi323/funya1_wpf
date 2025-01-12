@@ -29,7 +29,6 @@ namespace funya1_wpf
         }
         private EditMode editMode = EditMode.Chip;
         private int selectedNumber = 0;
-        private Brush selectBrush;
 
         private readonly Effect darkEffect = new DropShadowEffect
         {
@@ -84,7 +83,6 @@ namespace funya1_wpf
 
             this.resources = resources;
             this.options = options;
-            selectBrush = new ImageBrush(ChipSelector.Source);
 
             WindowState = options.StageMakerState;
             Width = options.StageMakerWidth;
@@ -164,30 +162,30 @@ namespace funya1_wpf
                 case EditMode.Chip:
                     ChipSelector.Visibility = Visibility.Visible;
                     Canvas.SetLeft(ChipSelector, 32 * newChip);
-                    SelectMine.Background = null;
-                    SelectFood1.Background = null;
-                    SelectFood2.Background = null;
-                    SelectFood3.Background = null;
-                    SelectFood4.Background = null;
-                    SelectFood5.Background = null;
+                    SelectMine.IsChecked = false;
+                    SelectFood1.IsChecked = false;
+                    SelectFood2.IsChecked = false;
+                    SelectFood3.IsChecked = false;
+                    SelectFood4.IsChecked = false;
+                    SelectFood5.IsChecked = false;
                     break;
                 case EditMode.Mine:
                     ChipSelector.Visibility = Visibility.Collapsed;
-                    SelectMine.Background = selectBrush;
-                    SelectFood1.Background = null;
-                    SelectFood2.Background = null;
-                    SelectFood3.Background = null;
-                    SelectFood4.Background = null;
-                    SelectFood5.Background = null;
+                    SelectMine.IsChecked = true;
+                    SelectFood1.IsChecked = false;
+                    SelectFood2.IsChecked = false;
+                    SelectFood3.IsChecked = false;
+                    SelectFood4.IsChecked = false;
+                    SelectFood5.IsChecked = false;
                     break;
                 case EditMode.Food:
                     ChipSelector.Visibility = Visibility.Collapsed;
-                    SelectMine.Background = null;
-                    SelectFood1.Background = newChip == 1 ? selectBrush : null;
-                    SelectFood2.Background = newChip == 2 ? selectBrush : null;
-                    SelectFood3.Background = newChip == 3 ? selectBrush : null;
-                    SelectFood4.Background = newChip == 4 ? selectBrush : null;
-                    SelectFood5.Background = newChip == 5 ? selectBrush : null;
+                    SelectMine.IsChecked = false;
+                    SelectFood1.IsChecked = newChip == 1;
+                    SelectFood2.IsChecked = newChip == 2;
+                    SelectFood3.IsChecked = newChip == 3;
+                    SelectFood4.IsChecked = newChip == 4;
+                    SelectFood5.IsChecked = newChip == 5;
                     break;
             }
         }
@@ -379,8 +377,8 @@ namespace funya1_wpf
             PlaceFood3.Visibility = SelectFood3.Visibility = SelectedMap.Value.TotalFood >= 3 ? Visibility.Visible : Visibility.Collapsed;
             PlaceFood4.Visibility = SelectFood4.Visibility = SelectedMap.Value.TotalFood >= 4 ? Visibility.Visible : Visibility.Collapsed;
             PlaceFood5.Visibility = SelectFood5.Visibility = SelectedMap.Value.TotalFood >= 5 ? Visibility.Visible : Visibility.Collapsed;
-            ReduceFood.IsEnabled = SelectedMap.Value.TotalFood > 1;
-            AddFood.IsEnabled = SelectedMap.Value.TotalFood < 5;
+            ReduceFood.Visibility = SelectedMap.Value.TotalFood > 1 ? Visibility.Visible : Visibility.Collapsed;
+            AddFood.Visibility = SelectedMap.Value.TotalFood < 5 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ChipContainer_MouseDown(object sender, MouseButtonEventArgs e) => ChipContainer_MouseMove(sender, e);

@@ -100,24 +100,24 @@
                     </GroupBox>
                     <GroupBox Header="キャラクター" Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            <ContentControl x:Name="SelectMine" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectMine" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
-                            </ContentControl>
-                            <ContentControl x:Name="SelectFood1" Margin="5,5,5,5">
+                            </ToggleButton>
+                            <ToggleButton x:Name="SelectFood1" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                            </ContentControl>
-                            <ContentControl x:Name="SelectFood2" Margin="5,5,5,5">
+                            </ToggleButton>
+                            <ToggleButton x:Name="SelectFood2" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                            </ContentControl>
-                            <ContentControl x:Name="SelectFood3" Margin="5,5,5,5">
+                            </ToggleButton>
+                            <ToggleButton x:Name="SelectFood3" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                            </ContentControl>
-                            <ContentControl x:Name="SelectFood4" Margin="5,5,5,5">
+                            </ToggleButton>
+                            <ToggleButton x:Name="SelectFood4" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                            </ContentControl>
-                            <ContentControl x:Name="SelectFood5" Margin="5,5,5,5">
+                            </ToggleButton>
+                            <ToggleButton x:Name="SelectFood5" Margin="5,5,5,5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                            </ContentControl>
+                            </ToggleButton>
                             <Button Content="－" Command="{Binding ReduceFood_Click}" Margin="5,5,5,5" x:Name="ReduceFood"/>
                             <Button Content="＋" Command="{Binding AddFood_Click}" Margin="5,5,5,5" x:Name="AddFood"/>
                         </StackPanel>
