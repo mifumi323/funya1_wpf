@@ -124,7 +124,7 @@ namespace funya1_wpf
         {
             var x = (int)e.GetPosition(StageCanvas).X / 32;
             var y = (int)e.GetPosition(StageCanvas).Y / 32;
-            if (editMode == EditMode.Mine && !(x >= 1 && x < SelectedMap.Value.Width - 1 && y >= 1 && y < SelectedMap.Value.Height - 1))
+            if (editMode == EditMode.Mine && !IsValidMinePosition(x, y))
             {
                 StageCanvas.Cursor = Cursors.No;
             }
@@ -149,7 +149,7 @@ namespace funya1_wpf
                             terrainImage.Render(dv);
                             break;
                         case EditMode.Mine:
-                            if (x >= 1 && x < SelectedMap.Value.Width - 1 && y >= 1 && y < SelectedMap.Value.Height - 1)
+                            if (IsValidMinePosition(x, y))
                             {
                                 SelectedMap.Value.StartX = x;
                                 SelectedMap.Value.StartY = y;
@@ -176,6 +176,11 @@ namespace funya1_wpf
                     Select(SelectedMap.Value.Data[x, y], EditMode.Chip);
                 }
             }
+        }
+
+        private bool IsValidMinePosition(int x, int y)
+        {
+            return x >= 1 && x < SelectedMap.Value.Width - 1 && y >= 1 && y < SelectedMap.Value.Height;
         }
 
         private void Select(int newChip, EditMode newMode)
