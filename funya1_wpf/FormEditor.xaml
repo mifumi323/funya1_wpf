@@ -100,22 +100,22 @@
                     </GroupBox>
                     <GroupBox Header="キャラクター" Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            <ToggleButton x:Name="SelectMine" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectMine" Margin="5,5,5,5" Command="{Binding SelectMine_Click}">
                                 <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
                             </ToggleButton>
-                            <ToggleButton x:Name="SelectFood1" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectFood1" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="1">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ToggleButton>
-                            <ToggleButton x:Name="SelectFood2" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectFood2" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="2">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ToggleButton>
-                            <ToggleButton x:Name="SelectFood3" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectFood3" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="3">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ToggleButton>
-                            <ToggleButton x:Name="SelectFood4" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectFood4" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="4">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ToggleButton>
-                            <ToggleButton x:Name="SelectFood5" Margin="5,5,5,5">
+                            <ToggleButton x:Name="SelectFood5" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="5">
                                 <Image Height="32" Width="32" Source="/Resources/banana.png"/>
                             </ToggleButton>
                             <Button Content="－" Command="{Binding ReduceFood_Click}" Margin="5,5,5,5" x:Name="ReduceFood"/>

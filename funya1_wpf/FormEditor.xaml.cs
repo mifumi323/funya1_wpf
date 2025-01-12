@@ -414,5 +414,9 @@ namespace funya1_wpf
         public ICommand AddFood_Click => new ActionCommand(_ => SelectedMap.Value.TotalFood++);
 
         public ICommand ReduceFood_Click => new ActionCommand(_ => SelectedMap.Value.TotalFood--);
+
+        public ICommand SelectMine_Click => new ActionCommand(_ => Select(0, EditMode.Mine));
+
+        public ICommand SelectFood_Click => new ActionCommand(number => Select(int.Parse(number as string ?? "1"), EditMode.Food));
     }
 }
