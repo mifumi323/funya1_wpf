@@ -468,10 +468,22 @@ namespace funya1_wpf
 
         public ICommand SelectFood_Click => new ActionCommand(number => Select(int.Parse(number as string ?? "1"), EditMode.Food));
 
-        public ICommand MapAdd_Click => new ActionCommand(number =>
+        public ICommand MapAdd_Click => new ActionCommand(_ =>
         {
             AddMap();
             SelectedMap = Maps.Last();
+        });
+
+        public ICommand MapDel_Click => new ActionCommand(_ =>
+        {
+            var number = SelectedMap.Key;
+            for (var i = number + 1; i <= StageData.StageCount; i++)
+            {
+                StageData.Map[i - 1] = StageData.Map[i];
+            }
+            StageData.StageCount--;
+            Maps = StageData.GetValidMaps();
+            SelectedMap = Maps.ElementAt(Math.Min(number - 1, StageData.StageCount - 1));
         });
     }
 }
