@@ -21,6 +21,16 @@ namespace funya1_wpf
         private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
         private bool drawing = false;
 
+        private enum EditMode
+        {
+            Chip,
+            Mine,
+            Food,
+        }
+        private EditMode editMode = EditMode.Chip;
+        private int selectedNumber = 0;
+        private Brush selectBrush;
+
         private readonly Effect darkEffect = new DropShadowEffect
         {
             Color = Colors.Black,
@@ -68,20 +78,13 @@ namespace funya1_wpf
         public static readonly DependencyProperty StageColorBrushProperty =
             DependencyProperty.Register("StageColorBrush", typeof(SolidColorBrush), typeof(FormEditor), new PropertyMetadata(null));
 
-        public int SelectedChip
-        {
-            get => (int)GetValue(SelectedChipProperty);
-            set => SetValue(SelectedChipProperty, value);
-        }
-        public static readonly DependencyProperty SelectedChipProperty =
-            DependencyProperty.Register("SelectedChip", typeof(int), typeof(FormEditor), new PropertyMetadata(0));
-
         public FormEditor(Resources resources, Options options)
         {
             InitializeComponent();
 
             this.resources = resources;
             this.options = options;
+            selectBrush = new ImageBrush(ChipSelector.Source);
 
             WindowState = options.StageMakerState;
             Width = options.StageMakerWidth;
@@ -109,6 +112,7 @@ namespace funya1_wpf
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.First();
             UpdateColor();
+            Select(0, EditMode.Chip);
             IsChanged = false;
         }
 
@@ -126,7 +130,7 @@ namespace funya1_wpf
                 var y = (int)e.GetPosition(StageCanvas).Y / 32;
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
-                    SelectedMap.Value.Data[x, y] = SelectedChip;
+                    SelectedMap.Value.Data[x, y] = selectedNumber;
                     var dv = new DrawingVisual();
                     using (var dc = dv.RenderOpen())
                     {
@@ -146,15 +150,46 @@ namespace funya1_wpf
                 var y = (int)e.GetPosition(StageCanvas).Y / 32;
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
-                    SelectChip(SelectedMap.Value.Data[x, y]);
+                    Select(SelectedMap.Value.Data[x, y], EditMode.Chip);
                 }
             }
         }
 
-        private void SelectChip(int newChip)
+        private void Select(int newChip, EditMode newMode)
         {
-            SelectedChip = newChip;
-            Canvas.SetLeft(ChipSelector, 32 * newChip);
+            editMode = newMode;
+            selectedNumber = newChip;
+            switch (newMode)
+            {
+                case EditMode.Chip:
+                    ChipSelector.Visibility = Visibility.Visible;
+                    Canvas.SetLeft(ChipSelector, 32 * newChip);
+                    SelectMine.Background = null;
+                    SelectFood1.Background = null;
+                    SelectFood2.Background = null;
+                    SelectFood3.Background = null;
+                    SelectFood4.Background = null;
+                    SelectFood5.Background = null;
+                    break;
+                case EditMode.Mine:
+                    ChipSelector.Visibility = Visibility.Collapsed;
+                    SelectMine.Background = selectBrush;
+                    SelectFood1.Background = null;
+                    SelectFood2.Background = null;
+                    SelectFood3.Background = null;
+                    SelectFood4.Background = null;
+                    SelectFood5.Background = null;
+                    break;
+                case EditMode.Food:
+                    ChipSelector.Visibility = Visibility.Collapsed;
+                    SelectMine.Background = null;
+                    SelectFood1.Background = newChip == 1 ? selectBrush : null;
+                    SelectFood2.Background = newChip == 2 ? selectBrush : null;
+                    SelectFood3.Background = newChip == 3 ? selectBrush : null;
+                    SelectFood4.Background = newChip == 4 ? selectBrush : null;
+                    SelectFood5.Background = newChip == 5 ? selectBrush : null;
+                    break;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -200,6 +235,7 @@ namespace funya1_wpf
                     Maps = StageData.GetValidMaps();
                     SelectedMap = Maps.First();
                     UpdateColor();
+                    Select(0, EditMode.Chip);
                 }
                 catch (Exception ex)
                 {
@@ -356,7 +392,7 @@ namespace funya1_wpf
                 var x = (int)e.GetPosition(ChipContainer).X / 32;
                 if (x >= 0 && x < 10)
                 {
-                    SelectChip(x);
+                    Select(x, EditMode.Chip);
                 }
             }
         }
