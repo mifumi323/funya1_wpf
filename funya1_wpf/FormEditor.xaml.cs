@@ -128,13 +128,28 @@ namespace funya1_wpf
                 var y = (int)e.GetPosition(StageCanvas).Y / 32;
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
-                    SelectedMap.Value.Data[x, y] = selectedNumber;
-                    var dv = new DrawingVisual();
-                    using (var dc = dv.RenderOpen())
+                    switch (editMode)
                     {
-                        SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                        case EditMode.Chip:
+                            SelectedMap.Value.Data[x, y] = selectedNumber;
+                            var dv = new DrawingVisual();
+                            using (var dc = dv.RenderOpen())
+                            {
+                                SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                            }
+                            terrainImage.Render(dv);
+                            break;
+                        case EditMode.Mine:
+                            SelectedMap.Value.StartX = x;
+                            SelectedMap.Value.StartY = y;
+                            MoveCharacters();
+                            break;
+                        case EditMode.Food:
+                            SelectedMap.Value.Food[selectedNumber].x = x;
+                            SelectedMap.Value.Food[selectedNumber].y = y;
+                            MoveCharacters();
+                            break;
                     }
-                    terrainImage.Render(dv);
                     IsChanged = true;
                 }
             }
