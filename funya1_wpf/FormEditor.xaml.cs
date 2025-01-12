@@ -122,10 +122,19 @@ namespace funya1_wpf
 
         private void StageCanvas_MouseMove(object sender, MouseEventArgs e)
         {
+            var x = (int)e.GetPosition(StageCanvas).X / 32;
+            var y = (int)e.GetPosition(StageCanvas).Y / 32;
+            if (editMode == EditMode.Mine && !(x >= 1 && x < SelectedMap.Value.Width - 1 && y >= 1 && y < SelectedMap.Value.Height - 1))
+            {
+                StageCanvas.Cursor = Cursors.No;
+            }
+            else
+            {
+                StageCanvas.Cursor = Cursors.Pen;
+            }
+
             if (e.LeftButton == MouseButtonState.Pressed && drawing)
             {
-                var x = (int)e.GetPosition(StageCanvas).X / 32;
-                var y = (int)e.GetPosition(StageCanvas).Y / 32;
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
                     switch (editMode)
@@ -162,8 +171,6 @@ namespace funya1_wpf
             }
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                var x = (int)e.GetPosition(StageCanvas).X / 32;
-                var y = (int)e.GetPosition(StageCanvas).Y / 32;
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
                     Select(SelectedMap.Value.Data[x, y], EditMode.Chip);
