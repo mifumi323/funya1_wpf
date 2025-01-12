@@ -173,7 +173,22 @@ namespace funya1_wpf
             {
                 if (x >= 0 && x < SelectedMap.Value.Width && y >= 0 && y < SelectedMap.Value.Height)
                 {
-                    Select(SelectedMap.Value.Data[x, y], EditMode.Chip);
+                    var newChip = SelectedMap.Value.Data[x, y];
+                    var newMode = EditMode.Chip;
+                    if (x == SelectedMap.Value.StartX && y == SelectedMap.Value.StartY)
+                    {
+                        newChip = 0;
+                        newMode = EditMode.Mine;
+                    }
+                    for (var i = 1; i <= SelectedMap.Value.TotalFood; i++)
+                    {
+                        if (x == SelectedMap.Value.Food[i].x && y == SelectedMap.Value.Food[i].y)
+                        {
+                            newChip = i;
+                            newMode = EditMode.Food;
+                        }
+                    }
+                    Select(newChip, newMode);
                 }
             }
         }
