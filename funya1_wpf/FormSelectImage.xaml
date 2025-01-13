@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:funya1_wpf"
         mc:Ignorable="d"
-        Title="FormSelectImage" Height="450" Width="800">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Icon="/Resources/funyaMaker.ICO"
+        Title="画像切り替え" Height="350" Width="400" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding ImageItems}" SelectedItem="{Binding SelectedImage}" Grid.ColumnSpan="2" MouseDoubleClick="ListBox_MouseDoubleClick">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding Image}"/>
+                        <TextBlock Text="{Binding Title}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="OK" Grid.Row="1" x:Name="OkButton" IsDefault="True" Command="{Binding OkButton_Click}"/>
+        <Button Content="キャンセル" Grid.Row="1" Grid.Column="1" x:Name="CancelButton" IsCancel="True"/>
     </Grid>
 </Window>

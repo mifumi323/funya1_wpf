@@ -505,9 +505,14 @@ namespace funya1_wpf
                 MessageBox.Show(this, "いったん保存した後に変更できます。", "画像切り替え", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            var f = new FormSelectImage();
+            var f = new FormSelectImage(Path.GetDirectoryName(StageData.StageFile)!, StageData.ImagePath, resources)
+            {
+                Owner = this,
+            };
             if (f.ShowDialog() == true)
             {
+                StageData.ImagePath = f.ImagePath;
+                SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
             }
         });
     }
