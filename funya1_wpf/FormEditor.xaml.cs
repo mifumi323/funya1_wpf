@@ -107,6 +107,7 @@ namespace funya1_wpf
             SelectedMap = Maps.First();
             UpdateColor();
             Select(0, EditMode.Chip);
+            UpdateMapSelectUi();
             IsChanged = false;
         }
 
@@ -283,6 +284,7 @@ namespace funya1_wpf
                     SelectedMap = Maps.First();
                     UpdateColor();
                     Select(0, EditMode.Chip);
+                    UpdateMapSelectUi();
                 }
                 catch (Exception ex)
                 {
@@ -472,6 +474,7 @@ namespace funya1_wpf
         {
             AddMap();
             SelectedMap = Maps.Last();
+            UpdateMapSelectUi();
         });
 
         public ICommand MapDel_Click => new ActionCommand(_ =>
@@ -484,6 +487,13 @@ namespace funya1_wpf
             StageData.StageCount--;
             Maps = StageData.GetValidMaps();
             SelectedMap = Maps.ElementAt(Math.Min(number - 1, StageData.StageCount - 1));
+            UpdateMapSelectUi();
         });
+
+        private void UpdateMapSelectUi()
+        {
+            MapAdd.IsEnabled = StageData.StageCount < 30;
+            MapDel.IsEnabled = StageData.StageCount > 1;
+        }
     }
 }
