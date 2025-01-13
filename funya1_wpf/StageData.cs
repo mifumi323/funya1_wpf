@@ -203,7 +203,7 @@ namespace funya1_wpf
             }
         }
 
-        public void Save()
+        public override string ToString()
         {
             var sb = new StringBuilder();
             sb.AppendLine(Friction.ToString());
@@ -233,7 +233,14 @@ namespace funya1_wpf
             }
             sb.AppendLine(EndingType == 0 ? "End" : EndingType.ToString());
 
-            File.WriteAllText(StageFile, sb.ToString(), Encoding.GetEncoding(932));
+            return sb.ToString();
+        }
+
+        public void Save()
+        {
+            string text = ToString();
+
+            File.WriteAllText(StageFile, text, Encoding.GetEncoding(932));
         }
 
         private static int ColorToInt(Color color)

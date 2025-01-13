@@ -15,7 +15,7 @@ namespace funya1_wpf
     /// </summary>
     public partial class FormEditor : Window
     {
-        private bool IsChanged = false;
+        private string originalText = "";
         public Resources resources;
         private readonly Options options;
         private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
@@ -108,7 +108,7 @@ namespace funya1_wpf
             UpdateColor();
             Select(0, EditMode.Chip);
             UpdateMapSelectUi();
-            IsChanged = false;
+            originalText = StageData.ToString();
         }
 
         private void AddMap()
@@ -167,7 +167,6 @@ namespace funya1_wpf
                             MoveCharacters();
                             break;
                     }
-                    IsChanged = true;
                 }
             }
             else
@@ -242,7 +241,7 @@ namespace funya1_wpf
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (IsChanged)
+            if (originalText != StageData.ToString())
             {
                 var result = MessageBox.Show(this, $"\"{StageData.StageFile}\"の内容は変更されているらしいです。\n保存するんですか？", "終了の前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
@@ -278,8 +277,8 @@ namespace funya1_wpf
                         StageFile = dialog.FileName,
                     };
                     stageData.LoadFile();
-                    IsChanged = false;
                     StageData = stageData;
+                    originalText = StageData.ToString();
                     Maps = StageData.GetValidMaps();
                     SelectedMap = Maps.First();
                     UpdateColor();
@@ -304,6 +303,7 @@ namespace funya1_wpf
             else
             {
                 StageData.Save();
+                originalText = StageData.ToString();
             }
         }
 
@@ -322,6 +322,7 @@ namespace funya1_wpf
             {
                 StageData.StageFile = dialog.FileName;
                 StageData.Save();
+                originalText = StageData.ToString();
             }
         }
 
