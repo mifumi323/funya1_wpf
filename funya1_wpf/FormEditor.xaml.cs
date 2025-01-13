@@ -480,9 +480,11 @@ namespace funya1_wpf
         public ICommand MapDel_Click => new ActionCommand(_ =>
         {
             var number = SelectedMap.Key;
+            var map = SelectedMap.Value;
             for (var i = number + 1; i <= StageData.StageCount; i++)
             {
                 StageData.Map[i - 1] = StageData.Map[i];
+                StageData.Map[i] = map;
             }
             StageData.StageCount--;
             Maps = StageData.GetValidMaps();
