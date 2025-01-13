@@ -497,5 +497,18 @@ namespace funya1_wpf
             MapAdd.IsEnabled = StageData.StageCount < 30;
             MapDel.IsEnabled = StageData.StageCount > 1;
         }
+
+        public ICommand LoadChip_Click => new ActionCommand(_ =>
+        {
+            if (string.IsNullOrEmpty(StageData.StageFile))
+            {
+                MessageBox.Show(this, "いったん保存した後に変更できます。", "画像切り替え", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            var f = new FormSelectImage();
+            if (f.ShowDialog() == true)
+            {
+            }
+        });
     }
 }
