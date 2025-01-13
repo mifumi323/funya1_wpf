@@ -130,20 +130,19 @@ namespace funya1_wpf
 
         public void Ending()
         {
-            Map[0].Width = 13;
-            Map[0].Height = 9;
+            Map[0].MaxX = 13;
+            Map[0].MaxY = 9;
             for (var r = 0; r <= 3; r++)
             {
-                MapText[0, r] = "55555555555555";
+                Map[0].ImportLine(r, "55555555555555");
             }
-            MapText[0, 4] = "11111111555555";
-            MapText[0, 5] = "00000000555555";
-            MapText[0, 6] = "11111111111111";
+            Map[0].ImportLine(4,"11111111555555");
+            Map[0].ImportLine(5,"00000000555555");
+            Map[0].ImportLine(6,"11111111111111");
             for (var r = 7; r <= 9; r++)
             {
-                MapText[0, r] = "55555555555555";
+                Map[0].ImportLine(r,"55555555555555");
             }
-            SetStage();
             Map[0].StartX = 5;
             Map[0].StartY = 5;
             Map[0].TotalFood = 1;
@@ -299,7 +298,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].Width || MainIndexY == Map[CurrentStage].Height + 2)
+            if (Map[CurrentStage].Data[MainIndexX, MainIndexY] >= 2 || MainIndexX == 0 || MainIndexY == 0 || MainIndexX == Map[CurrentStage].MaxX || MainIndexY == Map[CurrentStage].MaxY + 2)
             {
                 Die();
             }
@@ -504,30 +503,7 @@ namespace funya1_wpf
 
         private void DrawTerrain(int NextStage)
         {
-            int terrainWidth = 32 * (Map[NextStage].Width + 1);
-            formMain.Stage.Width = terrainWidth;
-            int terrainHeight = 32 * (Map[NextStage].Height + 1);
-            formMain.Stage.Height = terrainHeight;
-
-            var terrainImage = new RenderTargetBitmap(terrainWidth, terrainHeight, 96, 96, PixelFormats.Pbgra32);
-            var dv = new DrawingVisual();
-            using (var dc = dv.RenderOpen())
-            {
-                for (int x = 0; x <= Map[NextStage].Width; x++)
-                {
-                    for (int y = 0; y <= Map[NextStage].Height; y++)
-                    {
-                        CroppedBitmap? imageSource = croppedBitmaps[Map[NextStage].Data[x, y]];
-                        if (imageSource != null)
-                        {
-                            dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
-                        }
-                    }
-                }
-            }
-            terrainImage.Render(dv);
-
-            formMain.Stage.Background = new ImageBrush(terrainImage);
+            Map[NextStage].DrawTerrainInPanel(formMain.Stage, croppedBitmaps);
         }
 
         public bool GameStart()
@@ -545,8 +521,6 @@ namespace funya1_wpf
             }
             SetMenuStage();
             Rest = RestMax;
-            ResetStage();
-            SetStage();
             StartStage(CurrentStage);
             formMain.Client.Background = new SolidColorBrush(StageColor);
 
@@ -557,19 +531,19 @@ namespace funya1_wpf
         {
             StageCount = 1;
             Map[1].Title = "サンプルステージ";
-            Map[1].Width = 15;
-            Map[1].Height = 8;
+            Map[1].MaxX = 15;
+            Map[1].MaxY = 8;
             Map[1].StartX = 4;
             Map[1].StartY = 6;
-            MapText[1, 0] = "2211111200000000";
-            MapText[1, 1] = "2000000200000000";
-            MapText[1, 2] = "1000111222200002";
-            MapText[1, 3] = "2000000002222001";
-            MapText[1, 4] = "2100000102222001";
-            MapText[1, 5] = "2200000100000001";
-            MapText[1, 6] = "2211000100011111";
-            MapText[1, 7] = "2222111100010000";
-            MapText[1, 8] = "0000000111110000";
+            Map[1].ImportLine(0,"2211111200000000");
+            Map[1].ImportLine(1,"2000000200000000");
+            Map[1].ImportLine(2,"1000111222200002");
+            Map[1].ImportLine(3,"2000000002222001");
+            Map[1].ImportLine(4,"2100000102222001");
+            Map[1].ImportLine(5,"2200000100000001");
+            Map[1].ImportLine(6,"2211000100011111");
+            Map[1].ImportLine(7,"2222111100010000");
+            Map[1].ImportLine(8,"0000000111110000");
             Map[1].TotalFood = 3;
             Map[1].Food[1].x = 1;
             Map[1].Food[1].y = 3;

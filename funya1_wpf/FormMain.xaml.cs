@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,6 +38,7 @@ namespace funya1_wpf
 
         public FormMain()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             InitializeComponent();
             MouseHideTimer.Tick += MouseHideTimer_Tick;
             MouseHideTimer.Start();
@@ -602,13 +604,20 @@ namespace funya1_wpf
         public ActionCommand MenuStageMaker_Click => new(_ =>
         {
             cleater.Pause();
-            var formEditor = new FormEditor(resources)
+            var formEditor = new FormEditor(resources, options)
             {
                 Owner = this,
             };
             Hide();
-            formEditor.ShowDialog();
-            Show();
+            var result = formEditor.ShowDialog();
+            if (result == true)
+            {
+                Close();
+            }
+            else
+            {
+                Show();
+            }
         });
     }
 }
