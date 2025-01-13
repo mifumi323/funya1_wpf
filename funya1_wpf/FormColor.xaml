@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:funya1_wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="色指定" Height="150" Width="300">
+        Icon="/Resources/funyaMaker.ICO"
+        Title="色指定" Height="150" Width="300" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
