@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -515,6 +516,15 @@ namespace funya1_wpf
                 StageData.ImagePath = f.ImagePath;
                 SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
             }
+        });
+
+        public ActionCommand HelpContents_Click => new(_ =>
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Help", "stagemaker.html"),
+                UseShellExecute = true,
+            });
         });
     }
 }
