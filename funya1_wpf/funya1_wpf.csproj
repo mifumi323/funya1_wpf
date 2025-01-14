@@ -26,6 +26,7 @@
     <None Remove="funyaMaker\裏Cave.stg" />
     <None Remove="Help\bug.html" />
     <None Remove="Help\character.html" />
+    <None Remove="Help\chip.png" />
     <None Remove="Help\conclusion.html" />
     <None Remove="Help\copyright.html" />
     <None Remove="Help\favicon.ico" />
@@ -109,6 +110,9 @@
     <Content Include="Help\character.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Help\chip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\conclusion.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -143,6 +147,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\stand.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\stagemaker.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\story.html">

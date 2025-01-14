@@ -22,6 +22,7 @@
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding Save_Click}"/>
         <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAs_Click}"/>
         <KeyBinding Modifiers="Alt" Key="Q" Command="{Binding ExitAll_Click}"/>
+        <KeyBinding Key="F1" Command="{Binding HelpContents_Click}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,6 +39,9 @@
                 <Separator/>
                 <MenuItem Header="ゲームに戻る(_X)" Command="{Binding Exit_Click}" InputGestureText="Alt+F4"/>
                 <MenuItem Header="ゲームに戻らず終了する(_Q)" Command="{Binding ExitAll_Click}" InputGestureText="Alt+Q"/>
+            </MenuItem>
+            <MenuItem Header="ヘルプ(_H)">
+                <MenuItem Header="ふにゃステージメーカーのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
             </MenuItem>
         </Menu>
         <ToolBarTray Grid.Row="1">
