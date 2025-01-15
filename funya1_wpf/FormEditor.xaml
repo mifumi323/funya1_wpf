@@ -65,7 +65,7 @@
             <ScrollViewer x:Name="StageContainer" Grid.Column="0" HorizontalScrollBarVisibility="Visible" Background="{Binding StageColorBrush}">
                 <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
                     <ContentControl x:Name="PlaceMine">
-                        <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
+                        <Image Height="32" Width="32" Source="/Resources/Stand.png" SnapsToDevicePixels="True"/>
                     </ContentControl>
                     <ContentControl x:Name="PlaceFood1">
                         <Image Height="32" Width="32" Source="/Resources/banana.png"/>
@@ -96,8 +96,8 @@
                     <GroupBox Header="マップチップ">
                         <StackPanel Orientation="Vertical">
                             <Canvas x:Name="ChipContainer" Width="320" Height="32" MouseDown="ChipContainer_MouseDown" MouseMove="ChipContainer_MouseMove">
-                                <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Stretch="None"/>
-                                <Image x:Name="ChipSelector" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32"/>
+                                <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Stretch="None" SnapsToDevicePixels="True"/>
+                                <Image x:Name="ChipSelector" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32" SnapsToDevicePixels="True"/>
                             </Canvas>
                             <Button Command="{Binding LoadChip_Click}" Content="画像切り替え" Margin="5,5,5,5"/>
                         </StackPanel>
@@ -105,22 +105,22 @@
                     <GroupBox Header="キャラクター" Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton x:Name="SelectMine" Margin="5,5,5,5" Command="{Binding SelectMine_Click}">
-                                <Image Height="32" Width="32" Source="/Resources/Stand.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/Stand.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <ToggleButton x:Name="SelectFood1" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="1">
-                                <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/banana.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <ToggleButton x:Name="SelectFood2" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="2">
-                                <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/banana.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <ToggleButton x:Name="SelectFood3" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="3">
-                                <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/banana.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <ToggleButton x:Name="SelectFood4" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="4">
-                                <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/banana.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <ToggleButton x:Name="SelectFood5" Margin="5,5,5,5" Command="{Binding SelectFood_Click}" CommandParameter="5">
-                                <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                                <Image Height="32" Width="32" Source="/Resources/banana.png" SnapsToDevicePixels="True"/>
                             </ToggleButton>
                             <Button Content="－" Command="{Binding ReduceFood_Click}" Margin="5,5,5,5" x:Name="ReduceFood"/>
                             <Button Content="＋" Command="{Binding AddFood_Click}" Margin="5,5,5,5" x:Name="AddFood"/>

@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png"/>
+        <Image x:Name="MineImage" Height="32" Width="32" Source="/Resources/Stand.png" SnapsToDevicePixels="True"/>
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <Label Content="ふにゃ" FontSize="24"/>
             <Label Content="{Binding Version}"/>
