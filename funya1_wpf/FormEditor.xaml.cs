@@ -242,24 +242,55 @@ namespace funya1_wpf
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            var canContinue = BeforeCloseFile("終了の");
+            if (!canContinue)
+            {
+                e.Cancel = true;
+                DialogResult = false;
+            }
+        }
+
+        private bool BeforeCloseFile(string messagePrefix)
+        {
             if (originalText != StageData.ToString())
             {
-                var result = MessageBox.Show(this, $"\"{StageData.StageFile}\"の内容は変更されているらしいです。\n保存するんですか？", "終了の前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                string stageFile = StageData.StageFile;
+                if (string.IsNullOrEmpty(stageFile))
+                {
+                    stageFile = "無題";
+                }
+                var result = MessageBox.Show(this, $"\"{stageFile}\"の内容は変更されているらしいです。\n保存するんですか？", $"{messagePrefix}前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     Save();
                 }
                 else if (result == MessageBoxResult.Cancel)
                 {
-                    e.Cancel = true;
-                    DialogResult = false;
+                    return false;
                 }
             }
+            return true;
         }
 
-        public ICommand New_Click => new ActionCommand(_ => NewData());
+        public ICommand New_Click => new ActionCommand(_ =>
+        {
+            var canContinue = BeforeCloseFile("新規作成の");
+            if (!canContinue)
+            {
+                return;
+            }
+            NewData();
+        });
 
-        public ICommand Open_Click => new ActionCommand(_ => Open());
+        public ICommand Open_Click => new ActionCommand(_ =>
+        {
+            var canContinue = BeforeCloseFile("ファイルを開く");
+            if (!canContinue)
+            {
+                return;
+            }
+            Open();
+        });
 
         private void Open()
         {
