@@ -110,6 +110,12 @@ namespace funya1_wpf
             Select(0, EditMode.Chip);
             UpdateMapSelectUi();
             originalText = StageData.ToString();
+            UpdateTitle();
+        }
+
+        private void UpdateTitle()
+        {
+            Title = $"{Path.GetFileName(GetStageFileName())} - ふにゃステージメーカー";
         }
 
         private void AddMap()
@@ -254,11 +260,7 @@ namespace funya1_wpf
         {
             if (originalText != StageData.ToString())
             {
-                string stageFile = StageData.StageFile;
-                if (string.IsNullOrEmpty(stageFile))
-                {
-                    stageFile = "無題";
-                }
+                string stageFile = GetStageFileName();
                 var result = MessageBox.Show(this, $"\"{stageFile}\"の内容は変更されているらしいです。\n保存するんですか？", $"{messagePrefix}前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -270,6 +272,17 @@ namespace funya1_wpf
                 }
             }
             return true;
+        }
+
+        private string GetStageFileName()
+        {
+            string stageFile = StageData.StageFile;
+            if (string.IsNullOrEmpty(stageFile))
+            {
+                stageFile = "無題";
+            }
+
+            return stageFile;
         }
 
         public ICommand New_Click => new ActionCommand(_ =>
@@ -316,6 +329,7 @@ namespace funya1_wpf
                     UpdateColor();
                     Select(0, EditMode.Chip);
                     UpdateMapSelectUi();
+                    UpdateTitle();
                 }
                 catch (Exception ex)
                 {
@@ -336,6 +350,7 @@ namespace funya1_wpf
             {
                 StageData.Save();
                 originalText = StageData.ToString();
+                UpdateTitle();
             }
         }
 
@@ -355,6 +370,7 @@ namespace funya1_wpf
                 StageData.StageFile = dialog.FileName;
                 StageData.Save();
                 originalText = StageData.ToString();
+                UpdateTitle();
             }
         }
 
