@@ -1,0 +1,28 @@
+﻿body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.main {
+    padding: 5px;
+}
+
+h1 {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.top-page h1 {
+    font-size: 28px;
+    color: #f00;
+}
+
+.top-page h1 .copyright {
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 14px;
+}
