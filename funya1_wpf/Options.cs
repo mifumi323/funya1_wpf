@@ -13,6 +13,8 @@ namespace funya1_wpf
         public double StageMakerWidth = double.NaN;
         public double StageMakerHeight = double.NaN;
 
+        public bool ToolBarVisible = true;
+
         public int Interval = 50;
         public int Gravity = 2;
         public bool Reverse = false;
