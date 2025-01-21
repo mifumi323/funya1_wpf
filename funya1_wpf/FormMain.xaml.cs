@@ -255,6 +255,7 @@ namespace funya1_wpf
             UpdateMenuSpeed();
             UpdateMenuGravity();
             UpdateMenuReverse();
+            UpdateToolBar();
         }
 
         public void UpdateMenuStage()
@@ -619,5 +620,17 @@ namespace funya1_wpf
                 Show();
             }
         });
+
+        public ActionCommand MenuToolBar_Click => new(_ =>
+        {
+            options.ToolBarVisible = !options.ToolBarVisible;
+            UpdateToolBar();
+        });
+
+        private void UpdateToolBar()
+        {
+            MainToolBar.Visibility = options.ToolBarVisible ? Visibility.Visible : Visibility.Collapsed;
+            MenuToolBar.IsChecked = options.ToolBarVisible;
+        }
     }
 }

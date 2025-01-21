@@ -37,6 +37,7 @@
     <Grid MouseMove="Grid_MouseMove">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition x:Name="ScreenRow" Height="Auto"/>
         </Grid.RowDefinitions>
         <Menu>
@@ -74,6 +75,7 @@
                 </MenuItem>
                 <MenuItem x:Name="MenuReverse" Header="反操作(_R)" Command="{Binding MenuReverse_Click}"/>
                 <MenuItem Header="音楽の設定(_M)" Command="{Binding MenuMusic_Click}"/>
+                <MenuItem x:Name="MenuToolBar" Header="ツールバー(_T)" Command="{Binding MenuToolBar_Click}"/>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
                 <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
@@ -81,7 +83,28 @@
                 <MenuItem Header="バージョン情報(_A)" Command="{Binding MenuAbout_Click}"/>
             </MenuItem>
         </Menu>
-        <Viewbox x:Name="Screen" Grid.Row="1" Height="268" Width="347">
+        <ToolBarTray x:Name="MainToolBar" Grid.Row="1">
+            <ToolBar>
+                <Button Command="{Binding MenuStart_Click}" ToolTip="スタート" Margin="5,5,5,5">
+                    <Image Source="/Resources/RunRA.png"/>
+                </Button>
+                <Button Command="{Binding MenuPause_Click}" ToolTip="ポーズ" Margin="5,5,5,5">
+                    <Image Source="/Resources/funyaG.png"/>
+                </Button>
+                <Button Command="{Binding Death_Click}" ToolTip="自爆" Margin="5,5,5,5">
+                    <Image Source="/Resources/Death.png"/>
+                </Button>
+                <Separator/>
+                <Button Command="{Binding MenuOpen_Click}" ToolTip="ステージの読み込み" Margin="5,5,5,5">
+                    <Image Source="/Resources/Open.png"/>
+                </Button>
+                <Separator/>
+                <Button Command="{Binding MenuStageMaker_Click}" ToolTip="ステージメーカーを開く" Margin="5,5,5,5">
+                    <Image Source="/Resources/funyaMaker.ICO"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Viewbox x:Name="Screen" Grid.Row="2" Height="268" Width="347">
             <Grid>
                 <Canvas x:Name="Client" ClipToBounds="True" Height="268" Width="347" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True">
                     <Canvas x:Name="Stage" Height="153" Width="193" Canvas.Left="10" Canvas.Top="10" ClipToBounds="True">

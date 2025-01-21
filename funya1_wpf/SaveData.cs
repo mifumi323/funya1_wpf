@@ -44,6 +44,7 @@ namespace funya1_wpf
             Options.Interval = LoadInt("Interval", Options.Interval);
             Options.Gravity = LoadInt("Gravity", Options.Gravity);
             Options.Reverse = LoadBool("Reverse", Options.Reverse);
+            Options.ToolBarVisible = LoadBool("ToolBarVisible", Options.ToolBarVisible);
 
             // 音楽
             music.Options.IsEnabled = LoadBool("MusicEnabled", music.Options.IsEnabled);
@@ -171,6 +172,7 @@ namespace funya1_wpf
                 $"Interval={Options.Interval}",
                 $"Gravity={Options.Gravity}",
                 $"Reverse={Options.Reverse}",
+                $"ToolBarVisible={Options.ToolBarVisible}",
 
                 // 音楽
                 $"MusicEnabled={music.Options.IsEnabled}",
