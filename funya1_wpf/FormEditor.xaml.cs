@@ -22,6 +22,10 @@ namespace funya1_wpf
         private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
         private bool drawing = false;
 
+        private readonly int MaxZoom = 200;
+        private readonly int MinZoom = 10;
+        public int ActualZoom => (int)(100 * StageZoomer.ActualWidth / StageCanvas.ActualWidth);
+
         private enum EditMode
         {
             Chip,
@@ -436,6 +440,7 @@ namespace funya1_wpf
             terrainImage = (StageCanvas.Background as ImageBrush)?.ImageSource as RenderTargetBitmap ?? terrainImage;
             MoveCharacters();
             UpdateFoodsVisibility();
+            UpdateZoom();
         }
 
         private void MoveCharacters()
@@ -459,14 +464,34 @@ namespace funya1_wpf
             if (e.PropertyName == nameof(MapData.Width))
             {
                 StageCanvas.Width = SelectedMap.Value.Width * 32;
+                UpdateZoom();
             }
             else if (e.PropertyName == nameof(MapData.Height))
             {
                 StageCanvas.Height = SelectedMap.Value.Height * 32;
+                UpdateZoom();
             }
             else if (e.PropertyName == nameof(MapData.TotalFood))
             {
                 UpdateFoodsVisibility();
+            }
+        }
+
+        private void UpdateZoom()
+        {
+            if (options.StageMakerZoom <= 0)
+            {
+                StageZoomer.Width = double.NaN;
+                StageZoomer.Height = double.NaN;
+                StageContainer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                StageContainer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+            }
+            else
+            {
+                StageZoomer.Width = StageCanvas.Width * options.StageMakerZoom / 100;
+                StageZoomer.Height = StageCanvas.Height * options.StageMakerZoom / 100;
+                StageContainer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                StageContainer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
         }
 
@@ -572,6 +597,46 @@ namespace funya1_wpf
                 FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Help", "stagemaker.html"),
                 UseShellExecute = true,
             });
+        });
+
+        public ActionCommand ZoomIn_Click => new(_ =>
+        {
+            if (options.StageMakerZoom <= 0)
+            {
+                options.StageMakerZoom = ActualZoom;
+            }
+            options.StageMakerZoom += 10;
+            if (options.StageMakerZoom > MaxZoom)
+            {
+                options.StageMakerZoom = MaxZoom;
+            }
+            UpdateZoom();
+        });
+
+        public ActionCommand ZoomOut_Click => new(_ =>
+        {
+            if (options.StageMakerZoom <= 0)
+            {
+                options.StageMakerZoom = ActualZoom;
+            }
+            options.StageMakerZoom -= 10;
+            if (options.StageMakerZoom < MinZoom)
+            {
+                options.StageMakerZoom = MinZoom;
+            }
+            UpdateZoom();
+        });
+
+        public ActionCommand ZoomAuto_Click => new(_ =>
+        {
+            options.StageMakerZoom = 0;
+            UpdateZoom();
+        });
+
+        public ActionCommand ZoomReset_Click => new(_ =>
+        {
+            options.StageMakerZoom = 100;
+            UpdateZoom();
         });
     }
 }

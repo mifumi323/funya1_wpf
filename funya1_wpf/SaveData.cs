@@ -41,6 +41,7 @@ namespace funya1_wpf
             Options.StageMakerState = (WindowState)LoadInt("StageMakerState", (int)Options.StageMakerState);
             Options.StageMakerWidth = LoadDouble("StageMakerWidth", Options.StageMakerWidth);
             Options.StageMakerHeight = LoadDouble("StageMakerHeight", Options.StageMakerHeight);
+            Options.StageMakerZoom = LoadInt("StageMakerZoom", Options.StageMakerZoom);
             Options.Interval = LoadInt("Interval", Options.Interval);
             Options.Gravity = LoadInt("Gravity", Options.Gravity);
             Options.Reverse = LoadBool("Reverse", Options.Reverse);
@@ -169,6 +170,7 @@ namespace funya1_wpf
                 $"StageMakerState={(int)Options.StageMakerState}",
                 $"StageMakerWidth={Options.StageMakerWidth}",
                 $"StageMakerHeight={Options.StageMakerHeight}",
+                $"StageMakerZoom={Options.StageMakerZoom}",
                 $"Interval={Options.Interval}",
                 $"Gravity={Options.Gravity}",
                 $"Reverse={Options.Reverse}",

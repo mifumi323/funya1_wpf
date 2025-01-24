@@ -12,6 +12,7 @@ namespace funya1_wpf
         public WindowState StageMakerState = WindowState.Normal;
         public double StageMakerWidth = double.NaN;
         public double StageMakerHeight = double.NaN;
+        public int StageMakerZoom = 100;
 
         public bool ToolBarVisible = true;
 
