@@ -83,6 +83,10 @@
     <None Remove="Resources\RunRC.png" />
     <None Remove="Resources\Save.png" />
     <None Remove="Resources\Selected.png" />
+    <None Remove="Resources\ShiftDown.png" />
+    <None Remove="Resources\ShiftLeft.png" />
+    <None Remove="Resources\ShiftRight.png" />
+    <None Remove="Resources\ShiftUp.png" />
     <None Remove="Resources\Sit.png" />
     <None Remove="Resources\Sleep.png" />
     <None Remove="Resources\Sleep2.png" />
@@ -282,6 +286,10 @@
     <Resource Include="Resources\RunRC.png" />
     <Resource Include="Resources\Save.png" />
     <Resource Include="Resources\Selected.png" />
+    <Resource Include="Resources\ShiftDown.png" />
+    <Resource Include="Resources\ShiftLeft.png" />
+    <Resource Include="Resources\ShiftRight.png" />
+    <Resource Include="Resources\ShiftUp.png" />
     <Resource Include="Resources\Sit.png" />
     <Resource Include="Resources\Sleep.png" />
     <Resource Include="Resources\Sleep2.png" />
