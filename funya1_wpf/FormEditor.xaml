@@ -190,12 +190,14 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListBox x:Name="MapList" ItemsSource="{Binding Maps}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="2" SelectionChanged="MapList_SelectionChanged">
+                            <ListBox x:Name="MapList" ItemsSource="{Binding Maps}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="4" SelectionChanged="MapList_SelectionChanged">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -207,6 +209,8 @@
                             </ListBox>
                             <Button x:Name="MapAdd" Command="{Binding MapAdd_Click}" Content="追加" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5"/>
                             <Button x:Name="MapDel" Command="{Binding MapDel_Click}" Content="削除" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5"/>
+                            <Button x:Name="MapUp" Command="{Binding MapUp_Click}" Content="上へ" Grid.Column="2" Grid.Row="1" Margin="5,5,5,5"/>
+                            <Button x:Name="MapDown" Command="{Binding MapDown_Click}" Content="下へ" Grid.Column="3" Grid.Row="1" Margin="5,5,5,5"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="マップ設定" Grid.Row="4">
