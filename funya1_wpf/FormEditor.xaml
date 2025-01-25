@@ -82,6 +82,12 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer x:Name="StageContainer" Grid.Column="0" Background="{Binding StageColorBrush}">
+                <ScrollViewer.InputBindings>
+                    <KeyBinding Modifiers="Ctrl" Key="PageUp" Command="{Binding ZoomIn_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding ZoomAuto_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="D0" Command="{Binding ZoomReset_Click}"/>
+                </ScrollViewer.InputBindings>
                 <Viewbox x:Name="StageZoomer" Width="320" Height="320">
                     <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
                         <ContentControl x:Name="PlaceMine">
