@@ -688,5 +688,129 @@ namespace funya1_wpf
                 e.Handled = true;
             }
         }
+
+        public ActionCommand ShiftRight_Click => new(_ =>
+        {
+            var map = SelectedMap.Value;
+
+            // マップチップ移動
+            for (var y = 0; y < map.Height; y++)
+            {
+                var last = map.Data[map.Width - 1, y];
+                for (var x = map.Width - 1; x >= 0; x--)
+                {
+                    if (x == 0)
+                    {
+                        map.Data[x, y] = last;
+                    }
+                    else
+                    {
+                        map.Data[x, y] = map.Data[x - 1, y];
+                    }
+                }
+            }
+            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+
+            // キャラクター移動
+            map.StartX = (map.StartX + 1) % map.Width;
+            for (var i = 1; i <= map.TotalFood; i++)
+            {
+                map.Food[i].x = (map.Food[i].x + 1) % map.Width;
+            }
+            MoveCharacters();
+        });
+
+        public ActionCommand ShiftLeft_Click => new(_ =>
+        {
+            var map = SelectedMap.Value;
+
+            // マップチップ移動
+            for (var y = 0; y < map.Height; y++)
+            {
+                var first = map.Data[0, y];
+                for (var x = 0; x < map.Width; x++)
+                {
+                    if (x == map.Width - 1)
+                    {
+                        map.Data[x, y] = first;
+                    }
+                    else
+                    {
+                        map.Data[x, y] = map.Data[x + 1, y];
+                    }
+                }
+            }
+            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+
+            // キャラクター移動
+            map.StartX = (map.StartX + map.Width - 1) % map.Width;
+            for (var i = 1; i <= map.TotalFood; i++)
+            {
+                map.Food[i].x = (map.Food[i].x + map.Width - 1) % map.Width;
+            }
+            MoveCharacters();
+        });
+
+        public ActionCommand ShiftUp_Click => new(_ =>
+        {
+            var map = SelectedMap.Value;
+
+            // マップチップ移動
+            for (var x = 0; x < map.Width; x++)
+            {
+                var first = map.Data[x, 0];
+                for (var y = 0; y < map.Height; y++)
+                {
+                    if (y == map.Height - 1)
+                    {
+                        map.Data[x, y] = first;
+                    }
+                    else
+                    {
+                        map.Data[x, y] = map.Data[x, y + 1];
+                    }
+                }
+            }
+            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+
+            // キャラクター移動
+            map.StartY = (map.StartY + map.Height - 1) % map.Height;
+            for (var i = 1; i <= map.TotalFood; i++)
+            {
+                map.Food[i].y = (map.Food[i].y + map.Height - 1) % map.Height;
+            }
+            MoveCharacters();
+        });
+
+        public ActionCommand ShiftDown_Click => new(_ =>
+        {
+            var map = SelectedMap.Value;
+
+            // マップチップ移動
+            for (var x = 0; x < map.Width; x++)
+            {
+                var last = map.Data[x, map.Height - 1];
+                for (var y = map.Height - 1; y >= 0; y--)
+                {
+                    if (y == 0)
+                    {
+                        map.Data[x, y] = last;
+                    }
+                    else
+                    {
+                        map.Data[x, y] = map.Data[x, y - 1];
+                    }
+                }
+            }
+            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+
+            // キャラクター移動
+            map.StartY = (map.StartY + 1) % map.Height;
+            for (var i = 1; i <= map.TotalFood; i++)
+            {
+                map.Food[i].y = (map.Food[i].y + 1) % map.Height;
+            }
+            MoveCharacters();
+        });
     }
 }

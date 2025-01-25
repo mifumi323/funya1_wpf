@@ -25,6 +25,10 @@
         <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>
         <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding ZoomAuto_Click}"/>
         <KeyBinding Modifiers="Ctrl" Key="D0" Command="{Binding ZoomReset_Click}"/>
+        <KeyBinding Modifiers="Shift" Key="Right" Command="{Binding ShiftRight_Click}"/>
+        <KeyBinding Modifiers="Shift" Key="Left" Command="{Binding ShiftLeft_Click}"/>
+        <KeyBinding Modifiers="Shift" Key="Up" Command="{Binding ShiftUp_Click}"/>
+        <KeyBinding Modifiers="Shift" Key="Down" Command="{Binding ShiftDown_Click}"/>
         <KeyBinding Modifiers="Alt" Key="Q" Command="{Binding ExitAll_Click}"/>
         <KeyBinding Key="F1" Command="{Binding HelpContents_Click}"/>
     </Window.InputBindings>
@@ -51,6 +55,12 @@
                     <MenuItem Header="自動(_A)" Command="{Binding ZoomAuto_Click}" InputGestureText="Ctrl+1"/>
                     <MenuItem Header="リセット(_R)" Command="{Binding ZoomReset_Click}" InputGestureText="Ctrl+0"/>
                 </MenuItem>
+                <MenuItem Header="シフト移動(_S)">
+                    <MenuItem Header="右(_R)" Command="{Binding ShiftRight_Click}" InputGestureText="Shift+→"/>
+                    <MenuItem Header="左(_L)" Command="{Binding ShiftLeft_Click}" InputGestureText="Shift+←"/>
+                    <MenuItem Header="上(_U)" Command="{Binding ShiftUp_Click}" InputGestureText="Shift+↑"/>
+                    <MenuItem Header="下(_D)" Command="{Binding ShiftDown_Click}" InputGestureText="Shift+↓"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
                 <MenuItem Header="ふにゃステージメーカーのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
@@ -74,6 +84,19 @@
                 <Button Command="{Binding ZoomOut_Click}" ToolTip="縮小" Margin="5,5,5,5">
                     <Image Source="/Resources/ZoomOut.png"/>
                 </Button>
+                <Separator/>
+                <Button Command="{Binding ShiftRight_Click}" ToolTip="右シフト" Margin="5,5,5,5">
+                    <Image Source="/Resources/ShiftRight.png"/>
+                </Button>
+                <Button Command="{Binding ShiftLeft_Click}" ToolTip="左シフト" Margin="5,5,5,5">
+                    <Image Source="/Resources/ShiftLeft.png"/>
+                </Button>
+                <Button Command="{Binding ShiftUp_Click}" ToolTip="上シフト" Margin="5,5,5,5">
+                    <Image Source="/Resources/ShiftUp.png"/>
+                </Button>
+                <Button Command="{Binding ShiftDown_Click}" ToolTip="下シフト" Margin="5,5,5,5">
+                    <Image Source="/Resources/ShiftDown.png"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="2">
@@ -87,6 +110,10 @@
                     <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>
                     <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding ZoomAuto_Click}"/>
                     <KeyBinding Modifiers="Ctrl" Key="D0" Command="{Binding ZoomReset_Click}"/>
+                    <KeyBinding Modifiers="Shift" Key="Right" Command="{Binding ShiftRight_Click}"/>
+                    <KeyBinding Modifiers="Shift" Key="Left" Command="{Binding ShiftLeft_Click}"/>
+                    <KeyBinding Modifiers="Shift" Key="Up" Command="{Binding ShiftUp_Click}"/>
+                    <KeyBinding Modifiers="Shift" Key="Down" Command="{Binding ShiftDown_Click}"/>
                 </ScrollViewer.InputBindings>
                 <Viewbox x:Name="StageZoomer" Width="320" Height="320">
                     <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
