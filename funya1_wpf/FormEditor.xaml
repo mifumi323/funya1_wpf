@@ -21,6 +21,10 @@
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding Open_Click}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding Save_Click}"/>
         <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAs_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="PageUp" Command="{Binding ZoomIn_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding ZoomAuto_Click}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D0" Command="{Binding ZoomReset_Click}"/>
         <KeyBinding Modifiers="Alt" Key="Q" Command="{Binding ExitAll_Click}"/>
         <KeyBinding Key="F1" Command="{Binding HelpContents_Click}"/>
     </Window.InputBindings>
@@ -40,6 +44,14 @@
                 <MenuItem Header="ゲームに戻る(_X)" Command="{Binding Exit_Click}" InputGestureText="Alt+F4"/>
                 <MenuItem Header="ゲームに戻らず終了する(_Q)" Command="{Binding ExitAll_Click}" InputGestureText="Alt+Q"/>
             </MenuItem>
+            <MenuItem Header="編集(_E)">
+                <MenuItem Header="ズーム(_Z)">
+                    <MenuItem Header="拡大(_I)" Command="{Binding ZoomIn_Click}" InputGestureText="Ctrl+PageUp"/>
+                    <MenuItem Header="縮小(_O)" Command="{Binding ZoomOut_Click}" InputGestureText="Ctrl+PageDown"/>
+                    <MenuItem Header="自動(_A)" Command="{Binding ZoomAuto_Click}" InputGestureText="Ctrl+1"/>
+                    <MenuItem Header="リセット(_R)" Command="{Binding ZoomReset_Click}" InputGestureText="Ctrl+0"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
                 <MenuItem Header="ふにゃステージメーカーのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
             </MenuItem>
@@ -55,6 +67,13 @@
                 <Button Command="{Binding Save_Click}" ToolTip="上書き保存" Margin="5,5,5,5">
                     <Image Source="/Resources/Save.png"/>
                 </Button>
+                <Separator/>
+                <Button Command="{Binding ZoomIn_Click}" ToolTip="拡大" Margin="5,5,5,5">
+                    <Image Source="/Resources/ZoomIn.png"/>
+                </Button>
+                <Button Command="{Binding ZoomOut_Click}" ToolTip="縮小" Margin="5,5,5,5">
+                    <Image Source="/Resources/ZoomOut.png"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="2">
@@ -62,27 +81,35 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer x:Name="StageContainer" Grid.Column="0" HorizontalScrollBarVisibility="Visible" Background="{Binding StageColorBrush}">
-                <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
-                    <ContentControl x:Name="PlaceMine">
-                        <Image Height="32" Width="32" Source="/Resources/Stand.png" SnapsToDevicePixels="True"/>
-                    </ContentControl>
-                    <ContentControl x:Name="PlaceFood1">
-                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                    </ContentControl>
-                    <ContentControl x:Name="PlaceFood2">
-                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                    </ContentControl>
-                    <ContentControl x:Name="PlaceFood3">
-                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                    </ContentControl>
-                    <ContentControl x:Name="PlaceFood4">
-                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                    </ContentControl>
-                    <ContentControl x:Name="PlaceFood5">
-                        <Image Height="32" Width="32" Source="/Resources/banana.png"/>
-                    </ContentControl>
-                </Canvas>
+            <ScrollViewer x:Name="StageContainer" Grid.Column="0" Background="{Binding StageColorBrush}" PreviewMouseWheel="StageContainer_MouseWheel">
+                <ScrollViewer.InputBindings>
+                    <KeyBinding Modifiers="Ctrl" Key="PageUp" Command="{Binding ZoomIn_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="D1" Command="{Binding ZoomAuto_Click}"/>
+                    <KeyBinding Modifiers="Ctrl" Key="D0" Command="{Binding ZoomReset_Click}"/>
+                </ScrollViewer.InputBindings>
+                <Viewbox x:Name="StageZoomer" Width="320" Height="320">
+                    <Canvas x:Name="StageCanvas" MouseDown="StageCanvas_MouseDown" MouseMove="StageCanvas_MouseMove" Width="320" Height="320">
+                        <ContentControl x:Name="PlaceMine">
+                            <Image Height="32" Width="32" Source="/Resources/Stand.png" SnapsToDevicePixels="True"/>
+                        </ContentControl>
+                        <ContentControl x:Name="PlaceFood1">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="PlaceFood2">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="PlaceFood3">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="PlaceFood4">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                        <ContentControl x:Name="PlaceFood5">
+                            <Image Height="32" Width="32" Source="/Resources/banana.png"/>
+                        </ContentControl>
+                    </Canvas>
+                </Viewbox>
             </ScrollViewer>
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
                 <Grid>

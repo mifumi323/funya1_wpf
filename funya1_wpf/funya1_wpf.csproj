@@ -92,6 +92,8 @@
     <None Remove="Resources\WalkR.png" />
     <None Remove="Resources\Wink.png" />
     <None Remove="Resources\ZeroG.stg" />
+    <None Remove="Resources\ZoomIn.png" />
+    <None Remove="Resources\ZoomOut.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -289,6 +291,8 @@
     <Resource Include="Resources\WalkR.png" />
     <Resource Include="Resources\Wink.png" />
     <Resource Include="Resources\ZeroG.stg" />
+    <Resource Include="Resources\ZoomIn.png" />
+    <Resource Include="Resources\ZoomOut.png" />
   </ItemGroup>
 
 </Project>
