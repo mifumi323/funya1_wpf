@@ -566,6 +566,35 @@ namespace funya1_wpf
             UpdateMapSelectUi();
         });
 
+        public ICommand MapUp_Click => new ActionCommand(_ =>
+        {
+            var number = SelectedMap.Key;
+            if (number > 1)
+            {
+                var map = SelectedMap.Value;
+                StageData.Map[number] = StageData.Map[number - 1];
+                StageData.Map[number - 1] = map;
+                Maps = StageData.GetValidMaps();
+                SelectedMap = Maps.ElementAt(number - 2);
+                UpdateMapSelectUi();
+            }
+        });
+
+        public ICommand MapDown_Click => new ActionCommand(_ =>
+        {
+            var number = SelectedMap.Key;
+            if (number < StageData.StageCount)
+            {
+                var map = SelectedMap.Value;
+                StageData.Map[number] = StageData.Map[number + 1];
+                StageData.Map[number + 1] = map;
+                Maps = StageData.GetValidMaps();
+                SelectedMap = Maps.ElementAt(number);
+                UpdateMapSelectUi();
+            }
+            UpdateMapSelectUi();
+        });
+
         private void UpdateMapSelectUi()
         {
             MapAdd.IsEnabled = StageData.StageCount < 30;
