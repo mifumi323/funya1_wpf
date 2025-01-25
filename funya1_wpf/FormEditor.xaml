@@ -81,7 +81,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer x:Name="StageContainer" Grid.Column="0" Background="{Binding StageColorBrush}">
+            <ScrollViewer x:Name="StageContainer" Grid.Column="0" Background="{Binding StageColorBrush}" PreviewMouseWheel="StageContainer_MouseWheel">
                 <ScrollViewer.InputBindings>
                     <KeyBinding Modifiers="Ctrl" Key="PageUp" Command="{Binding ZoomIn_Click}"/>
                     <KeyBinding Modifiers="Ctrl" Key="PageDown" Command="{Binding ZoomOut_Click}"/>

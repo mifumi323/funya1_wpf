@@ -642,5 +642,22 @@ namespace funya1_wpf
             options.StageMakerZoom = 100;
             UpdateZoom();
         });
+
+        private void StageContainer_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+            {
+                if (e.Delta > 0)
+                {
+                    ZoomIn_Click.Execute(null);
+                }
+                else
+                {
+                    ZoomOut_Click.Execute(null);
+                }
+                UpdateZoom();
+                e.Handled = true;
+            }
+        }
     }
 }
