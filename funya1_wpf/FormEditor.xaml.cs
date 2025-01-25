@@ -624,6 +624,10 @@ namespace funya1_wpf
             {
                 options.StageMakerZoom = MinZoom;
             }
+            if (options.StageMakerZoom > MaxZoom)
+            {
+                options.StageMakerZoom = MaxZoom;
+            }
             UpdateZoom();
         });
 
