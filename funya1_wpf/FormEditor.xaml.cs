@@ -267,7 +267,7 @@ namespace funya1_wpf
                 var result = MessageBox.Show(this, $"\"{stageFile}\"の内容は変更されているらしいです。\n保存するんですか？", $"{messagePrefix}前にちょっと確認させていただきたく存じ上げます", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    Save();
+                    return Save();
                 }
                 else if (result == MessageBoxResult.Cancel)
                 {
@@ -343,24 +343,33 @@ namespace funya1_wpf
 
         public ICommand Save_Click => new ActionCommand(_ => Save());
 
-        private void Save()
+        private bool Save()
         {
             if (string.IsNullOrEmpty(StageData.StageFile))
             {
-                SaveAs();
+                return SaveAs();
             }
             else
             {
+                if (AlertMapErrors())
+                {
+                    return false;
+                }
                 StageData.Save();
                 originalText = StageData.ToString();
                 UpdateTitle();
+                return true;
             }
         }
 
         public ICommand SaveAs_Click => new ActionCommand(_ => SaveAs());
 
-        private void SaveAs()
+        private bool SaveAs()
         {
+            if (AlertMapErrors())
+            {
+                return false;
+            }
             var dialog = new SaveFileDialog
             {
                 Filter = "ふにゃステージファイル|*.stg",
@@ -374,7 +383,53 @@ namespace funya1_wpf
                 StageData.Save();
                 originalText = StageData.ToString();
                 UpdateTitle();
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 必要に応じてマップの問題を表示します。問題があればtrueを返します。
+        /// </summary>
+        /// <returns>問題があればtrue、なければfalse</returns>
+        private bool AlertMapErrors()
+        {
+            var errors = new List<string>();
+            for (var i = 1; i <= StageData.StageCount; i++)
+            {
+                var map = StageData.Map[i];
+
+                // スタート地点チェック
+                if (map.StartX < 0 || map.StartX > map.Width - 1 || map.StartY < 0 || map.StartY > map.Height)
+                {
+                    errors.Add($"マップ{i}：スタート地点がマップ外になっています。このままじゃ即死します！");
+                }
+                else if (map.StartX == 0 || map.StartX == map.Width - 1 || map.StartY == 0)
+                {
+                    // 下だけマップ外に1マス余裕があるので下側のマップ端判定は省く
+                    errors.Add($"マップ{i}：スタート地点がマップ端になっています。このゲームは画面端でも死ぬんです！");
+                }
+
+                // バナナチェック
+                for (var j = 1; j <= map.TotalFood; j++)
+                {
+                    if (map.Food[j].x < 0 || map.Food[j].x > map.Width - 1 || map.Food[j].y < 0 || map.Food[j].y > map.Height)
+                    {
+                        // 下だけマップ外に1マス余裕があるので下側の判定だけ広く
+                        errors.Add($"マップ{i}：バナナ{j}の座標がマップ外になっています。このままじゃ取れません！");
+                    }
+                }
+            }
+            if (errors.Count > 0)
+            {
+                var messageBoxText = $"このステージには問題があるみたいです。保存できません！\n\n{string.Join("\n", errors)}";
+                MessageBox.Show(this, messageBoxText, "気付いちゃったんですが…", MessageBoxButton.OK, MessageBoxImage.Error);
+                return true;
+            }
+            return false;
         }
 
         public ICommand Exit_Click => new ActionCommand(_ =>
