@@ -60,7 +60,6 @@ namespace funya1_wpf
         public ICommand OkButton_Click => new ActionCommand(friction =>
         {
             DialogResult = true;
-            Close();
         });
     }
 }
