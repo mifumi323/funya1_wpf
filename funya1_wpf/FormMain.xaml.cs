@@ -36,6 +36,8 @@ namespace funya1_wpf
         private DateTime LastMouseMoved = DateTime.Now;
         private readonly DispatcherTimer? MouseHideTimer = new() { Interval = TimeSpan.FromSeconds(0.5) };
 
+        public readonly DispatcherTimer MusicFadeTimer = new() { Interval = TimeSpan.FromMilliseconds(100) };
+
         public FormMain()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -46,6 +48,16 @@ namespace funya1_wpf
             cleater = new Cleater(this, music, results, options, resources);
             SaveData = new(music, results, options);
             SaveData.Load();
+
+            MusicFadeTimer.Tick += (_, _) =>
+            {
+                if (cleater.GameState == GameState.Playing)
+                {
+                    music.Volume = cleater.Status == Status.Slepping ? Music.SleepVolume : Music.NormalVolume;
+                }
+                music.OnFrame();
+            };
+            MusicFadeTimer.Start();
 
             SetScreenSize(options.ScreenSize);
             WindowState = options.WindowState;
@@ -69,7 +81,7 @@ namespace funya1_wpf
             {
                 if (cleater.GameState == GameState.Playing)
                 {
-                    music.Play(music.Options.Playing);
+                    music.Play(music.Options.Playing, cleater.Status == Status.Slepping ? Music.SleepVolume : Music.NormalVolume);
                 }
             };
         }
