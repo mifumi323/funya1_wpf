@@ -150,7 +150,7 @@
                     <GroupBox Header="マップチップ">
                         <StackPanel Orientation="Vertical">
                             <Canvas x:Name="ChipContainer" Width="320" Height="32" MouseDown="ChipContainer_MouseDown" MouseMove="ChipContainer_MouseMove">
-                                <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Stretch="None" SnapsToDevicePixels="True"/>
+                                <Image x:Name="ChipImage" DataContext="{Binding StageData}" Source="{Binding Image}" Width="{Binding Image.PixelWidth}" Height="{Binding Image.PixelHeight}" Stretch="Fill" SnapsToDevicePixels="True"/>
                                 <Image x:Name="ChipSelector" Source="/Resources/Selected.png" Stretch="None" Width="32" Height="32" SnapsToDevicePixels="True"/>
                             </Canvas>
                             <Button Command="{Binding LoadChip_Click}" Content="画像切り替え" Margin="5,5,5,5"/>
