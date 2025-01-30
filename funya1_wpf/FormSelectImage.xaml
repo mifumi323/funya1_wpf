@@ -21,7 +21,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-                        <Image Source="{Binding Image}" SnapsToDevicePixels="True"/>
+                        <Image Source="{Binding Image}" Width="{Binding Image.PixelWidth}" Height="{Binding Image.PixelHeight}" Stretch="Fill" SnapsToDevicePixels="True"/>
                         <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </DataTemplate>
