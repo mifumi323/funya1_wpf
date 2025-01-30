@@ -209,7 +209,14 @@
                             <TextBox x:Name="RestText" DataContext="{Binding StageData}" Text="{Binding RestMax, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" MaxLength="3"/>
                             <Slider x:Name="Rest" DataContext="{Binding StageData}" Value="{Binding RestMax}" Minimum="1" Maximum="100" TickFrequency="1" Grid.Column="3" Grid.Row="1"/>
                             <Label Content="背景色" Grid.Column="0" Grid.Row="2"/>
-                            <Button x:Name="BackColor" Command="{Binding BackColor_Click}" Grid.Column="3" Grid.Row="2" Background="{Binding StageColorBrush}" Margin="5,5,5,5"/>
+                            <Grid Grid.Column="3" Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="BackColor" Command="{Binding BackColor_Click}" Background="{Binding StageColorBrush}"/>
+                                <Button x:Name="BackColorReset" Grid.Column="1" Command="{Binding BackColorAuto_Click}" Content="自動"/>
+                            </Grid>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="マップセレクト" Grid.Row="3" MinHeight="100">

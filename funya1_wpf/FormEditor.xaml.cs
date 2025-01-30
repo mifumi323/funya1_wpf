@@ -572,13 +572,19 @@ namespace funya1_wpf
             }
         }
 
-        public ICommand BackColor_Click => new ActionCommand(friction =>
+        public ICommand BackColor_Click => new ActionCommand(_ =>
         {
             var dialog = new FormColor(StageData.StageColor);
             if (dialog.ShowDialog() == true)
             {
                 StageData.StageColor = dialog.Color;
             }
+            UpdateColor();
+        });
+
+        public ICommand BackColorAuto_Click => new ActionCommand(_ =>
+        {
+            StageData.StageColor = StageData.croppedBitmaps[0]!.GetAverageColor();
             UpdateColor();
         });
 
