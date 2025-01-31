@@ -86,7 +86,7 @@
         <ToolBarTray x:Name="MainToolBar" Grid.Row="1">
             <ToolBar>
                 <Button Command="{Binding MenuStart_Click}" ToolTip="スタート" Margin="5,5,5,5">
-                    <Image Source="/Resources/RunRA.png"/>
+                    <Image Source="/Resources/start.png"/>
                 </Button>
                 <Button Command="{Binding MenuPause_Click}" ToolTip="ポーズ" Margin="5,5,5,5">
                     <Image Source="/Resources/funyaG.png"/>
