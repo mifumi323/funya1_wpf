@@ -126,6 +126,14 @@ namespace funya1_wpf
 
         public ActionCommand MenuStart_Click => new(_ =>
         {
+            if (cleater.CurrentStage > 1)
+            {
+                var result = MessageBox.Show("ステージ1からやり直しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
             cleater.GameStart();
         });
 
