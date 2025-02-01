@@ -76,6 +76,9 @@
                 <MenuItem x:Name="MenuReverse" Header="反操作(_R)" Command="{Binding MenuReverse_Click}"/>
                 <MenuItem Header="音楽の設定(_M)" Command="{Binding MenuMusic_Click}"/>
                 <MenuItem x:Name="MenuToolBar" Header="ツールバー(_T)" Command="{Binding MenuToolBar_Click}"/>
+                <MenuItem Header="データ管理">
+                    <MenuItem Header="データを消して終了" Command="{Binding ExitAndDeleteData_Click}"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
                 <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
