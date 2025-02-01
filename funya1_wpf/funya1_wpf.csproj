@@ -54,6 +54,7 @@
     <None Remove="Help\WalkL.png" />
     <None Remove="Help\WalkR.png" />
     <None Remove="readme.txt" />
+    <None Remove="Resources\BackToGame.png" />
     <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
@@ -260,6 +261,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\BackToGame.png" />
     <Resource Include="Resources\banana.png" />
     <Resource Include="Resources\BlockData1.bmp" />
     <Resource Include="Resources\Death.png" />

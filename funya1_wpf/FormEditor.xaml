@@ -97,6 +97,10 @@
                 <Button Command="{Binding ShiftDown_Click}" ToolTip="下シフト" Margin="5,5,5,5">
                     <Image Source="/Resources/ShiftDown.png"/>
                 </Button>
+                <Separator/>
+                <Button Command="{Binding Exit_Click}" ToolTip="ゲームに戻る" Margin="5,5,5,5">
+                    <Image Source="/Resources/BackToGame.png"/>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="2">
