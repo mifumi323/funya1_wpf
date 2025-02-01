@@ -89,7 +89,7 @@
                     <Image Source="/Resources/start.png"/>
                 </Button>
                 <Button Command="{Binding MenuPause_Click}" ToolTip="ポーズ" Margin="5,5,5,5">
-                    <Image Source="/Resources/funyaG.png"/>
+                    <Image Source="/Resources/pause.png"/>
                 </Button>
                 <Button Command="{Binding Death_Click}" ToolTip="自爆" Margin="5,5,5,5">
                     <Image Source="/Resources/Death.png"/>

@@ -75,6 +75,7 @@
     <None Remove="Resources\New.png" />
     <None Remove="Resources\NonOil.bmp" />
     <None Remove="Resources\Open.png" />
+    <None Remove="Resources\pause.png" />
     <None Remove="Resources\RunLA.png" />
     <None Remove="Resources\RunLB.png" />
     <None Remove="Resources\RunLC.png" />
@@ -279,6 +280,7 @@
     <Resource Include="Resources\New.png" />
     <Resource Include="Resources\NonOil.bmp" />
     <Resource Include="Resources\Open.png" />
+    <Resource Include="Resources\pause.png" />
     <Resource Include="Resources\RunLA.png" />
     <Resource Include="Resources\RunLB.png" />
     <Resource Include="Resources\RunLC.png" />
