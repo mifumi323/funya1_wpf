@@ -57,6 +57,7 @@
     <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
+    <None Remove="Resources\Death2.png" />
     <None Remove="Resources\Fall.png" />
     <None Remove="Resources\FallG.png" />
     <None Remove="Resources\FallL.png" />
@@ -262,6 +263,7 @@
     <Resource Include="Resources\banana.png" />
     <Resource Include="Resources\BlockData1.bmp" />
     <Resource Include="Resources\Death.png" />
+    <Resource Include="Resources\Death2.png" />
     <Resource Include="Resources\Fall.png" />
     <Resource Include="Resources\FallG.png" />
     <Resource Include="Resources\FallL.png" />

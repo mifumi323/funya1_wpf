@@ -92,7 +92,7 @@
                     <Image Source="/Resources/pause.png"/>
                 </Button>
                 <Button Command="{Binding Death_Click}" ToolTip="自爆" Margin="5,5,5,5">
-                    <Image Source="/Resources/Death.png"/>
+                    <Image Source="/Resources/Death2.png"/>
                 </Button>
                 <Separator/>
                 <Button Command="{Binding MenuOpen_Click}" ToolTip="ステージの読み込み" Margin="5,5,5,5">
