@@ -54,9 +54,11 @@
     <None Remove="Help\WalkL.png" />
     <None Remove="Help\WalkR.png" />
     <None Remove="readme.txt" />
+    <None Remove="Resources\BackToGame.png" />
     <None Remove="Resources\banana.png" />
     <None Remove="Resources\BlockData1.bmp" />
     <None Remove="Resources\Death.png" />
+    <None Remove="Resources\Death2.png" />
     <None Remove="Resources\Fall.png" />
     <None Remove="Resources\FallG.png" />
     <None Remove="Resources\FallL.png" />
@@ -75,6 +77,7 @@
     <None Remove="Resources\New.png" />
     <None Remove="Resources\NonOil.bmp" />
     <None Remove="Resources\Open.png" />
+    <None Remove="Resources\pause.png" />
     <None Remove="Resources\RunLA.png" />
     <None Remove="Resources\RunLB.png" />
     <None Remove="Resources\RunLC.png" />
@@ -92,6 +95,7 @@
     <None Remove="Resources\Sleep2.png" />
     <None Remove="Resources\Stand.ICO" />
     <None Remove="Resources\Stand.png" />
+    <None Remove="Resources\start.png" />
     <None Remove="Resources\WalkL.png" />
     <None Remove="Resources\WalkR.png" />
     <None Remove="Resources\Wink.png" />
@@ -257,9 +261,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\BackToGame.png" />
     <Resource Include="Resources\banana.png" />
     <Resource Include="Resources\BlockData1.bmp" />
     <Resource Include="Resources\Death.png" />
+    <Resource Include="Resources\Death2.png" />
     <Resource Include="Resources\Fall.png" />
     <Resource Include="Resources\FallG.png" />
     <Resource Include="Resources\FallL.png" />
@@ -278,6 +284,7 @@
     <Resource Include="Resources\New.png" />
     <Resource Include="Resources\NonOil.bmp" />
     <Resource Include="Resources\Open.png" />
+    <Resource Include="Resources\pause.png" />
     <Resource Include="Resources\RunLA.png" />
     <Resource Include="Resources\RunLB.png" />
     <Resource Include="Resources\RunLC.png" />
@@ -295,6 +302,7 @@
     <Resource Include="Resources\Sleep2.png" />
     <Resource Include="Resources\Stand.ICO" />
     <Resource Include="Resources\Stand.png" />
+    <Resource Include="Resources\start.png" />
     <Resource Include="Resources\WalkL.png" />
     <Resource Include="Resources\WalkR.png" />
     <Resource Include="Resources\Wink.png" />
