@@ -21,6 +21,7 @@ namespace funya1_wpf
         private readonly Options options = new();
         private readonly Resources resources = new();
         private readonly SaveData SaveData;
+        private bool saveOnExit = true;
 
         readonly ElapsedFrameCounter frameCounter1;
         readonly ElapsedFrameCounter frameCounter2;
@@ -124,6 +125,27 @@ namespace funya1_wpf
             Close();
         });
 
+        public ActionCommand ExitAndDeleteData_Click => new(_ =>
+        {
+            string[] messages = [
+                "ふにゃのセーブデータを削除しますか？",
+                "本当に削除してもよいのですね？",
+                "削除したデータは二度ともとに戻りませんがよいのですか？",
+                "最後に訊きます。本当に削除するのですね？",
+            ];
+            foreach (var message in messages)
+            {
+                var result = MessageBox.Show(message, "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+            SaveData.Delete();
+            saveOnExit = false;
+            Close();
+        });
+
         public ActionCommand MenuStart_Click => new(_ =>
         {
             if (cleater.CurrentStage > 1)
@@ -180,7 +202,10 @@ namespace funya1_wpf
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            SaveData.Save();
+            if (saveOnExit)
+            {
+                SaveData.Save();
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

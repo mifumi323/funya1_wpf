@@ -204,5 +204,24 @@ namespace funya1_wpf
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MifuminSoft", "funya", "settings.ini");
         }
+
+        public static void Delete()
+        {
+            if (File.Exists(GetFilePath()))
+            {
+                File.Delete(GetFilePath());
+            }
+            RemoveFromRegistory();
+        }
+
+        private static void RemoveFromRegistory()
+        {
+            var registryKey = Registry.CurrentUser.OpenSubKey("Software\\VB and VBA Program Settings", true);
+            if (registryKey == null)
+            {
+                return;
+            }
+            registryKey.DeleteSubKeyTree("funya", false);
+        }
     }
 }
