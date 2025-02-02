@@ -20,7 +20,7 @@ namespace funya1_wpf
             set => SetValue(ImageItemsProperty, value);
         }
         public static readonly DependencyProperty ImageItemsProperty =
-            DependencyProperty.Register("ImageItems", typeof(ImageItem[]), typeof(FormSelectImage), new PropertyMetadata(new ImageItem[0]));
+            DependencyProperty.Register("ImageItems", typeof(ImageItem[]), typeof(FormSelectImage), new PropertyMetadata(Array.Empty<ImageItem>()));
 
         private ImageItem SelectedImage
         {

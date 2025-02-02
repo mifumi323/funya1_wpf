@@ -53,7 +53,7 @@
         <TextBox Grid.Row="5" Grid.Column="0" Margin="2" Text="{Binding Missing.FilePath, Mode=TwoWay}" IsEnabled="{Binding IsEnabled}"/>
         <Button Content="参照" Grid.Row="5" Grid.Column="1" Margin="2" Tag="{Binding Missing.FilePath, Mode=TwoWay}" Click="OpenButton_Click" IsEnabled="{Binding IsEnabled}"/>
 
-        <Label Content="オールクリアの音楽" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" IsEnabled="{Binding IsEnabled}"/>
+        <Label Content="ゲームオーバーの音楽" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" IsEnabled="{Binding IsEnabled}"/>
         <CheckBox Content="ループ" Grid.Row="4" Grid.Column="3" VerticalContentAlignment="Center" IsChecked="{Binding GameOver.IsLoop, Mode=TwoWay}" IsEnabled="{Binding IsEnabled}"/>
         <TextBox Grid.Row="5" Grid.Column="2" Margin="2" Text="{Binding GameOver.FilePath, Mode=TwoWay}" IsEnabled="{Binding IsEnabled}"/>
         <Button Content="参照" Grid.Row="5" Grid.Column="3" Margin="2" Tag="{Binding GameOver.FilePath, Mode=TwoWay}" Click="OpenButton_Click" IsEnabled="{Binding IsEnabled}"/>

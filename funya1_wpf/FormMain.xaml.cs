@@ -96,6 +96,7 @@ namespace funya1_wpf
             int stage = (int)stageNumber!;
             cleater.GameStart();
             cleater.StartStage(stage);
+            UpdatePause();
         });
 
         public ActionCommand MenuReverse_Click => new(_ =>
@@ -118,7 +119,14 @@ namespace funya1_wpf
             {
                 cleater.ResumeGame();
             }
+            UpdatePause();
         });
+
+        private void UpdatePause()
+        {
+            MenuPause.IsChecked = cleater.GameState == GameState.Paused;
+            ButtonPause.IsChecked = cleater.GameState == GameState.Paused;
+        }
 
         public ActionCommand GameExit_Click => new(_ =>
         {
@@ -157,6 +165,7 @@ namespace funya1_wpf
                 }
             }
             cleater.GameStart();
+            UpdatePause();
         });
 
         public ActionCommand Death_Click => new(_ =>
@@ -165,6 +174,7 @@ namespace funya1_wpf
             {
                 CloseMessage();
                 cleater.Die();
+                UpdatePause();
             }
         });
 
@@ -172,6 +182,7 @@ namespace funya1_wpf
         {
             cleater.Pause();
             music.Stop(); // Pauseメソッドで音楽が止まるのはプレイ中だけ。
+            UpdatePause();
             var editing = music.Options.Clone();
             var formMusic = new FormMusic
             {
@@ -229,6 +240,7 @@ namespace funya1_wpf
         public ActionCommand MenuOpen_Click => new(_ =>
         {
             cleater.Pause();
+            UpdatePause();
             var newCleater = new Cleater(this, music, results, options, resources);
             var dialog = new OpenFileDialog()
             {
@@ -277,6 +289,7 @@ namespace funya1_wpf
         public ActionCommand MenuAbout_Click => new(_ =>
         {
             cleater.Pause();
+            UpdatePause();
             var formAbout = new FormAbout
             {
                 Owner = this,
@@ -285,7 +298,7 @@ namespace funya1_wpf
             formAbout.ShowDialog();
         });
 
-        public ActionCommand HelpContents_Click => new(_ =>
+        public static ActionCommand HelpContents_Click => new(_ =>
         {
             Process.Start(new ProcessStartInfo()
             {
@@ -593,6 +606,7 @@ namespace funya1_wpf
         public ActionCommand OpenResultsCommand => new(_ =>
         {
             cleater.Pause();
+            UpdatePause();
             var formResults = new FormResults(results)
             {
                 Owner = this,
@@ -625,8 +639,10 @@ namespace funya1_wpf
 
         private void OpenStageFile(string fileName)
         {
-            var newCleater = new Cleater(this, music, results, options, resources);
-            newCleater.StageFile = fileName;
+            var newCleater = new Cleater(this, music, results, options, resources)
+            {
+                StageFile = fileName
+            };
             bool success;
             try
             {
@@ -640,6 +656,7 @@ namespace funya1_wpf
             {
                 cleater = newCleater;
                 UpdateMenuItems();
+                UpdatePause();
             }
             else
             {
@@ -650,6 +667,7 @@ namespace funya1_wpf
         public ActionCommand MenuStageMaker_Click => new(_ =>
         {
             cleater.Pause();
+            UpdatePause();
             var formEditor = new FormEditor(resources, options)
             {
                 Owner = this,
