@@ -148,7 +148,7 @@ namespace funya1_wpf
 
         public ActionCommand MenuStart_Click => new(_ =>
         {
-            if (cleater.CurrentStage > 1)
+            if (cleater.CurrentStage > 1 && cleater.GameState is GameState.Playing or GameState.Paused)
             {
                 var result = MessageBox.Show("ステージ1からやり直しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result != MessageBoxResult.Yes)
