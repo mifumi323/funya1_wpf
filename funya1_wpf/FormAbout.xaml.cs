@@ -9,12 +9,14 @@ namespace funya1_wpf
     /// </summary>
     public partial class FormAbout : Window
     {
+#pragma warning disable IDE1006 // 命名スタイル
         public required Resources resources { get; init; }
+#pragma warning restore IDE1006 // 命名スタイル
         private readonly ElapsedFrameCounter frameCounter1;
         private readonly Random random = new();
 
-        public string Version => $"バージョン {Assembly.GetExecutingAssembly().GetName().Version?.ToString(3)}";
-        public string Copyright => $"{Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}";
+        public static string Version => $"バージョン {Assembly.GetExecutingAssembly().GetName().Version?.ToString(3)}";
+        public static string Copyright => $"{Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}";
 
         private Status status = Status.Standing;
         private int frame = 0;

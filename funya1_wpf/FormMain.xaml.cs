@@ -298,7 +298,7 @@ namespace funya1_wpf
             formAbout.ShowDialog();
         });
 
-        public ActionCommand HelpContents_Click => new(_ =>
+        public static ActionCommand HelpContents_Click => new(_ =>
         {
             Process.Start(new ProcessStartInfo()
             {
@@ -639,8 +639,10 @@ namespace funya1_wpf
 
         private void OpenStageFile(string fileName)
         {
-            var newCleater = new Cleater(this, music, results, options, resources);
-            newCleater.StageFile = fileName;
+            var newCleater = new Cleater(this, music, results, options, resources)
+            {
+                StageFile = fileName
+            };
             bool success;
             try
             {

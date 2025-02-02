@@ -677,7 +677,7 @@ namespace funya1_wpf
             }
         });
 
-        public ActionCommand HelpContents_Click => new(_ =>
+        public static ActionCommand HelpContents_Click => new(_ =>
         {
             Process.Start(new ProcessStartInfo()
             {

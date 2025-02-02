@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace funya1_wpf
 {
@@ -108,8 +107,8 @@ namespace funya1_wpf
         public static bool CopyZeroGStage()
         {
             var result = false;
-            result = result | CopyFileFromResource("ZeroG.stg");
-            result = result | CopyFileFromResource("NonOil.bmp");
+            result |= CopyFileFromResource("ZeroG.stg");
+            result |= CopyFileFromResource("NonOil.bmp");
             return result;
         }
 
@@ -136,12 +135,12 @@ namespace funya1_wpf
             {
                 Map[0].ImportLine(r, "55555555555555");
             }
-            Map[0].ImportLine(4,"11111111555555");
-            Map[0].ImportLine(5,"00000000555555");
-            Map[0].ImportLine(6,"11111111111111");
+            Map[0].ImportLine(4, "11111111555555");
+            Map[0].ImportLine(5, "00000000555555");
+            Map[0].ImportLine(6, "11111111111111");
             for (var r = 7; r <= 9; r++)
             {
-                Map[0].ImportLine(r,"55555555555555");
+                Map[0].ImportLine(r, "55555555555555");
             }
             Map[0].StartX = 5;
             Map[0].StartY = 5;
@@ -535,15 +534,15 @@ namespace funya1_wpf
             Map[1].MaxY = 8;
             Map[1].StartX = 4;
             Map[1].StartY = 6;
-            Map[1].ImportLine(0,"2211111200000000");
-            Map[1].ImportLine(1,"2000000200000000");
-            Map[1].ImportLine(2,"1000111222200002");
-            Map[1].ImportLine(3,"2000000002222001");
-            Map[1].ImportLine(4,"2100000102222001");
-            Map[1].ImportLine(5,"2200000100000001");
-            Map[1].ImportLine(6,"2211000100011111");
-            Map[1].ImportLine(7,"2222111100010000");
-            Map[1].ImportLine(8,"0000000111110000");
+            Map[1].ImportLine(0, "2211111200000000");
+            Map[1].ImportLine(1, "2000000200000000");
+            Map[1].ImportLine(2, "1000111222200002");
+            Map[1].ImportLine(3, "2000000002222001");
+            Map[1].ImportLine(4, "2100000102222001");
+            Map[1].ImportLine(5, "2200000100000001");
+            Map[1].ImportLine(6, "2211000100011111");
+            Map[1].ImportLine(7, "2222111100010000");
+            Map[1].ImportLine(8, "0000000111110000");
             Map[1].TotalFood = 3;
             Map[1].Food[1].x = 1;
             Map[1].Food[1].y = 3;
