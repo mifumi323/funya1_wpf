@@ -44,7 +44,7 @@
             <MenuItem Header="ゲーム(_G)">
                 <MenuItem Header="スタート(_S)" Command="{Binding MenuStart_Click}" InputGestureText="F2"/>
                 <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)"/>
-                <MenuItem Header="ポーズ(_P)" Command="{Binding MenuPause_Click}" InputGestureText="Ctrl+P"/>
+                <MenuItem x:Name="MenuPause" Header="ポーズ(_P)" Command="{Binding MenuPause_Click}" InputGestureText="Ctrl+P"/>
                 <MenuItem Header="自爆(_D)" Command="{Binding Death_Click}" InputGestureText="Del"/>
                 <Separator/>
                 <MenuItem Header="ステージの読み込み(_R)" Command="{Binding MenuOpen_Click}" InputGestureText="Ctrl+O"/>
@@ -91,9 +91,9 @@
                 <Button Command="{Binding MenuStart_Click}" ToolTip="スタート" Margin="5,5,5,5">
                     <Image Source="/Resources/start.png"/>
                 </Button>
-                <Button Command="{Binding MenuPause_Click}" ToolTip="ポーズ" Margin="5,5,5,5">
+                <ToggleButton x:Name="ButtonPause" Command="{Binding MenuPause_Click}" ToolTip="ポーズ" Margin="5,5,5,5">
                     <Image Source="/Resources/pause.png"/>
-                </Button>
+                </ToggleButton>
                 <Button Command="{Binding Death_Click}" ToolTip="自爆" Margin="5,5,5,5">
                     <Image Source="/Resources/Death2.png"/>
                 </Button>
