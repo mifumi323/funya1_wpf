@@ -10,6 +10,6 @@
         public bool ZeroGStage;
         public bool Reverse;
 
-        public const int GetTotalMax = 5000;
+        public const int GetTotalMax = 9999;
     }
 }
