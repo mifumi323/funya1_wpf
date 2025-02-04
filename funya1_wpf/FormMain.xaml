@@ -43,7 +43,7 @@
         <Menu>
             <MenuItem Header="ゲーム(_G)">
                 <MenuItem Header="スタート(_S)" Command="{Binding MenuStart_Click}" InputGestureText="F2"/>
-                <MenuItem x:Name="MenuStage" Header="指定ステージからスタート(_E)"/>
+                <MenuItem x:Name="MenuStage" Header="指定マップからスタート(_E)"/>
                 <MenuItem x:Name="MenuPause" Header="ポーズ(_P)" Command="{Binding MenuPause_Click}" InputGestureText="Ctrl+P"/>
                 <MenuItem Header="自爆(_D)" Command="{Binding Death_Click}" InputGestureText="Del"/>
                 <Separator/>

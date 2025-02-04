@@ -35,6 +35,8 @@
     <None Remove="Help\FallR.png" />
     <None Remove="Help\favicon.ico" />
     <None Remove="Help\funya.css" />
+    <None Remove="Help\glossary-map.png" />
+    <None Remove="Help\glossary-stage.png" />
     <None Remove="Help\Happy.png" />
     <None Remove="Help\history.html" />
     <None Remove="Help\howto.html" />
@@ -154,6 +156,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\FallR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\glossary-map.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\glossary-stage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\Happy.png">

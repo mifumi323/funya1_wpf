@@ -158,7 +158,7 @@ namespace funya1_wpf
         {
             if (cleater.CurrentStage > 1 && cleater.GameState is GameState.Playing or GameState.Paused)
             {
-                var result = MessageBox.Show("ステージ1からやり直しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("マップ1からやり直しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result != MessageBoxResult.Yes)
                 {
                     return;

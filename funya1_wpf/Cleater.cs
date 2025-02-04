@@ -278,7 +278,7 @@ namespace funya1_wpf
                             ChangeMineImage(Resources.Happy);
                             GameState = GameState.Clear;
                             music.Play(music.Options.Clear);
-                            formMain.Title = $"{Map[CurrentStage].Title}(ステージクリア) - ふにゃ";
+                            formMain.Title = $"{Map[CurrentStage].Title}(クリア) - ふにゃ";
                             formMain.ShowMessage("Clear!", MessageMode.Clear);
                             formMain.OnMessageClose = _ =>
                             {
