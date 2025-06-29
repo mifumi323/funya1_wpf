@@ -44,7 +44,7 @@ namespace funya1_wpf
         {
             try
             {
-                var exception = e.ExceptionObject as Exception;
+                var exception = (Exception)e.ExceptionObject;
                 LogException(exception, "UnhandledException");
                 ShowErrorMessage(exception);
 
@@ -59,7 +59,7 @@ namespace funya1_wpf
             }
         }
 
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace funya1_wpf
             }
         }
 
-        private void ShowErrorMessage(Exception exception)
+        private static void ShowErrorMessage(Exception exception)
         {
             if (exception == null)
             {
@@ -109,7 +109,7 @@ namespace funya1_wpf
             MessageBox.Show(errorMessage.ToString(), "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void LogException(Exception exception, string source)
+        private static void LogException(Exception exception, string source)
         {
             if (exception == null)
             {
