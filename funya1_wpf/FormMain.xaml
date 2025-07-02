@@ -84,10 +84,10 @@
                 <MenuItem Header="ふにゃのヘルプ(_H)" Command="{Binding HelpContents_Click}" InputGestureText="F1"/>
                 <Separator/>
                 <MenuItem Header="バージョン情報(_A)" Command="{Binding MenuAbout_Click}"/>
-                <Separator/>
-                <MenuItem Header="例外テスト(_T)" Command="{Binding TestException_Click}"/>
-                <MenuItem Header="スレッド例外テスト(_B)" Command="{Binding TestThreadException_Click}"/>
-                <MenuItem Header="タスク例外テスト(_K)" Command="{Binding TestTaskException_Click}"/>
+                <Separator Visibility="Collapsed"/>
+                <MenuItem Visibility="Collapsed" Header="例外テスト(_T)" Command="{Binding TestException_Click}"/>
+                <MenuItem Visibility="Collapsed" Header="スレッド例外テスト(_B)" Command="{Binding TestThreadException_Click}"/>
+                <MenuItem Visibility="Collapsed" Header="タスク例外テスト(_K)" Command="{Binding TestTaskException_Click}"/>
             </MenuItem>
         </Menu>
         <ToolBarTray x:Name="MainToolBar" Grid.Row="1">

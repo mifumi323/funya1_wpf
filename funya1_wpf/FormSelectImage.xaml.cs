@@ -57,7 +57,7 @@ namespace funya1_wpf
                         return null;
                     }
                 })
-                .Where(item => item != null)
+                .Where(item => item != null)!
             ];
             SelectedImage = ImageItems.FirstOrDefault(item => item.Path == imagePath) ?? ImageItems[0];
         }

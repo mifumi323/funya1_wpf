@@ -690,16 +690,16 @@ namespace funya1_wpf
             UpdateToolBar();
         });
 
-        public ActionCommand TestException_Click => new(_ =>
+        public static ActionCommand TestException_Click => new(_ =>
         {
             // UI スレッドでの例外テスト
             throw new InvalidOperationException("これはテスト例外です。エラーハンドリングが正しく機能していることを確認するためのものです。");
         });
 
-        public ActionCommand TestThreadException_Click => new(_ =>
+        public static ActionCommand TestThreadException_Click => new(_ =>
         {
             // 非 UI スレッドでの例外テスト
-            Thread thread = new Thread(() =>
+            Thread thread = new(() =>
             {
                 Thread.Sleep(500); // 少し待機
                 throw new InvalidOperationException("これは非UIスレッドでのテスト例外です。");
@@ -707,7 +707,7 @@ namespace funya1_wpf
             thread.Start();
         });
 
-        public ActionCommand TestTaskException_Click => new(_ =>
+        public static ActionCommand TestTaskException_Click => new(_ =>
         {
             // Task での例外テスト
             Task.Run(() =>
