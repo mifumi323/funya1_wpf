@@ -23,6 +23,16 @@
     <None Remove="funyaMaker\Ice.bmp" />
     <None Remove="funyaMaker\Ice.stg" />
     <None Remove="funyaMaker\Ice.txt" />
+    <None Remove="funyaMaker\omake\add.bmp" />
+    <None Remove="funyaMaker\omake\add.stg" />
+    <None Remove="funyaMaker\omake\add.txt" />
+    <None Remove="funyaMaker\omake\add2.stg" />
+    <None Remove="funyaMaker\omake\add2.txt" />
+    <None Remove="funyaMaker\omake\Fire.bmp" />
+    <None Remove="funyaMaker\omake\Fire.stg" />
+    <None Remove="funyaMaker\omake\Move.stg" />
+    <None Remove="funyaMaker\omake\numbers.stg" />
+    <None Remove="funyaMaker\omake\sample.stg" />
     <None Remove="funyaMaker\裏Cave.stg" />
     <None Remove="Help\bug.html" />
     <None Remove="Help\character.html" />
@@ -127,6 +137,36 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="funyaMaker\Ice.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\add.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\add.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\add.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\add2.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\add2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\Fire.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\Fire.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\Move.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\numbers.stg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="funyaMaker\omake\sample.stg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="funyaMaker\裏Cave.stg">
