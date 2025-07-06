@@ -51,6 +51,7 @@
     <None Remove="Help\RunRA.png" />
     <None Remove="Help\RunRB.png" />
     <None Remove="Help\Sit.png" />
+    <None Remove="Help\stages.html" />
     <None Remove="Help\stand.png" />
     <None Remove="Help\story.html" />
     <None Remove="Help\WalkL.png" />
@@ -248,6 +249,9 @@
     <Content Include="Help\Sit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Help\stages.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\stand.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -269,6 +273,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Help\Open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\BackToGame.png" />
     <Resource Include="Resources\banana.png" />
     <Resource Include="Resources\BlockData1.bmp" />
