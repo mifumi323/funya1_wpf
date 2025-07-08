@@ -156,26 +156,35 @@ namespace funya1_wpf
                     switch (editMode)
                     {
                         case EditMode.Chip:
-                            SelectedMap.Value.Data[x, y] = selectedNumber;
-                            var dv = new DrawingVisual();
-                            using (var dc = dv.RenderOpen())
+                            if (SelectedMap.Value.Data[x, y] != selectedNumber)
                             {
-                                SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                                SelectedMap.Value.Data[x, y] = selectedNumber;
+                                var dv = new DrawingVisual();
+                                using (var dc = dv.RenderOpen())
+                                {
+                                    SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                                }
+                                terrainImage.Render(dv);
                             }
-                            terrainImage.Render(dv);
                             break;
                         case EditMode.Mine:
-                            if (IsValidMinePosition(x, y))
+                            if (SelectedMap.Value.StartX != x || SelectedMap.Value.StartY != y)
                             {
-                                SelectedMap.Value.StartX = x;
-                                SelectedMap.Value.StartY = y;
+                                if (IsValidMinePosition(x, y))
+                                {
+                                    SelectedMap.Value.StartX = x;
+                                    SelectedMap.Value.StartY = y;
+                                }
+                                MoveCharacters();
                             }
-                            MoveCharacters();
                             break;
                         case EditMode.Food:
-                            SelectedMap.Value.Food[selectedNumber].x = x;
-                            SelectedMap.Value.Food[selectedNumber].y = y;
-                            MoveCharacters();
+                            if (SelectedMap.Value.Food[selectedNumber].x != x || SelectedMap.Value.Food[selectedNumber].y != y)
+                            {
+                                SelectedMap.Value.Food[selectedNumber].x = x;
+                                SelectedMap.Value.Food[selectedNumber].y = y;
+                                MoveCharacters();
+                            }
                             break;
                     }
                 }
