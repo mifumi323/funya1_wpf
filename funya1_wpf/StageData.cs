@@ -53,7 +53,14 @@ namespace funya1_wpf
                 {
                     using var stream = File.OpenRead(MapBankPath);
                     Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                    LoadCroppedBitmaps();
+                    if (Image.IsValidMapChipSize())
+                    {
+                        LoadCroppedBitmaps();
+                    }
+                    else
+                    {
+                        LoadSampleImage();
+                    }
                 }
                 else
                 {
