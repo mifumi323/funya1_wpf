@@ -95,6 +95,27 @@ namespace funya1_wpf
             };
         }
 
+        public WriteableBitmap DrawTerrainInPanel(Panel Stage, MapChip?[] mapChips, bool extended = false)
+        {
+            int terrainWidth = 32 * Width;
+            Stage.Width = terrainWidth;
+            int terrainHeight = 32 * Height;
+            Stage.Height = terrainHeight;
+
+            var terrainImage = new WriteableBitmap(extended ? 40 * 32 : terrainWidth, extended ? 40 * 32 : terrainHeight, 96, 96, PixelFormats.Pbgra32, null);
+            DrawTerrainToBitmap(terrainImage, mapChips, extended);
+
+            Stage.Background = new ImageBrush(terrainImage)
+            {
+                Stretch = Stretch.None,
+                TileMode = TileMode.None,
+                AlignmentX = AlignmentX.Left,
+                AlignmentY = AlignmentY.Top,
+            };
+
+            return terrainImage;
+        }
+
         private void DrawTerrainToBitmap(RenderTargetBitmap terrainImage, CroppedBitmap?[] croppedBitmaps, bool extended = false)
         {
             var maxX = extended ? 39 : MaxX;
@@ -113,12 +134,44 @@ namespace funya1_wpf
             terrainImage.Render(dv);
         }
 
+        public void DrawTerrainToBitmap(WriteableBitmap terrainImage, MapChip?[] mapChips, bool extended = false)
+        {
+            var maxX = extended ? 39 : MaxX;
+            var maxY = extended ? 39 : MaxY;
+            terrainImage.Lock();
+            try
+            {
+                for (int x = 0; x <= maxX; x++)
+                {
+                    for (int y = 0; y <= maxY; y++)
+                    {
+                        DrawTile(terrainImage, mapChips, x, y);
+                    }
+                }
+            }
+            finally
+            {
+                terrainImage.Unlock();
+            }
+        }
+
         public void DrawTile(CroppedBitmap?[] croppedBitmaps, DrawingContext dc, int x, int y)
         {
             CroppedBitmap? imageSource = croppedBitmaps[Data[x, y]];
             if (imageSource != null)
             {
                 dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
+            }
+        }
+
+        public void DrawTile(WriteableBitmap terrainImage, MapChip?[] mapChips, int x, int y)
+        {
+            var mapChip = mapChips[Data[x, y]];
+            if (mapChip != null)
+            {
+                var pixelData = mapChip.PixelData;
+                var rect = new System.Windows.Int32Rect(x * 32, y * 32, 32, 32);
+                terrainImage.WritePixels(rect, pixelData, 32 * 4, 0);
             }
         }
 

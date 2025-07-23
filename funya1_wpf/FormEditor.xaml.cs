@@ -19,7 +19,7 @@ namespace funya1_wpf
         private string originalText = "";
         public Resources resources;
         private readonly Options options;
-        private RenderTargetBitmap terrainImage = new(1, 1, 96, 96, PixelFormats.Pbgra32);
+        private WriteableBitmap terrainImage = null!;
         private bool drawing = false;
 
         private readonly int MaxZoom = 200;
@@ -159,12 +159,15 @@ namespace funya1_wpf
                             if (SelectedMap.Value.Data[x, y] != selectedNumber)
                             {
                                 SelectedMap.Value.Data[x, y] = selectedNumber;
-                                var dv = new DrawingVisual();
-                                using (var dc = dv.RenderOpen())
+                                terrainImage.Lock();
+                                try
                                 {
-                                    SelectedMap.Value.DrawTile(StageData.croppedBitmaps, dc, x, y);
+                                    SelectedMap.Value.DrawTile(terrainImage, StageData.MapChips, x, y);
                                 }
-                                terrainImage.Render(dv);
+                                finally
+                                {
+                                    terrainImage.Unlock();
+                                }
                             }
                             break;
                         case EditMode.Mine:
@@ -497,8 +500,7 @@ namespace funya1_wpf
                     map.Value.PropertyChanged += SelectedMap_PropertyChanged;
                 }
             }
-            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
-            terrainImage = (StageCanvas.Background as ImageBrush)?.ImageSource as RenderTargetBitmap ?? terrainImage;
+            terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
             MoveCharacters();
             UpdateFoodsVisibility();
             UpdateZoom();
@@ -682,7 +684,7 @@ namespace funya1_wpf
             if (f.ShowDialog() == true)
             {
                 StageData.ImagePath = f.ImagePath;
-                SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+                terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
             }
         });
 
@@ -776,7 +778,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+            terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
 
             // キャラクター移動
             map.StartX = (map.StartX + 1) % map.Width;
@@ -807,7 +809,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+            terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
 
             // キャラクター移動
             map.StartX = (map.StartX + map.Width - 1) % map.Width;
@@ -838,7 +840,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+            terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
 
             // キャラクター移動
             map.StartY = (map.StartY + map.Height - 1) % map.Height;
@@ -869,7 +871,7 @@ namespace funya1_wpf
                     }
                 }
             }
-            SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.croppedBitmaps, true);
+            terrainImage = SelectedMap.Value.DrawTerrainInPanel(StageCanvas, StageData.MapChips, true);
 
             // キャラクター移動
             map.StartY = (map.StartY + 1) % map.Height;
