@@ -595,7 +595,7 @@ namespace funya1_wpf
 
         public ICommand BackColorAuto_Click => new ActionCommand(_ =>
         {
-            StageData.StageColor = StageData.croppedBitmaps[0]!.GetAverageColor();
+            StageData.StageColor = StageData.MapChips[0]!.GetAverageColor();
             UpdateColor();
         });
 
