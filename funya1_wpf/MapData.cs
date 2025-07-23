@@ -76,25 +76,6 @@ namespace funya1_wpf
             }
         }
 
-        public void DrawTerrainInPanel(Panel Stage, CroppedBitmap?[] croppedBitmaps, bool extended = false)
-        {
-            int terrainWidth = 32 * Width;
-            Stage.Width = terrainWidth;
-            int terrainHeight = 32 * Height;
-            Stage.Height = terrainHeight;
-
-            var terrainImage = new RenderTargetBitmap(extended ? 40 * 32 : terrainWidth, extended ? 40 * 32 : terrainHeight, 96, 96, PixelFormats.Pbgra32);
-            DrawTerrainToBitmap(terrainImage, croppedBitmaps, extended);
-
-            Stage.Background = new ImageBrush(terrainImage)
-            {
-                Stretch = Stretch.None,
-                TileMode = TileMode.None,
-                AlignmentX = AlignmentX.Left,
-                AlignmentY = AlignmentY.Top,
-            };
-        }
-
         public WriteableBitmap DrawTerrainInPanel(Panel Stage, MapChip?[] mapChips, bool extended = false)
         {
             int terrainWidth = 32 * Width;
@@ -116,24 +97,6 @@ namespace funya1_wpf
             return terrainImage;
         }
 
-        private void DrawTerrainToBitmap(RenderTargetBitmap terrainImage, CroppedBitmap?[] croppedBitmaps, bool extended = false)
-        {
-            var maxX = extended ? 39 : MaxX;
-            var maxY = extended ? 39 : MaxY;
-            var dv = new DrawingVisual();
-            using (var dc = dv.RenderOpen())
-            {
-                for (int x = 0; x <= maxX; x++)
-                {
-                    for (int y = 0; y <= maxY; y++)
-                    {
-                        DrawTile(croppedBitmaps, dc, x, y);
-                    }
-                }
-            }
-            terrainImage.Render(dv);
-        }
-
         public void DrawTerrainToBitmap(WriteableBitmap terrainImage, MapChip?[] mapChips, bool extended = false)
         {
             var maxX = extended ? 39 : MaxX;
@@ -152,15 +115,6 @@ namespace funya1_wpf
             finally
             {
                 terrainImage.Unlock();
-            }
-        }
-
-        public void DrawTile(CroppedBitmap?[] croppedBitmaps, DrawingContext dc, int x, int y)
-        {
-            CroppedBitmap? imageSource = croppedBitmaps[Data[x, y]];
-            if (imageSource != null)
-            {
-                dc.DrawImage(imageSource, new System.Windows.Rect(x * 32, y * 32, 32, 32));
             }
         }
 
