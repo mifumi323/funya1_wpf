@@ -10,8 +10,9 @@ namespace funya1_wpf
     /// </summary>
     public partial class FormSelectImage : Window
     {
-        private record ImageItem(string Path, BitmapSource Image, string Title)
+        private record ImageItem(string Path, BitmapSource Image, string Title, bool IsValid)
         {
+            public string DisplayTitle => IsValid ? Title : $"{Title} (使えません)";
         }
 
         private ImageItem[] ImageItems
@@ -42,7 +43,7 @@ namespace funya1_wpf
             InitializeComponent();
 
             ImageItems = [
-                new("", resources.BlockData1, "(サンプル画像)"),
+                new("", resources.BlockData1, "(サンプル画像)", true),
                 ..Directory.EnumerateFiles(baseDirectory)
                 .Where(file => Path.GetExtension(file).ToLower() is ".bmp" or ".gif" or ".jpg" or ".jpeg" or ".png")
                 .Select(file => {
@@ -50,7 +51,7 @@ namespace funya1_wpf
                         using var stream = File.OpenRead(file);
                         var image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                         var fileName = Path.GetFileName(file);
-                        return new ImageItem(fileName, image, fileName);
+                        return new ImageItem(fileName, image, fileName, image.IsValidMapChipSize());
                     }
                     catch (Exception)
                     {
@@ -64,6 +65,11 @@ namespace funya1_wpf
 
         public ICommand OkButton_Click => new ActionCommand(friction =>
         {
+            if (SelectedImage == null || !SelectedImage.IsValid)
+            {
+                MessageBox.Show("有効な画像を選択してください。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             DialogResult = true;
             Close();
         });

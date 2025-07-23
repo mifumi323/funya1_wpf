@@ -53,7 +53,14 @@ namespace funya1_wpf
                 {
                     using var stream = File.OpenRead(MapBankPath);
                     Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                    LoadCroppedBitmaps();
+                    if (Image.IsValidMapChipSize())
+                    {
+                        LoadCroppedBitmaps();
+                    }
+                    else
+                    {
+                        LoadSampleImage();
+                    }
                 }
                 else
                 {
@@ -64,7 +71,7 @@ namespace funya1_wpf
         }
         private BitmapSource image = null!;
         public BitmapSource Image { get => image; set { image = value; OnPropertyChanged(); } }
-        public CroppedBitmap?[] croppedBitmaps = new CroppedBitmap?[10];
+        public MapChip?[] MapChips = new MapChip?[10];
 
         public bool LoadFile()
         {
@@ -199,7 +206,15 @@ namespace funya1_wpf
         {
             for (int i = 0; i < 10; i++)
             {
-                croppedBitmaps[i] = (i + 1) * 32 <= Image.PixelWidth ? new(Image, new(i * 32, 0, 32, 32)) : null;
+                if ((i + 1) * 32 <= Image.PixelWidth)
+                {
+                    CroppedBitmap croppedBitmap = new(Image, new(i * 32, 0, 32, 32));
+                    MapChips[i] = new MapChip(new FormatConvertedBitmap(croppedBitmap, PixelFormats.Bgr32, null, 0).GetPixelData());
+                }
+                else
+                {
+                    MapChips[i] = null;
+                }
             }
         }
 

@@ -22,12 +22,12 @@
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <Image Source="{Binding Image}" Width="{Binding Image.PixelWidth}" Height="{Binding Image.PixelHeight}" Stretch="Fill" SnapsToDevicePixels="True"/>
-                        <TextBlock Text="{Binding Title}"/>
+                        <TextBlock Text="{Binding DisplayTitle}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="OK" Grid.Row="1" x:Name="OkButton" IsDefault="True" Command="{Binding OkButton_Click}"/>
+        <Button Content="OK" Grid.Row="1" x:Name="OkButton" IsDefault="True" Command="{Binding OkButton_Click}" IsEnabled="{Binding SelectedImage.IsValid}"/>
         <Button Content="キャンセル" Grid.Row="1" Grid.Column="1" x:Name="CancelButton" IsCancel="True"/>
     </Grid>
 </Window>
