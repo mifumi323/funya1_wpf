@@ -502,7 +502,7 @@ namespace funya1_wpf
 
         private void DrawTerrain(int NextStage)
         {
-            Map[NextStage].DrawTerrainInPanel(formMain.Stage, croppedBitmaps);
+            Map[NextStage].DrawTerrainInPanel(formMain.Stage, MapChips);
         }
 
         public bool GameStart()
