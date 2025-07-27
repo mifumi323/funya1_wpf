@@ -8,7 +8,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\Stand.ICO</ApplicationIcon>
     <AssemblyName>funya</AssemblyName>
-    <Version>2.4.1</Version>
+    <Version>2.4.2</Version>
     <Copyright>© 2024-2025 美文</Copyright>
     <Authors>Mifumi Matsuda</Authors>
     <Product>ふにゃ</Product>
