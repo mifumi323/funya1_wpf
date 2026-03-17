@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Icon="/Resources/funyaMaker.ICO"
+        UseLayoutRounding="True"
         Title="画像切り替え" Height="350" Width="400" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
         <Grid.ColumnDefinitions>

@@ -12,6 +12,7 @@
         Width="800"
         MinHeight="300"
         MinWidth="500"
+        UseLayoutRounding="True"
         Closing="Window_Closing"
         StateChanged="Window_StateChanged"
         SizeChanged="Window_SizeChanged"

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:funya1_wpf"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        UseLayoutRounding="True"
         Title="プレイ記録 - ふにゃ" Height="300" Width="350" WindowStartupLocation="CenterOwner" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
