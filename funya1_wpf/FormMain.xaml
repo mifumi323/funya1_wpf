@@ -12,6 +12,7 @@
         Icon="/Resources/Stand.ICO"
         Background="Gray"
         AllowDrop="True"
+        UseLayoutRounding="True"
         StateChanged="Window_StateChanged"
         SizeChanged="Window_SizeChanged"
         Closed="Window_Closed"
